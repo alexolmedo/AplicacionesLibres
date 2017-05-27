@@ -1,7 +1,6 @@
-/AplicacionesLibres/dist/
-/AplicacionesLibres/build/
-/AplicacionesLibres/nbproject/
-build.xml
-manifest.mf
-*.class
-/AplicacionesLibres1/nbproject/private/
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
