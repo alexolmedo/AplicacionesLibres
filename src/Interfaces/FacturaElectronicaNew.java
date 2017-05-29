@@ -67,7 +67,7 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jList1);
 
         jLabel2.setFont(new java.awt.Font("Cantarell", 1, 15)); // NOI18N
-        jLabel2.setText("Archivos Disponibles:");
+        jLabel2.setText("Archivos Disponibles -------:");
 
         jButton2.setText("Aceptar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
