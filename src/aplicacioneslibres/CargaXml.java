@@ -89,13 +89,15 @@ public class CargaXml {
             }
 
             String fechaCompleta = tabla.getChildren().get(1).getChildTextTrim("fechaEmision");
+            System.out.println(fechaCompleta);
             StringTokenizer tk = new StringTokenizer(fechaCompleta, "/");
             String verificarFecha = "";
 
             while (tk.hasMoreTokens()) {
                 verificarFecha = tk.nextToken();
             }
-
+            System.out.println(verificarFecha);
+            
             if (verificarFecha.equals(String.valueOf(anio))) {
                 List lista_campos = tabla.getChildren();
                 Element campo;
@@ -152,10 +154,19 @@ public class CargaXml {
 
                 // Info Factura
                 cont = elementos.indexOf("fechaEmision");
-                String fecha = "";
+                
+                String fecha =  "";
                 if (cont != -1) {
-                    fecha = factura.getChildTextTrim(elementos.get(cont).toString());
+                    String fechaA = "";
+                    fechaA = factura.getChildTextTrim(elementos.get(cont).toString());                    
+                    StringTokenizer tok = new StringTokenizer(fechaA, "/");
+                    String d = tok.nextToken();
+                    String m = tok.nextToken();
+                    String a = tok.nextToken();
+                    fecha = m + "/" + d + "/" + a;
                 }
+                
+                //System.out.println(fecha);
 
                 cont = elementos.indexOf("totalSinImpuestos");
                 Double totalSinImp = 0.0;
