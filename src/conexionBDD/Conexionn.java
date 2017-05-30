@@ -7,6 +7,7 @@ package conexionBDD;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -151,6 +152,14 @@ public class Conexionn {
 
     public Connection getConn() {
         return conexion;
+    }
+
+    public PreparedStatement prepareStatement(String strSQL, int TYPE_SCROLL_INSENSITIVE, int CONCUR_READ_ONLY) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void commit() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

@@ -45,7 +45,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         rPV = new ReporteProveedor(conn, cedula_usuario, anio);
         this.anio = anio;
         this.cedula_usuario = cedula_usuario;
-        setResizable(false);
+        //setResizable(false);
         setLocationRelativeTo(null);
     }
 
