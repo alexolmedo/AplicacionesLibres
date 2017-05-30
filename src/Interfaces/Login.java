@@ -29,7 +29,7 @@ public class Login extends javax.swing.JFrame {
     public void cargar_anios(){
         combo_anio.removeAllItems();
         ArrayList anios=conn.cargarAnios();
-        anios.sort(null);
+        //anios.sort(null);
         for (Object obj:anios){
             combo_anio.addItem(obj.toString());
         }
@@ -100,12 +100,6 @@ public class Login extends javax.swing.JFrame {
         });
 
         jLabel4.setText("Año");
-
-        combo_anio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                combo_anioActionPerformed(evt);
-            }
-        });
 
         menu.setText("Límites");
 
@@ -248,10 +242,6 @@ public class Login extends javax.swing.JFrame {
     private void txt_passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_passActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_passActionPerformed
-
-    private void combo_anioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combo_anioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_combo_anioActionPerformed
 
     /**
      * @param args the command line arguments
