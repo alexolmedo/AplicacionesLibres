@@ -32,6 +32,11 @@ public class HistorialGastos extends javax.swing.JInternalFrame {
 
     public HistorialGastos(Conexionn conn, String cedula_usuario, int anio) {
         initComponents();
+        jScrollPane2.setVisible(false);
+        jLabel2.setVisible(false);
+        lblNegocios.setVisible(false);
+        jTextField2.setVisible(false);
+        btnExport.setVisible(false);
         lbl_Reporte.setText("REPORTE DEL AÑO " + anio);
         this.conn = conn;
         this.cedula_usuario = cedula_usuario;

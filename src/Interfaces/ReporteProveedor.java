@@ -43,7 +43,7 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
 
     public ReporteProveedor(Conexionn conn, String cedula_usuario, int anio) {
         initComponents();
-
+        Aceptar.setVisible(false);
         this.conn = conn;
         this.cedula_usuario = cedula_usuario;
         this.anio = anio;
@@ -121,6 +121,15 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
                 comboProvItemStateChanged(evt);
             }
         });
+        comboProv.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                comboProvPopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
         comboProv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboProvActionPerformed(evt);
@@ -174,7 +183,7 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
                                 .addComponent(comboProv, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(105, 105, 105)
                                 .addComponent(Aceptar)))))
-                .addContainerGap(119, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -281,6 +290,79 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
         }
         
     }//GEN-LAST:event_AceptarActionPerformed
+
+    private void comboProvPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_comboProvPopupMenuWillBecomeInvisible
+        // TODO add your handling code here:
+         ArrayList historial_p = conn.ddl(String.format("select * from factura where id_cliente='%s'", this.cedula_usuario));
+        ArrayList idEstab = conn.ddl(String.format("select id_establecimiento from establecimiento where nombre_establecimiento='%s'", comboProv.getSelectedItem().toString()));
+        int sel;
+                
+        System.out.println(idEstab.get(0));
+        if (!historial_p.isEmpty()) {
+            /*ArrayList anual = conn.ddl(String.format("select * from factura where id_establecimiento=%s", idEstab.get(0)));
+            System.out.println("as: " + comboProv.getSelectedIndex());
+            System.out.println("anual: " + anual.size());
+            System.out.println(anual);*/
+
+            //String nombreCabeceras[] = {"Id Factura", "CI Cliente", "RUC Prov", "Tipo", "Fecha Emisio", "Autorización", "Total sin IVA", "IVA", "Total con IVA"};
+
+            /*String datosTabla[][] = new String[anual.toArray().length][9];
+
+            for (int i = 0; i < anual.size(); i++) {
+
+                for (int j = 0; j < nombreCabeceras.length; j++) {
+                    //System.out.println(anual.get(i));
+
+                    datosTabla[i][j] = anual.get(j).toString();
+
+                }
+            }*/
+            
+            Statement st;
+            try {
+                st = conn.getConn().createStatement();
+                ResultSet rs = st.executeQuery(String.format("select * from factura where id_establecimiento=%s", idEstab.get(0)));
+                ResultSetMetaData rsMd = rs.getMetaData();
+                int numeroColumnas = rsMd.getColumnCount();
+                //System.out.println("estoy en dfdfg" + rs.getString(0));
+                
+                int i=0;
+                while(rs.next()){
+                    System.out.println("estoy en el while");                    
+                    for(int j=0;j<numeroColumnas;j++){
+                        System.out.println(rs.getObject(j+1));
+                        tablaProv.setValueAt(rs.getObject(j+1), i, j);
+                        System.out.println(rs.getObject(j+1));
+                    }
+                    i++;
+                }
+                
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(ReporteProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+
+            //txtPersonal.setText((String) historial_p.get(8));
+            //JTable tabH = new JTable
+            /*JTable tablaHistorialP = new JTable(datosTabla, nombreCabeceras) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+
+            auxP = tablaHistorialP;
+
+            DefaultTableCellRenderer alinearDerecha = new DefaultTableCellRenderer();
+            alinearDerecha.setHorizontalAlignment(DefaultTableCellRenderer.RIGHT);
+            tablaHistorialP.getColumnModel().getColumn(1).setCellRenderer(alinearDerecha);
+            tablaHistorialP.getColumnModel().getColumn(2).setCellRenderer(alinearDerecha);
+            tablaHistorialP.getColumnModel().getColumn(3).setCellRenderer(alinearDerecha);*/
+
+        }
+        
+    }//GEN-LAST:event_comboProvPopupMenuWillBecomeInvisible
 
     public void toExcel(JTable table, File file) {
         try {
