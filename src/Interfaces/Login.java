@@ -6,6 +6,7 @@
 package Interfaces;
 
 import conexionBDD.Conexionn;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -77,8 +78,18 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        txt_pass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_passActionPerformed(evt);
+            }
+        });
+        txt_pass.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_passKeyPressed(evt);
+            }
+        });
+
         jLabel3.setFont(new java.awt.Font("Open Sans", 1, 24)); // NOI18N
-        jLabel3.setForeground(java.awt.Color.black);
         jLabel3.setText("LOGIN");
 
         btn_Registrar.setText("Registrarse");
@@ -221,6 +232,16 @@ public class Login extends javax.swing.JFrame {
         this.setVisible(false);
         new EdicionLimitesAnio(this).setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void txt_passKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_passKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER) {            
+            btn_Ingresar.doClick();
+        }
+    }//GEN-LAST:event_txt_passKeyPressed
+
+    private void txt_passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_passActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_passActionPerformed
 
     /**
      * @param args the command line arguments
