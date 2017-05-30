@@ -22,11 +22,10 @@ public class Conexionn {
     Connection conexion;
 
     public Conexionn() {
-        //conexion=null;
         try {
-            conexion = DriverManager.getConnection(
-                    "jdbc:postgresql://127.0.0.1:5432/facturas",
-                    "appfacturacion", "facturacion01");
+            //Class.forName("org.sqlite.JDBC");
+            conexion = DriverManager.getConnection("jdbc:sqlite:facturacion.db");
+            System.out.println("Opened database successfully");
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console");
             e.printStackTrace();
@@ -37,7 +36,7 @@ public class Conexionn {
     public ArrayList cargarEstablecimiento() {
         ArrayList n = new ArrayList();
         try {
-            Statement comando = conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            Statement comando = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
             ResultSet resultado = comando.executeQuery("SELECT nombre_establecimiento FROM establecimiento");
             while (resultado.next()) {
                 n.add(resultado.getString("nombre_establecimiento"));
@@ -53,7 +52,7 @@ public class Conexionn {
     public ArrayList cargarAnios() {
         ArrayList n = new ArrayList();
         try {
-            Statement comando = conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            Statement comando = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
             ResultSet resultado = comando.executeQuery("SELECT * FROM gastosanualespersonales");
             while (resultado.next()) {
                 n.add(resultado.getString("anio_gastos"));
@@ -69,7 +68,7 @@ public class Conexionn {
     public ArrayList cambiarDatosEstablecimiento(String est) {
         ArrayList n = new ArrayList();
         try {
-            Statement comando = conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            Statement comando = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
             ResultSet resultado = comando.executeQuery("SELECT id_establecimiento, direccion_establecimiento,telefono_establecimiento "
                     + "FROM establecimiento WHERE nombre_establecimiento='" + est + "'");
             while (resultado.next()) {
@@ -92,7 +91,7 @@ public class Conexionn {
     public String consultar(String tabla) {
         String n = "";
         try {
-            Statement comando = conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            Statement comando = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
             String sql = "SELECT count(*) FROM " + tabla + ";";
             ResultSet resultado = comando.executeQuery(sql);
             while (resultado.next()) {

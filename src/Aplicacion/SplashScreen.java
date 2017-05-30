@@ -5,6 +5,8 @@
  */
 package Aplicacion;
 
+import conexionBDD.InitDatabase;
+
 /**
  *
  * @author Alexander
@@ -16,6 +18,7 @@ public class SplashScreen extends javax.swing.JFrame {
      */
     public SplashScreen() {
         initComponents();
+        InitDatabase crearBase = new InitDatabase();
     }
 
     /**
