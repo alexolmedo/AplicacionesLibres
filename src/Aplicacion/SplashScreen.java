@@ -6,6 +6,7 @@
 package Aplicacion;
 
 import conexionBDD.InitDatabase;
+import java.io.File;
 
 /**
  *
@@ -18,7 +19,11 @@ public class SplashScreen extends javax.swing.JFrame {
      */
     public SplashScreen() {
         initComponents();
-        InitDatabase crearBase = new InitDatabase();
+        File base = new File("facturacion.db");
+        if(!base.exists()){
+            InitDatabase crearBase = new InitDatabase();
+        }
+        
     }
 
     /**
