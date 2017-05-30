@@ -29,7 +29,6 @@ public class CargaXml {
     public void cargarXml(String name, String cedulaCli, int anio, String tipo) {
         //Se crea un SAXBuilder para poder parsear el archivo
         SAXBuilder builder = new SAXBuilder();
-
         File xmlFile = new File(name);
         try {
             //Se crea el documento a traves del archivo
@@ -48,6 +47,8 @@ public class CargaXml {
             elementos.add("ptoEmi");
             elementos.add("secuencial");
             elementos.add("fechaEmision");
+            elementos.add("razonSocialComprador");            
+            elementos.add("identificacionComprador");
             elementos.add("totalSinImpuestos");
             elementos.add("valor");
             elementos.add("descripcion");
@@ -96,7 +97,7 @@ public class CargaXml {
             while (tk.hasMoreTokens()) {
                 verificarFecha = tk.nextToken();
             }
-            System.out.println(verificarFecha);
+            //System.out.println(verificarFecha);
             
             if (verificarFecha.equals(String.valueOf(anio))) {
                 List lista_campos = tabla.getChildren();
@@ -166,8 +167,22 @@ public class CargaXml {
                     fecha = m + "/" + d + "/" + a;
                 }
                 
-                //System.out.println(fecha);
+                System.out.println(fecha);
 
+                cont = elementos.indexOf("razonSocialComprador");
+                String nombreCompr = "";
+                if (cont != -1) {
+                    nombreCompr = factura.getChildTextTrim(elementos.get(cont).toString());
+                }
+                //System.out.println(nombreCompr);
+                
+                cont = elementos.indexOf("identificacionComprador");
+                String CI_Compr = "";
+                if (cont != -1) {
+                    CI_Compr = factura.getChildTextTrim(elementos.get(cont).toString());
+                }
+                //System.out.println(CI_Compr);
+                
                 cont = elementos.indexOf("totalSinImpuestos");
                 Double totalSinImp = 0.0;
                 if (cont != -1) {
@@ -221,7 +236,8 @@ public class CargaXml {
 
                     if (datosProducto.length != 0) {
                         if (tipo.equals("Personal")) {
-                            SeleccionarTipoGastoPersonal seleccionarP = new SeleccionarTipoGastoPersonal(cp, datosProducto, numFact, anio, cedulaCli, tipo);
+                            SeleccionarTipoGastoPersonal seleccionarP = new SeleccionarTipoGastoPersonal(cp, datosProducto, numFact, anio, 
+                                    cedulaCli, tipo, nombreCompr,CI_Compr, ruc, nombreEst,dirMatriz, secuencial, fechaCompleta);
                             seleccionarP.setVisible(true);
                         } else {
                             SeleccionarTipoGastoNegocios seleccionarH = new SeleccionarTipoGastoNegocios(cp, datosProducto, numFact, anio, cedulaCli, tipo);
