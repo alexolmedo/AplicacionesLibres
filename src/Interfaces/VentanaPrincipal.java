@@ -6,6 +6,7 @@
 package Interfaces;
 
 import conexionBDD.Conexionn;
+import java.awt.Dimension;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
@@ -16,6 +17,7 @@ import javax.swing.JPasswordField;
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
 
+    private Dimension dim;
     FacturaManualPersonal fmp;
     FacturaElectronicaNew fe;
     FacturaManualNegocio fmn;
@@ -30,6 +32,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     public VentanaPrincipal(String cedula_usuario, int anio) {
         initComponents();
+        dim=super.getToolkit().getScreenSize();
+        setSize(dim);
+        //setUndecorated(true);
         conn = new Conexionn();
         fmp = new FacturaManualPersonal(conn, cedula_usuario, anio);
         fmn = new FacturaManualNegocio(conn, cedula_usuario, anio);
@@ -154,13 +159,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jDesktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 651, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jDesktopPane, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
