@@ -63,7 +63,6 @@ public class RegistroLimitesAnio extends javax.swing.JFrame {
 
         jLabel7.setBackground(java.awt.Color.black);
         jLabel7.setFont(new java.awt.Font("Open Sans Extrabold", 1, 24)); // NOI18N
-        jLabel7.setForeground(java.awt.Color.black);
         jLabel7.setText("REGISTRO DE LIMITES");
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
 
@@ -130,13 +129,11 @@ public class RegistroLimitesAnio extends javax.swing.JFrame {
 
         jLabel8.setBackground(java.awt.Color.black);
         jLabel8.setFont(new java.awt.Font("Open Sans Extrabold", 1, 14)); // NOI18N
-        jLabel8.setForeground(java.awt.Color.black);
         jLabel8.setText("AÑO:");
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, -1));
 
         jLabel9.setBackground(java.awt.Color.black);
         jLabel9.setFont(new java.awt.Font("Open Sans Extrabold", 1, 18)); // NOI18N
-        jLabel9.setForeground(java.awt.Color.black);
         jLabel9.setText("LIMITES");
         getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, -1, -1));
 
