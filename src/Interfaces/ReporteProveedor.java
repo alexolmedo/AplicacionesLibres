@@ -293,7 +293,7 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
 
     private void comboProvPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_comboProvPopupMenuWillBecomeInvisible
         // TODO add your handling code here:
-         ArrayList historial_p = conn.ddl(String.format("select * from factura where id_cliente='%s'", this.cedula_usuario));
+         ArrayList historial_p = conn.ddl(String.format("select * from factura"));
         ArrayList idEstab = conn.ddl(String.format("select id_establecimiento from establecimiento where nombre_establecimiento='%s'", comboProv.getSelectedItem().toString()));
         int sel;
                 
