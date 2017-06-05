@@ -101,6 +101,12 @@ public class Login extends javax.swing.JFrame {
 
         jLabel4.setText("Año");
 
+        combo_anio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                combo_anioKeyPressed(evt);
+            }
+        });
+
         menu.setText("Límites");
 
         jMenuItem1.setText("Registrar límites de un nuevo año");
@@ -199,6 +205,7 @@ public class Login extends javax.swing.JFrame {
                     this.dispose();
                 } else {
                     JOptionPane.showMessageDialog(null,  "Contraseña incorrecta", "Error",JOptionPane.ERROR_MESSAGE);
+                    txt_pass.setText("");
                 }
             } else {
                 if (JOptionPane.showConfirmDialog(null, "Usuario no existente.\nDesea registrarse en el sistema?", "Error", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
@@ -242,6 +249,12 @@ public class Login extends javax.swing.JFrame {
     private void txt_passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_passActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_passActionPerformed
+
+    private void combo_anioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_combo_anioKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER) {            
+            btn_Ingresar.doClick();
+        }
+    }//GEN-LAST:event_combo_anioKeyPressed
 
     /**
      * @param args the command line arguments

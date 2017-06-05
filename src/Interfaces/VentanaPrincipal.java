@@ -8,6 +8,7 @@ package Interfaces;
 import conexionBDD.Conexionn;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 
@@ -33,8 +34,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     public VentanaPrincipal(String cedula_usuario, int anio) {
         initComponents();
-        dim=super.getToolkit().getScreenSize();
-        setSize(dim);
+        setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+        //dim=super.getToolkit().getScreenSize();
+        //setSize(dim);
         //setUndecorated(true);
         conn = new Conexionn();
         fmp = new FacturaManualPersonal(conn, cedula_usuario, anio);
@@ -284,7 +286,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void salir(){
         if (JOptionPane.showConfirmDialog(null, "Desea salir del sistema?", "Advertencia", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-            this.dispose();
+            System.exit(0);
             new Login().setVisible(true);
         }
     }
