@@ -53,6 +53,7 @@ public class CargaXml {
             elementos.add("valor");
             elementos.add("descripcion");
             elementos.add("precioTotalSinImpuesto");
+            elementos.add("importeTotal");
 
             //Se obtiene la raiz 'tables'
             Element rootNode = document.getRootElement();
@@ -198,12 +199,18 @@ public class CargaXml {
                     Imps = Double.parseDouble(totalImp.getChildTextTrim(elementos.get(cont).toString()));
                     System.err.println(Imps);
                 }
+                
+                cont = elementos.indexOf("importeTotal");
+                Double totalConIVA = 0.0;
+                if (cont != -1) {
+                    totalConIVA = Double.parseDouble(factura.getChildTextTrim(elementos.get(cont).toString()));
+                }
 
                 Double totalConImps = totalSinImp + Imps;
 
                 if (!cp.verificar_usuario("SELECT * FROM FACTURA WHERE id_factura='" + numFact + "'")) {
                     String facturaQ = "INSERT INTO FACTURA (id_factura,id_cliente,id_establecimiento,tipo_factura,fecha_emision,estado_factura,ambiente_factura,total_sin_iva,iva,total_con_iva)"
-                            + "VALUES ('" + numFact + "','" + CI_Compr + "','" + ruc + "','" + tipo + "','" + fecha + "','" + estado + "','" + ambiente + "'," + totalSinImp + "," + Imps + "," + totalConImps + ")";
+                            + "VALUES ('" + numFact + "','" + CI_Compr + "','" + ruc + "','" + tipo + "','" + fecha + "','" + estado + "','" + ambiente + "'," + totalSinImp + "," + Imps + "," + totalConIVA + ")";
                     cp.insertar(facturaQ);
 
                     Element detalles = (Element) lista_campos.get(2);
@@ -238,7 +245,8 @@ public class CargaXml {
                     if (datosProducto.length != 0) {
                         if (tipo.equals("Personal")) {
                             SeleccionarTipoGastoPersonal seleccionarP = new SeleccionarTipoGastoPersonal(cp, datosProducto, numFact, anio, 
-                                    cedulaCli, tipo, nombreCompr,CI_Compr, ruc, nombreEst,dirMatriz, secuencial, fechaCompleta);
+                                    cedulaCli, tipo, nombreCompr,CI_Compr, ruc, nombreEst,dirMatriz, secuencial, fechaCompleta, 
+                                    totalSinImp.toString(),Imps.toString(), totalConIVA.toString());
                             seleccionarP.setVisible(true);
                         } else {
                             SeleccionarTipoGastoNegocios seleccionarH = new SeleccionarTipoGastoNegocios(cp, datosProducto, numFact, anio, cedulaCli, tipo);
