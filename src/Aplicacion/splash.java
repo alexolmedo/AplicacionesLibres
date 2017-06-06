@@ -1,6 +1,6 @@
 package Aplicacion;
 
-import com.sun.awt.AWTUtilities;
+//import com.sun.awt.AWTUtilities;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -78,7 +78,7 @@ public class splash extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(pbcargando.getValue()==i){
             if(j!=101){
-                AWTUtilities.setWindowOpacity(this, Float.valueOf((100-j)/100+"f"));
+                //AWTUtilities.setWindowOpacity(this, Float.valueOf((100-j)/100+"f"));
             }
             i++;
             j+=3;

@@ -6,12 +6,12 @@
 package Interfaces;
 
 import conexionBDD.Conexionn;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowFocusListener;
-import java.awt.event.WindowListener;
+//import java.awt.event.WindowEvent;
+//import java.awt.event.WindowFocusListener;
+//import java.awt.event.WindowListener;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import sun.awt.WindowClosingSupport;
+//import sun.awt.WindowClosingSupport;
 
 /**
  *
