@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -193,20 +194,22 @@ public class CargaXml {
                 List totalConImp = factura.getChild("totalConImpuestos").getChildren();
                 Element totalImp = (Element) totalConImp.get(0);
 
-                cont = elementos.indexOf("valor");
+                /*cont = elementos.indexOf("valor");
                 Double Imps = 0.0;
                 if (cont != -1) {
                     Imps = Double.parseDouble(totalImp.getChildTextTrim(elementos.get(cont).toString()));
                     System.err.println(Imps);
-                }
+                }*/
                 
                 cont = elementos.indexOf("importeTotal");
                 Double totalConIVA = 0.0;
                 if (cont != -1) {
                     totalConIVA = Double.parseDouble(factura.getChildTextTrim(elementos.get(cont).toString()));
                 }
-
-                Double totalConImps = totalSinImp + Imps;
+               
+                Double Imps = (Double) (totalConIVA - totalSinImp);                
+                DecimalFormat df = new DecimalFormat("#.##");                                
+                Double totalConImps = (Double) (totalSinImp + Imps);
 
                 if (!cp.verificar_usuario("SELECT * FROM FACTURA WHERE id_factura='" + numFact + "'")) {
                     String facturaQ = "INSERT INTO FACTURA (id_factura,id_cliente,id_establecimiento,tipo_factura,fecha_emision,estado_factura,ambiente_factura,total_sin_iva,iva,total_con_iva)"
@@ -246,7 +249,7 @@ public class CargaXml {
                         if (tipo.equals("Personal")) {
                             SeleccionarTipoGastoPersonal seleccionarP = new SeleccionarTipoGastoPersonal(cp, datosProducto, numFact, anio, 
                                     cedulaCli, tipo, nombreCompr,CI_Compr, ruc, nombreEst,dirMatriz, secuencial, fechaCompleta, 
-                                    totalSinImp.toString(),Imps.toString(), totalConIVA.toString());
+                                    totalSinImp.toString(),df.format(Imps).toString(), totalConIVA.toString());
                             seleccionarP.setVisible(true);
                         } else {
                             SeleccionarTipoGastoNegocios seleccionarH = new SeleccionarTipoGastoNegocios(cp, datosProducto, numFact, anio, cedulaCli, tipo);
