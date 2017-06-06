@@ -19,10 +19,7 @@ public class SplashScreen extends javax.swing.JFrame {
      */
     public SplashScreen() {
         initComponents();
-        File base = new File("facturacion.db");
-        if(!base.exists()){
-            InitDatabase crearBase = new InitDatabase();
-        }
+
         
     }
 
