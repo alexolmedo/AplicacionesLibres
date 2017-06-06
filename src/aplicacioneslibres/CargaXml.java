@@ -248,7 +248,7 @@ public class CargaXml {
                     if (datosProducto.length != 0) {
                         if (tipo.equals("Personal")) {
                             SeleccionarTipoGastoPersonal seleccionarP = new SeleccionarTipoGastoPersonal(cp, datosProducto, numFact, anio, 
-                                    cedulaCli, tipo, nombreCompr,CI_Compr, ruc, nombreEst,dirMatriz, secuencial, fechaCompleta, 
+                                    cedulaCli, tipo, nombreCompr,CI_Compr, ruc, nombreEst,dirMatriz, numFact, fechaCompleta, 
                                     totalSinImp.toString(),df.format(Imps).toString(), totalConIVA.toString());
                             seleccionarP.setVisible(true);
                         } else {

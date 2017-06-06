@@ -222,6 +222,7 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
         totalSinIVA = new javax.swing.JTextField();
         totalConIVA = new javax.swing.JTextField();
         IVA = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -505,6 +506,13 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jButton2.setText("Cancelar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -514,6 +522,8 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -545,7 +555,9 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addContainerGap())
         );
 
@@ -614,6 +626,20 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
     private void txtSaludActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSaludActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSaludActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        String query ="";
+         if (conTipo.verificar_usuario("SELECT * FROM HISTORIAL_PAGOS_PERSONALES WHERE anio_historial_p=" + anio + " AND id_cliente='" + cedula + "'")) {
+                query = "delete from factura where id_factura = '" + numFac +"'";
+                System.out.println("Estoy en el if");
+            } 
+         conTipo.insertar(query);
+
+            System.out.println("LA factura no se ingresa");
+            recargar(conTipo);
+            this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void recargar(Conexionn conn) {
          ArrayList auxRec = new ArrayList();
@@ -704,6 +730,7 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
     private javax.swing.JTextField dir_Prov;
     private javax.swing.JTextField fecha;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
