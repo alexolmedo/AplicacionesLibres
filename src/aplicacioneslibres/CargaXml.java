@@ -213,7 +213,7 @@ public class CargaXml {
 
                 if (!cp.verificar_usuario("SELECT * FROM FACTURA WHERE id_factura='" + numFact + "'")) {
                     String facturaQ = "INSERT INTO FACTURA (id_factura,id_cliente,id_establecimiento,tipo_factura,fecha_emision,estado_factura,ambiente_factura,total_sin_iva,iva,total_con_iva)"
-                            + "VALUES ('" + numFact + "','" + CI_Compr + "','" + ruc + "','" + tipo + "','" + fecha + "','" + estado + "','" + ambiente + "'," + totalSinImp + "," + Imps + "," + totalConIVA + ")";
+                            + "VALUES ('" + numFact + "','" + CI_Compr + "','" + ruc + "','" + tipo + "','" + fecha + "','" + estado + "','" + ambiente + "'," + totalSinImp + "," + df.format(Imps).toString() + "," + totalConIVA + ")";
                     cp.insertar(facturaQ);
 
                     Element detalles = (Element) lista_campos.get(2);
