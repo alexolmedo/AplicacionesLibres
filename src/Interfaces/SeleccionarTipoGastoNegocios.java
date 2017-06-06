@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import javax.swing.DefaultCellEditor;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -50,6 +51,7 @@ public class SeleccionarTipoGastoNegocios extends javax.swing.JFrame {
      */
     public SeleccionarTipoGastoNegocios(Conexionn conn, Object[][] tipos, String factura, int anio, String cedula, String tipo) {
         initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("/Imagenes/ico_21-1.png")).getImage());
         this.conTipo = conn;
         this.numFac = factura;
         this.anio = anio;

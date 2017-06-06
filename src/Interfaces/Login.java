@@ -8,6 +8,7 @@ package Interfaces;
 import conexionBDD.Conexionn;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,6 +23,7 @@ public class Login extends javax.swing.JFrame {
     conexionBDD.Conexionn conn;
     public Login() {
         initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("/Imagenes/ico_21-1.png")).getImage());
         conn = new Conexionn();        
         cargar_anios();
     }

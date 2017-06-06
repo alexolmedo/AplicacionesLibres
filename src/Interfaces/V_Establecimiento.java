@@ -7,6 +7,7 @@ package Interfaces;
 
 import conexionBDD.Conexionn;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,6 +23,7 @@ public class V_Establecimiento extends javax.swing.JFrame {
 
     public V_Establecimiento(String caso, Conexionn conn) {
         initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("/Imagenes/ico_21-1.png")).getImage());
         this.caso = caso;
         this.connEst = conn;
         this.btn_borrar.setVisible(false);

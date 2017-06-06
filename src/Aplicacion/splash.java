@@ -23,6 +23,7 @@ public class splash extends javax.swing.JFrame {
      */
     public splash() {
         initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("/Imagenes/ico_21-1.png")).getImage());
         File base = new File("facturacion.db");
         if(!base.exists()){
             InitDatabase crearBase = new InitDatabase();

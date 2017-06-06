@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -43,6 +44,7 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
 
     public ReporteProveedor(Conexionn conn, String cedula_usuario, int anio) {
         initComponents();
+        //setIconImage(new ImageIcon(getClass().getResource("/Imagenes/ico_21-1.png")).getImage());
         //Aceptar.setVisible(false);
         this.conn = conn;
         this.cedula_usuario = cedula_usuario;

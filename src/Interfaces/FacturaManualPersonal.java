@@ -14,6 +14,7 @@ import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -28,6 +29,7 @@ public class FacturaManualPersonal extends javax.swing.JInternalFrame {
 
     public FacturaManualPersonal(Conexionn conn, String cedula, int anio) {
         initComponents();
+        //setIconImage(new ImageIcon(getClass().getResource("/Imagenes/ico_21-1.png")).getImage());
         this.anio = anio;
         this.conn = conn;
         this.cedula_usuario = cedula;

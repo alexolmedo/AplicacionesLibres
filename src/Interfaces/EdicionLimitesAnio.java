@@ -11,6 +11,7 @@ import java.awt.event.ItemEvent;
 //import java.awt.event.WindowFocusListener;
 //import java.awt.event.WindowListener;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 //import java.util.StringTokenizer;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -27,6 +28,7 @@ public class EdicionLimitesAnio extends javax.swing.JFrame {
 
     public EdicionLimitesAnio(Login login) {
         initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("/Imagenes/ico_21-1.png")).getImage());
         this.login = login;
         conn = new Conexionn();
         ArrayList anios = conn.cargarAnios();

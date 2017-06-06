@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -32,6 +33,7 @@ public class HistorialGastos extends javax.swing.JInternalFrame {
 
     public HistorialGastos(Conexionn conn, String cedula_usuario, int anio) {
         initComponents();
+        //setIconImage(new ImageIcon(getClass().getResource("/Imagenes/ico_21-1.png")).getImage());
         jScrollPane2.setVisible(false);
         jLabel2.setVisible(false);
         lblNegocios.setVisible(false);

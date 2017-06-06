@@ -6,6 +6,7 @@
 package Interfaces;
 
 import conexionBDD.Conexionn;
+import javax.swing.ImageIcon;
 //import java.awt.event.WindowEvent;
 //import java.awt.event.WindowFocusListener;
 //import java.awt.event.WindowListener;
@@ -23,6 +24,7 @@ public class RegistroLimitesAnio extends javax.swing.JFrame {
 
     public RegistroLimitesAnio(Login login) {
         initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("/Imagenes/ico_21-1.png")).getImage());
         this.login = login;
     }
 

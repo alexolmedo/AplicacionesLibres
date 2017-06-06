@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
@@ -30,6 +31,7 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
 
     public FacturaElectronicaNew(String cedula, int anio) {
         initComponents();
+        //setIconImage(new ImageIcon(getClass().getResource("/Imagenes/ico_21-1.png")).getImage());
         this.cedula_usuario = cedula;
         this.anio = anio;
         jLabel3.setVisible(false);

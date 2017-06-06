@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
@@ -26,6 +27,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
+
 
 
 /**
@@ -41,6 +43,7 @@ public class Reportes extends javax.swing.JInternalFrame {
 
     public Reportes(Conexionn conn, String cedula_usuario, int anio) {
         initComponents();
+        //setIconImage(new ImageIcon(getClass().getResource("/Imagenes/ico_21-1.png")).getImage());
         lbl_Reporte.setText("REPORTE DEL AÑO " + anio);
         this.conn = conn;
         this.cedula_usuario = cedula_usuario;

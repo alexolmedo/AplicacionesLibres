@@ -8,6 +8,7 @@ package Interfaces;
 import conexionBDD.Conexionn;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
@@ -34,6 +35,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     public VentanaPrincipal(String cedula_usuario, int anio) {
         initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("/Imagenes/ico_21-1.png")).getImage());
         setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
         //dim=super.getToolkit().getScreenSize();
         //setSize(dim);

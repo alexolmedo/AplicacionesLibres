@@ -9,6 +9,7 @@ import conexionBDD.Conexionn;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,6 +20,7 @@ public class V_RegistroUsuario extends javax.swing.JFrame {
 
     public V_RegistroUsuario() {
         initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("/Imagenes/ico_21-1.png")).getImage());
     }
 
     /**
