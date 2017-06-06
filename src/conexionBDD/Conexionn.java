@@ -49,6 +49,23 @@ public class Conexionn {
         }
         return n;
     }
+    
+        public ArrayList cargarCliente(String id_ES) {
+        ArrayList n = new ArrayList();
+        try {
+            Statement comando = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+            ResultSet resultado = comando.executeQuery("select id_cliente from factura where id_establecimiento=\n" +
+"(select id_establecimiento from establecimiento where nombre_establecimiento = '" +id_ES + "')");
+            while (resultado.next()) {
+                n.add(resultado.getString("id_cliente"));
+            }
+            resultado.close();
+            comando.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return n;
+    }
 
     public ArrayList cargarAnios() {
         ArrayList n = new ArrayList();

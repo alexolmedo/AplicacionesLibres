@@ -43,11 +43,12 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
 
     public ReporteProveedor(Conexionn conn, String cedula_usuario, int anio) {
         initComponents();
-        Aceptar.setVisible(false);
+        //Aceptar.setVisible(false);
         this.conn = conn;
         this.cedula_usuario = cedula_usuario;
         this.anio = anio;
         this.tablaProv.setVisible(false);
+        this.comboProv1.setEnabled(false);
         cargar_Provee();
         BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
         Component north = ui.getNorthPane();
@@ -76,10 +77,20 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
 
     public void cargar_Provee() {
         comboProv.removeAllItems();
-        comboProv.addItem("Selecciones un proveedor...");
+        comboProv.addItem("Seleccione un proveedor...");
         ArrayList proov = conn.cargarEstablecimiento();
         for (Object obj : proov) {
             comboProv.addItem(obj.toString());
+            //System.out.println(obj.toString());
+        }
+    }
+    
+    public void cargar_Cliente() {
+        comboProv1.removeAllItems();
+        comboProv1.addItem("Seleccione un cliente...");
+        ArrayList proov = conn.cargarCliente((String) comboProv.getSelectedItem());
+        for (Object obj : proov) {
+            comboProv1.addItem(obj.toString());
             System.out.println(obj.toString());
         }
     }
@@ -98,11 +109,13 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
         comboProv = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaProv = new javax.swing.JTable();
-        Aceptar = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        comboProv1 = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setEnabled(false);
-        setPreferredSize(new java.awt.Dimension(800, 700));
+        setPreferredSize(new java.awt.Dimension(880, 650));
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
                 formComponentShown(evt);
@@ -112,7 +125,7 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
         lbl_Reporte.setFont(new java.awt.Font("Open Sans", 1, 48)); // NOI18N
         lbl_Reporte.setText("Reporte Facturas por Proveedor ");
 
-        jLabel3.setText("Seleccione el Proveedor:");
+        jLabel3.setText("Proveedor:");
 
         comboProv.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un proveedor..." }));
         comboProv.setToolTipText("");
@@ -157,10 +170,34 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
         });
         jScrollPane2.setViewportView(tablaProv);
 
-        Aceptar.setText("Aceptar");
-        Aceptar.addActionListener(new java.awt.event.ActionListener() {
+        jLabel4.setText("Cliente");
+
+        comboProv1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un  cliente..." }));
+        comboProv1.setToolTipText("");
+        comboProv1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboProv1ItemStateChanged(evt);
+            }
+        });
+        comboProv1.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                comboProv1PopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
+        comboProv1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AceptarActionPerformed(evt);
+                comboProv1ActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Cancelar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -172,32 +209,39 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(12, 12, 12)
-                        .addComponent(lbl_Reporte))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(comboProv1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_Reporte)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 823, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(35, 35, 35)
-                                .addComponent(comboProv, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(105, 105, 105)
-                                .addComponent(Aceptar)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton1)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 823, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel3)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(comboProv, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(100, 100, 100)
+                                    .addComponent(jLabel4))))))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addComponent(lbl_Reporte)
-                .addGap(41, 41, 41)
+                .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(comboProv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Aceptar))
-                .addGap(26, 26, 26)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                    .addComponent(jLabel4)
+                    .addComponent(comboProv1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(19, 19, 19))
         );
 
         pack();
@@ -218,110 +262,29 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
         tablaProv.setVisible(true);
     }//GEN-LAST:event_comboProvItemStateChanged
 
-    private void AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarActionPerformed
-        // TODO add your handling code here:
-        ArrayList historial_p = conn.ddl(String.format("select * from factura where id_cliente='%s'", this.cedula_usuario));
-        ArrayList idEstab = conn.ddl(String.format("select id_establecimiento from establecimiento where nombre_establecimiento='%s'", comboProv.getSelectedItem().toString()));
-        int sel;
-                
-        System.out.println(idEstab.get(0));
-        if (!historial_p.isEmpty()) {
-            /*ArrayList anual = conn.ddl(String.format("select * from factura where id_establecimiento=%s", idEstab.get(0)));
-            System.out.println("as: " + comboProv.getSelectedIndex());
-            System.out.println("anual: " + anual.size());
-            System.out.println(anual);*/
-
-            //String nombreCabeceras[] = {"Id Factura", "CI Cliente", "RUC Prov", "Tipo", "Fecha Emisio", "Autorización", "Total sin IVA", "IVA", "Total con IVA"};
-
-            /*String datosTabla[][] = new String[anual.toArray().length][9];
-
-            for (int i = 0; i < anual.size(); i++) {
-
-                for (int j = 0; j < nombreCabeceras.length; j++) {
-                    //System.out.println(anual.get(i));
-
-                    datosTabla[i][j] = anual.get(j).toString();
-
-                }
-            }*/
-            
-            Statement st;
-            try {
-                st = conn.getConn().createStatement();
-                ResultSet rs = st.executeQuery(String.format("select * from factura where id_establecimiento=%s", idEstab.get(0)));
-                ResultSetMetaData rsMd = rs.getMetaData();
-                int numeroColumnas = rsMd.getColumnCount();
-                //System.out.println("estoy en dfdfg" + rs.getString(0));
-                
-                int i=0;
-                while(rs.next()){
-                    System.out.println("estoy en el while");                    
-                    for(int j=0;j<numeroColumnas;j++){
-                        System.out.println(rs.getObject(j+1));
-                        tablaProv.setValueAt(rs.getObject(j+1), i, j);
-                        System.out.println(rs.getObject(j+1));
-                    }
-                    i++;
-                }
-                
-                
-            } catch (SQLException ex) {
-                Logger.getLogger(ReporteProveedor.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-
-            //txtPersonal.setText((String) historial_p.get(8));
-            //JTable tabH = new JTable
-            /*JTable tablaHistorialP = new JTable(datosTabla, nombreCabeceras) {
-                @Override
-                public boolean isCellEditable(int row, int column) {
-                    return false;
-                }
-            };
-
-            auxP = tablaHistorialP;
-
-            DefaultTableCellRenderer alinearDerecha = new DefaultTableCellRenderer();
-            alinearDerecha.setHorizontalAlignment(DefaultTableCellRenderer.RIGHT);
-            tablaHistorialP.getColumnModel().getColumn(1).setCellRenderer(alinearDerecha);
-            tablaHistorialP.getColumnModel().getColumn(2).setCellRenderer(alinearDerecha);
-            tablaHistorialP.getColumnModel().getColumn(3).setCellRenderer(alinearDerecha);*/
-
-        }
-        
-    }//GEN-LAST:event_AceptarActionPerformed
-
     private void comboProvPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_comboProvPopupMenuWillBecomeInvisible
         // TODO add your handling code here:
-         ArrayList historial_p = conn.ddl(String.format("select * from factura"));
+        cargar_Cliente();
+        comboProv1.setEnabled(true);
+    }//GEN-LAST:event_comboProvPopupMenuWillBecomeInvisible
+
+    private void comboProv1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboProv1ItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboProv1ItemStateChanged
+
+    private void comboProv1PopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_comboProv1PopupMenuWillBecomeInvisible
+        // TODO add your handling code here:
+        ArrayList historial_p = conn.ddl(String.format("select * from factura"));
         ArrayList idEstab = conn.ddl(String.format("select id_establecimiento from establecimiento where nombre_establecimiento='%s'", comboProv.getSelectedItem().toString()));
         int sel;
                 
         System.out.println(idEstab.get(0));
         if (!historial_p.isEmpty()) {
-            /*ArrayList anual = conn.ddl(String.format("select * from factura where id_establecimiento=%s", idEstab.get(0)));
-            System.out.println("as: " + comboProv.getSelectedIndex());
-            System.out.println("anual: " + anual.size());
-            System.out.println(anual);*/
-
-            //String nombreCabeceras[] = {"Id Factura", "CI Cliente", "RUC Prov", "Tipo", "Fecha Emisio", "Autorización", "Total sin IVA", "IVA", "Total con IVA"};
-
-            /*String datosTabla[][] = new String[anual.toArray().length][9];
-
-            for (int i = 0; i < anual.size(); i++) {
-
-                for (int j = 0; j < nombreCabeceras.length; j++) {
-                    //System.out.println(anual.get(i));
-
-                    datosTabla[i][j] = anual.get(j).toString();
-
-                }
-            }*/
             
             Statement st;
             try {
                 st = conn.getConn().createStatement();
-                ResultSet rs = st.executeQuery(String.format("select * from factura where id_establecimiento=%s", idEstab.get(0)));
+                ResultSet rs = st.executeQuery(String.format("select * from factura where id_establecimiento=%s and id_cliente=%s", idEstab.get(0), comboProv1.getSelectedItem().toString()));
                 ResultSetMetaData rsMd = rs.getMetaData();
                 int numeroColumnas = rsMd.getColumnCount();
                 //System.out.println("estoy en dfdfg" + rs.getString(0));
@@ -361,8 +324,16 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
             tablaHistorialP.getColumnModel().getColumn(3).setCellRenderer(alinearDerecha);*/
 
         }
-        
-    }//GEN-LAST:event_comboProvPopupMenuWillBecomeInvisible
+    }//GEN-LAST:event_comboProv1PopupMenuWillBecomeInvisible
+
+    private void comboProv1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboProv1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboProv1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     public void toExcel(JTable table, File file) {
         try {
@@ -435,9 +406,11 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Aceptar;
     private javax.swing.JComboBox<String> comboProv;
+    private javax.swing.JComboBox<String> comboProv1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbl_Reporte;
     private javax.swing.JTable tablaProv;

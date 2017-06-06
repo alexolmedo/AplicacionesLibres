@@ -197,11 +197,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 823, Short.MAX_VALUE)
+            .addComponent(jDesktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
+            .addComponent(jDesktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
         );
 
         pack();
@@ -223,7 +223,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         fmn.setVisible(false);
         hg.setVisible(false);
         rp.setVisible(false);
-        fe.setVisible(true);
+        rPV.setVisible(false);
+        fe.setVisible(true);        
         jDesktopPane.add(fe);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 

@@ -32,6 +32,8 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
         initComponents();
         this.cedula_usuario = cedula;
         this.anio = anio;
+        jLabel3.setVisible(false);
+        jComboBox2.setVisible(false);
         //Bloquear el movimiento del Frame
         BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
         Component north = ui.getNorthPane();
@@ -64,7 +66,7 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
         Cancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(800, 700));
+        setPreferredSize(new java.awt.Dimension(590, 670));
 
         jScrollPane1.setViewportView(jList1);
 
@@ -123,7 +125,7 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addContainerGap(80, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
