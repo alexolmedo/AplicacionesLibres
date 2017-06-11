@@ -13,7 +13,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -169,7 +172,7 @@ public class CargaXml {
                     fecha = m + "/" + d + "/" + a;
                 }
                 
-                System.out.println(fecha);
+                //System.out.println(fecha);
 
                 cont = elementos.indexOf("razonSocialComprador");
                 String nombreCompr = "";
@@ -207,13 +210,13 @@ public class CargaXml {
                     totalConIVA = Double.parseDouble(factura.getChildTextTrim(elementos.get(cont).toString()));
                 }
                
-                Double Imps = (Double) (totalConIVA - totalSinImp);                
-                DecimalFormat df = new DecimalFormat("#.##");                                
-                Double totalConImps = (Double) (totalSinImp + Imps);
-
+                BigDecimal Imps = new BigDecimal(totalConIVA).subtract(new BigDecimal(totalSinImp)); 
+                BigDecimal impuesto = Imps.setScale(2, RoundingMode.HALF_EVEN);
+                      
                 if (!cp.verificar_usuario("SELECT * FROM FACTURA WHERE id_factura='" + numFact + "'")) {
                     String facturaQ = "INSERT INTO FACTURA (id_factura,id_cliente,id_establecimiento,tipo_factura,fecha_emision,estado_factura,ambiente_factura,total_sin_iva,iva,total_con_iva)"
-                            + "VALUES ('" + numFact + "','" + CI_Compr + "','" + ruc + "','" + tipo + "','" + fecha + "','" + estado + "','" + ambiente + "'," + totalSinImp + "," + df.format(Imps).toString() + "," + totalConIVA + ")";
+                            + "VALUES ('" + numFact + "','" + CI_Compr + "','" + ruc + "','" + tipo + "','" + fecha + "','" + estado + "','" + ambiente + "'," + totalSinImp + "," + impuesto + "," + totalConIVA + ")";
+                    System.out.println(facturaQ);
                     cp.insertar(facturaQ);
 
                     Element detalles = (Element) lista_campos.get(2);
@@ -249,7 +252,7 @@ public class CargaXml {
                         if (tipo.equals("Personal")) {
                             SeleccionarTipoGastoPersonal seleccionarP = new SeleccionarTipoGastoPersonal(cp, datosProducto, numFact, anio, 
                                     cedulaCli, tipo, nombreCompr,CI_Compr, ruc, nombreEst,dirMatriz, numFact, fechaCompleta, 
-                                    totalSinImp.toString(),df.format(Imps).toString(), totalConIVA.toString());
+                                    totalSinImp.toString(), impuesto.toString(), totalConIVA.toString());
                             seleccionarP.setVisible(true);
                         } else {
                             SeleccionarTipoGastoNegocios seleccionarH = new SeleccionarTipoGastoNegocios(cp, datosProducto, numFact, anio, cedulaCli, tipo);
