@@ -632,10 +632,10 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         String query ="";
-         if (conTipo.verificar_usuario("SELECT * FROM HISTORIAL_PAGOS_PERSONALES WHERE anio_historial_p=" + anio + " AND id_cliente='" + cedula + "'")) {
+         //if (conTipo.verificar_usuario("SELECT * FROM HISTORIAL_PAGOS_PERSONALES WHERE anio_historial_p=" + anio + " AND id_cliente='" + cedula + "'")) {
                 query = "delete from factura where id_factura = '" + numFac +"'";
                 System.out.println("Estoy en el if");
-            } 
+            //} 
          conTipo.insertar(query);
 
             System.out.println("LA factura no se ingresa");
