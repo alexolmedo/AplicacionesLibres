@@ -10,7 +10,9 @@ import conexionBDD.Conexionn;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -20,6 +22,8 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.jdom2.*;
 import org.jdom2.input.SAXBuilder;
@@ -30,10 +34,98 @@ import org.jdom2.input.SAXBuilder;
  */
 public class CargaXml {
 
-    public void cargarXml(String name, String cedulaCli, int anio, String tipo) {
+    public void cargarXml(String name, String cedulaCli, int anio, String tipo) throws IOException {
         //Se crea un SAXBuilder para poder parsear el archivo
         SAXBuilder builder = new SAXBuilder();
         File xmlFile = new File(name);
+        
+        String search = "<RespuestaAutorizacionComprobante>";
+        String replace = "";
+
+        try{
+            FileReader fr = new FileReader(xmlFile);
+            String s;
+            String totalStr = "";
+            try (BufferedReader br = new BufferedReader(fr)) {
+
+                while ((s = br.readLine()) != null) {
+                    totalStr += s;
+                }
+                totalStr = totalStr.replaceAll(search, replace);
+                FileWriter fw = new FileWriter(xmlFile);
+                fw.write(totalStr);
+                fw.close();
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
+        search = "<autorizaciones>";
+        replace = "";
+
+        try{
+            FileReader fr = new FileReader(xmlFile);
+            String s;
+            String totalStr = "";
+            try (BufferedReader br = new BufferedReader(fr)) {
+
+                while ((s = br.readLine()) != null) {
+                    totalStr += s;
+                }
+                totalStr = totalStr.replaceAll(search, replace);
+                FileWriter fw = new FileWriter(xmlFile);
+                fw.write(totalStr);
+                fw.close();
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
+        search = "</ambiente>    </autorizacion>";
+        replace = "</ambiente>";
+
+        try{
+            FileReader fr = new FileReader(xmlFile);
+            String s;
+            String totalStr = "";
+            try (BufferedReader br = new BufferedReader(fr)) {
+
+                while ((s = br.readLine()) != null) {
+                    totalStr += s;
+                }
+                totalStr = totalStr.replaceAll(search, replace);
+                FileWriter fw = new FileWriter(xmlFile);
+                fw.write(totalStr);
+                fw.close();
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
+        search = "</autorizaciones></RespuestaAutorizacionComprobante>";
+        replace = "</autorizacion>";
+
+        try{
+            FileReader fr = new FileReader(xmlFile);
+            String s;
+            String totalStr = "";
+            try (BufferedReader br = new BufferedReader(fr)) {
+
+                while ((s = br.readLine()) != null) {
+                    totalStr += s;
+                }
+                totalStr = totalStr.replaceAll(search, replace);
+                FileWriter fw = new FileWriter(xmlFile);
+                fw.write(totalStr);
+                fw.close();
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        
+        
+        
         try {
             //Se crea el documento a traves del archivo
             Document document = (Document) builder.build(xmlFile);
