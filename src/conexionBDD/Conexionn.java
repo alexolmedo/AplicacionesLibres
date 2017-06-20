@@ -54,7 +54,7 @@ public class Conexionn {
         ArrayList n = new ArrayList();
         try {
             Statement comando = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-            ResultSet resultado = comando.executeQuery("select id_cliente from factura where id_establecimiento=\n" +
+            ResultSet resultado = comando.executeQuery("select distinct id_cliente from factura where id_establecimiento=\n" +
 "(select id_establecimiento from establecimiento where nombre_establecimiento = '" +id_ES + "')");
             while (resultado.next()) {
                 n.add(resultado.getString("id_cliente"));
