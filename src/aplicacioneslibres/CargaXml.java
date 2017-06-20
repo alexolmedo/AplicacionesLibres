@@ -39,19 +39,20 @@ public class CargaXml {
         SAXBuilder builder = new SAXBuilder();
         File xmlFile = new File(name);
         
-        String search = "<RespuestaAutorizacionComprobante>";
-        String replace = "";
-
+        //Reformatear facturas de Payless
         try{
             FileReader fr = new FileReader(xmlFile);
             String s;
             String totalStr = "";
             try (BufferedReader br = new BufferedReader(fr)) {
-
                 while ((s = br.readLine()) != null) {
                     totalStr += s;
                 }
-                totalStr = totalStr.replaceAll(search, replace);
+                totalStr = totalStr.replaceAll("<RespuestaAutorizacionComprobante>","");
+                totalStr = totalStr.replaceAll("<autorizaciones>","");
+                totalStr = totalStr.replaceAll("</ambiente>    </autorizacion>","</ambiente>");
+                totalStr = totalStr.replaceAll("</autorizaciones></RespuestaAutorizacionComprobante>","</autorizacion>");
+                
                 FileWriter fw = new FileWriter(xmlFile);
                 fw.write(totalStr);
                 fw.close();
@@ -59,72 +60,6 @@ public class CargaXml {
         }catch(Exception e){
             e.printStackTrace();
         }
-        
-        search = "<autorizaciones>";
-        replace = "";
-
-        try{
-            FileReader fr = new FileReader(xmlFile);
-            String s;
-            String totalStr = "";
-            try (BufferedReader br = new BufferedReader(fr)) {
-
-                while ((s = br.readLine()) != null) {
-                    totalStr += s;
-                }
-                totalStr = totalStr.replaceAll(search, replace);
-                FileWriter fw = new FileWriter(xmlFile);
-                fw.write(totalStr);
-                fw.close();
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        
-        search = "</ambiente>    </autorizacion>";
-        replace = "</ambiente>";
-
-        try{
-            FileReader fr = new FileReader(xmlFile);
-            String s;
-            String totalStr = "";
-            try (BufferedReader br = new BufferedReader(fr)) {
-
-                while ((s = br.readLine()) != null) {
-                    totalStr += s;
-                }
-                totalStr = totalStr.replaceAll(search, replace);
-                FileWriter fw = new FileWriter(xmlFile);
-                fw.write(totalStr);
-                fw.close();
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        
-        search = "</autorizaciones></RespuestaAutorizacionComprobante>";
-        replace = "</autorizacion>";
-
-        try{
-            FileReader fr = new FileReader(xmlFile);
-            String s;
-            String totalStr = "";
-            try (BufferedReader br = new BufferedReader(fr)) {
-
-                while ((s = br.readLine()) != null) {
-                    totalStr += s;
-                }
-                totalStr = totalStr.replaceAll(search, replace);
-                FileWriter fw = new FileWriter(xmlFile);
-                fw.write(totalStr);
-                fw.close();
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-
-        
-        
         
         try {
             //Se crea el documento a traves del archivo
