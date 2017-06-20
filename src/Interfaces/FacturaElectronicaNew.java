@@ -169,8 +169,12 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
             if (!ficherosSeleccionados.isEmpty()) {
                 for (Object ficheroSeleccionado : ficherosSeleccionados) {
                     CargaXml carga = new CargaXml();
-                    carga.cargarXml(jTextField1.getText() + "/" + ficheroSeleccionado,
-                            cedula_usuario, anio, jComboBox2.getSelectedItem().toString());
+                    try {
+                        carga.cargarXml(jTextField1.getText() + "/" + ficheroSeleccionado,
+                                cedula_usuario, anio, jComboBox2.getSelectedItem().toString());
+                    } catch (IOException ex) {
+                        Logger.getLogger(FacturaElectronicaNew.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "No se selecciono un tipo de factura");
