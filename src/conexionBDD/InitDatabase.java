@@ -123,8 +123,11 @@ public class InitDatabase {
                     "ID_FACTURA\n" +
                     ");";
             stmt.executeUpdate(sql);
-            String datos = " INSERT INTO GASTOSANUALESPERSONALES VALUES (2016, 3630.25, 14521.00, 3630.25, 3630.25, 3630.25);"
-                    + "INSERT INTO GASTOSANUALESPERSONALES VALUES (2017, 3669.25, 14677.00, 3669.25, 3669.25, 3669.25);";
+            String datos = " INSERT INTO GASTOSANUALESPERSONALES VALUES (2013, 3630.25, 14521.00, 3630.25, 3630.25, 3630.25);"
+                          + "INSERT INTO GASTOSANUALESPERSONALES VALUES (2014, 3630.25, 14521.00, 3630.25, 3630.25, 3630.25);"
+                          + "INSERT INTO GASTOSANUALESPERSONALES VALUES (2015, 3630.25, 14521.00, 3630.25, 3630.25, 3630.25);"
+                          + "INSERT INTO GASTOSANUALESPERSONALES VALUES (2016, 3630.25, 14521.00, 3630.25, 3630.25, 3630.25);"
+                          + "INSERT INTO GASTOSANUALESPERSONALES VALUES (2017, 3630.25, 14521.00, 3630.25, 3630.25, 3630.25);";
             stmt.executeUpdate(datos);
             stmt.close();
             conexion.close();
