@@ -8,6 +8,11 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 
 public class App {
+    
+    //------------------------------
+    //Comentario de prueba de cambios ----
+    //-------------
+    
     public static void main(String args[]) {
         File base = new File("facturacion.db");
         if(!base.exists()){
