@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Interfaces;
 
 import conexionBDD.Conexionn;
@@ -26,33 +21,34 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     HistorialGastos hg;
     Reportes rp;
     ReporteProveedor rPV;
-
     String cedula_usuario;
     int anio;
     Conexionn conn;
-
     ArrayList historial_p, historial_n;
 
-    public VentanaPrincipal(String cedula_usuario, int anio) {
+    public VentanaPrincipal(String cedula_usuario) {
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/ico_21-1.png")).getImage());
         setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
-        //dim=super.getToolkit().getScreenSize();
-        //setSize(dim);
-        //setUndecorated(true);
+
         conn = new Conexionn();
+        cargar_anios();
+        setYear();        
+        this.cedula_usuario = cedula_usuario;
+        setLocationRelativeTo(null);
+    }
+
+    private void setYear(){
+        jDesktopPane.removeAll();
+        jDesktopPane.repaint();
+        this.anio=Integer.parseInt(combo_anio.getSelectedItem().toString());
         fmp = new FacturaManualPersonal(conn, cedula_usuario, anio);
         fmn = new FacturaManualNegocio(conn, cedula_usuario, anio);
         fe = new FacturaElectronicaNew(cedula_usuario, anio);
         hg = new HistorialGastos(conn, cedula_usuario, anio);
         rp = new Reportes(conn, cedula_usuario, anio);
         rPV = new ReporteProveedor(conn, cedula_usuario, anio);
-        this.anio = anio;
-        this.cedula_usuario = cedula_usuario;
-        //setResizable(false);
-        setLocationRelativeTo(null);
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -65,6 +61,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
+        jPanel1 = new javax.swing.JPanel();
+        combo_anio = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
         jDesktopPane = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         m_FactElect = new javax.swing.JMenu();
@@ -95,6 +94,51 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 formWindowClosing(evt);
             }
         });
+
+        jPanel1.setMaximumSize(new java.awt.Dimension(32767, 30));
+        jPanel1.setPreferredSize(new java.awt.Dimension(126, 30));
+
+        combo_anio.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                combo_anioItemStateChanged(evt);
+            }
+        });
+        combo_anio.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                combo_anioFocusLost(evt);
+            }
+        });
+        combo_anio.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                combo_anioPopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
+
+        jLabel1.setText("Año");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(8, 8, 8)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(combo_anio, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 10, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(combo_anio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)))
+        );
 
         jDesktopPane.setPreferredSize(null);
         jDesktopPane.setRequestFocusEnabled(false);
@@ -200,15 +244,28 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jDesktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jDesktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void cargar_anios(){
+        combo_anio.removeAllItems();
+        ArrayList anios=conn.cargarAnios();
+        //anios.sort(null);
+        for (Object obj:anios){
+            combo_anio.addItem(obj.toString());
+        }
+    }
+    
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         jDesktopPane.removeAll();
         fe.setVisible(false);
@@ -220,12 +277,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        anio=Integer.parseInt(combo_anio.getSelectedItem().toString());
         jDesktopPane.removeAll();
         fmp.setVisible(false);
         fmn.setVisible(false);
         hg.setVisible(false);
         rp.setVisible(false);
         rPV.setVisible(false);
+        fe = new FacturaElectronicaNew(cedula_usuario, anio);
         fe.setVisible(true);        
         jDesktopPane.add(fe);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
@@ -299,7 +358,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        // TODO add your handling code here:
+
         jDesktopPane.removeAll();
             fmp.setVisible(false);
             fmn.setVisible(false);
@@ -312,8 +371,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem8ActionPerformed
     
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-        // TODO add your handling code here:
-        
+
         historial_p = conn.ddl(String.format("select * from historial_pagos_personales where anio_historial_p=%s and id_cliente='%s'", anio, cedula_usuario));
         historial_n = conn.ddl(String.format("select * from historial_pagos_negocios where anio_historial_n=%s and id_cliente='%s'", anio, cedula_usuario));
 
@@ -330,6 +388,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             jDesktopPane.add(hg);
         }               
     }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void combo_anioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combo_anioItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_combo_anioItemStateChanged
+
+    private void combo_anioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_combo_anioFocusLost
+       // TODO add your handling code here:
+    }//GEN-LAST:event_combo_anioFocusLost
+
+    private void combo_anioPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_combo_anioPopupMenuWillBecomeInvisible
+        setYear();
+    }//GEN-LAST:event_combo_anioPopupMenuWillBecomeInvisible
 
     /**
      * @param args the command line arguments
@@ -375,7 +445,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> combo_anio;
     private javax.swing.JDesktopPane jDesktopPane;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -391,6 +463,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JMenu m_FactElect;
     private javax.swing.JMenu m_FactFisic;
     private javax.swing.JMenu m_Usuario;
