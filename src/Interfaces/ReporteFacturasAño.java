@@ -32,6 +32,7 @@ import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 /**
@@ -79,13 +80,15 @@ public class ReporteFacturasAño extends javax.swing.JInternalFrame {
             ResultSetMetaData rsMd = rs.getMetaData();
             int numeroColumnas = rsMd.getColumnCount();
             //System.out.println("estoy en dfdfg" + rs.getString(0));
-
+            
+            DefaultTableModel dm = (DefaultTableModel) tablaProv.getModel();
             int i = 0;
             while (rs.next()) {
-                System.out.println("estoy en el while");
+                //System.out.println("estoy en el while");
+                dm.addRow(new Object[]{"", "", ""});
                 for (int j = 0; j < numeroColumnas; j++) {                    
                     tablaProv.setValueAt(rs.getObject(j + 1),i ,j );                    
-                    System.out.println(rs.getObject(j + 1));
+                    //System.out.println(rs.getObject(j + 1));
                 }
                 i++;
             }
@@ -128,10 +131,7 @@ public class ReporteFacturasAño extends javax.swing.JInternalFrame {
 
         tablaProv.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "Id Factura", "RUC Prov", "Nomb Prov", "Total sin IVA", "IVA", "Total con IVA"
