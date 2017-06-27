@@ -205,7 +205,7 @@ public class EdicionLimitesAnio extends javax.swing.JFrame {
             conn.insertar(String.format("update gastosanualespersonales set total_alimentacion=%s,total_salud=%s,total_vivienda=%s,total_educacion=%s,total_vestimenta=%s where anio_gastos=%s", alim, salud, viv, edu, vest, anio));
             JOptionPane.showMessageDialog(null, "Limites editados correctamente");
             this.dispose();
-            this.login.cargar_anios();
+            //this.login.cargar_anios();
             this.login.setVisible(true);
 
         }

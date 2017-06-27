@@ -202,7 +202,7 @@ public class RegistroLimitesAnio extends javax.swing.JFrame {
                     conn.insertar(String.format("insert into gastosanualespersonales values(%s,%s,%s,%s,%s,%s)", anio, alim, salud, viv, edu, vest));
                     JOptionPane.showMessageDialog(null, "Registro Exitoso");
                     this.dispose();
-                    this.login.cargar_anios();
+                    //this.login.cargar_anios();
                     this.login.setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(null, "Los limites de ese año ya estan registrados", "Error", JOptionPane.ERROR_MESSAGE);
