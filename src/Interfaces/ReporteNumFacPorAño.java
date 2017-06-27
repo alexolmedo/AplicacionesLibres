@@ -32,6 +32,7 @@ import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 /**
@@ -85,10 +86,12 @@ public class ReporteNumFacPorAño extends javax.swing.JInternalFrame {
             int numeroColumnas = rsMd.getColumnCount();
             //System.out.println("estoy en dfdfg" + rs.getString(0));
 
+            DefaultTableModel dm = (DefaultTableModel) tablaProv.getModel();
             int i = 0;
             while (rs.next()) {
                 System.out.println("estoy en el while");
-                for (int j = 0; j < numeroColumnas; j++) {                    
+                dm.addRow(new Object [] {"",""});
+                for (int j = 0; j < numeroColumnas; j++) {                                      
                     tablaProv.setValueAt(rs.getObject(j + 1),i ,j );                    
                     System.out.println(rs.getObject(j + 1));
                 }
@@ -130,10 +133,7 @@ public class ReporteNumFacPorAño extends javax.swing.JInternalFrame {
 
         tablaProv.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "Año", "Nro Facturas"
