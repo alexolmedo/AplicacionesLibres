@@ -80,7 +80,7 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
 
     public void cargar_Provee() {
         comboProv.removeAllItems();
-        comboProv.addItem("Seleccione un proveedor...");
+        comboProv.addItem("---Todos los proveedores---");
         ArrayList proov = conn.cargarEstablecimiento();
         for (Object obj : proov) {
             comboProv.addItem(obj.toString());
@@ -336,8 +336,14 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
 
     private void comboProvPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_comboProvPopupMenuWillBecomeInvisible
         // TODO add your handling code here:
+        //System.out.println("Seleccionado:" +comboProv.getSelectedIndex());
         limpiarTabla();
-        cargarTablaP();
+        if (comboProv.getSelectedIndex()==0){
+            cargarTabla();
+        }else{
+            cargarTablaP();
+        }
+        
     }//GEN-LAST:event_comboProvPopupMenuWillBecomeInvisible
 
     public void toExcel(JTable table, File file) {
