@@ -126,20 +126,18 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
     
     public void limpiarTabla () {
             
-        DefaultTableModel tb = (DefaultTableModel) tablaProv.getModel();
-        int a = tablaProv.getRowCount()-1;
-        for (int i = 0; i <= a; i++) {    
-            for (int j=0; j<3 ; j++) {            
-                tb.setValueAt("dfgtergt", tb.getRowCount()-1, j);        
-            }
-        }
+    DefaultTableModel dm = (DefaultTableModel) tablaProv.getModel();
+    int rowCount = dm.getRowCount();
+    //Remove rows one by one from the end of the table
+    for (int i = rowCount - 1; i > 0; i--) {
+        dm.removeRow(i);
+    }
         //cargaTicket();
     
     }
     
     public void cargarTablaP() {
         
-        limpiarTabla();
         tablaProv.setVisible(true);
         ArrayList idEstab = conn.ddl(String.format("select id_establecimiento from establecimiento where nombre_establecimiento='%s'", comboProv.getSelectedItem().toString()));
         
@@ -190,7 +188,6 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
         CI = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         comboProv = new javax.swing.JComboBox<>();
-        limpiar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setEnabled(false);
@@ -261,13 +258,6 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
             }
         });
 
-        limpiar.setText("jButton2");
-        limpiar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                limpiarActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -296,9 +286,7 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(limpiar)
-                        .addGap(29, 29, 29))))
+                        .addGap(29, 499, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -314,9 +302,8 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(comboProv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(limpiar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                    .addComponent(comboProv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
@@ -347,13 +334,9 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
 
     private void comboProvPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_comboProvPopupMenuWillBecomeInvisible
         // TODO add your handling code here:
+        limpiarTabla();
         cargarTablaP();
     }//GEN-LAST:event_comboProvPopupMenuWillBecomeInvisible
-
-    private void limpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarActionPerformed
-        // TODO add your handling code here:
-        limpiarTabla();
-    }//GEN-LAST:event_limpiarActionPerformed
 
     public void toExcel(JTable table, File file) {
         try {
@@ -434,7 +417,6 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbl_Reporte;
-    private javax.swing.JButton limpiar;
     private javax.swing.JTextField nom_cli;
     private javax.swing.JTable tablaProv;
     // End of variables declaration//GEN-END:variables
