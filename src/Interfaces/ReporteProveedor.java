@@ -106,11 +106,14 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
             ResultSet rs = st.executeQuery(c);
             System.out.println(c);
             ResultSetMetaData rsMd = rs.getMetaData();
+            DefaultTableModel dm = (DefaultTableModel) tablaProv.getModel();
+            
             int numeroColumnas = rsMd.getColumnCount();
             //System.out.println("estoy en dfdfg" + rs.getString(0));
 
             int i = 0;
             while (rs.next()) {
+                dm.addRow(new Object[]{"", "", ""});
                 System.out.println("estoy en el while");
                 for (int j = 0; j < numeroColumnas; j++) {                    
                     tablaProv.setValueAt(rs.getObject(j + 1),i ,j );                    
@@ -126,14 +129,13 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
     
     public void limpiarTabla () {
             
-    DefaultTableModel dm = (DefaultTableModel) tablaProv.getModel();
-    int rowCount = dm.getRowCount();
-    //Remove rows one by one from the end of the table
-    for (int i = rowCount - 1; i > 0; i--) {
-        dm.removeRow(i);
-    }
-        //cargaTicket();
-    
+        DefaultTableModel dm = (DefaultTableModel) tablaProv.getModel();
+        int rowCount = dm.getRowCount();
+        //Remove rows one by one from the end of the table
+        for (int i = rowCount - 1; i >= 0; i--) {
+            dm.removeRow(i);
+        }
+   
     }
     
     public void cargarTablaP() {
@@ -151,11 +153,13 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
             ResultSet rs = st.executeQuery(c);
             System.out.println(c);
             ResultSetMetaData rsMd = rs.getMetaData();
+            DefaultTableModel dm = (DefaultTableModel) tablaProv.getModel();
             int numeroColumnas = rsMd.getColumnCount();
             //System.out.println("estoy en dfdfg" + rs.getString(0));
 
             int i = 0;
             while (rs.next()) {
+                dm.addRow(new Object[]{"", "", ""});
                 System.out.println("estoy en el while");
                 for (int j = 0; j < numeroColumnas; j++) {                    
                     tablaProv.setValueAt(rs.getObject(j + 1),i ,j );                    
@@ -203,10 +207,7 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
 
         tablaProv.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "RUC Prov", "Nomb Prov", "Num Facturas"
