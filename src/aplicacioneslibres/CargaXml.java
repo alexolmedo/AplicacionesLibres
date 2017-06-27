@@ -130,7 +130,7 @@ public class CargaXml {
                 verificarFecha = tk.nextToken();
             }
             //System.out.println(verificarFecha);
-            
+                      
             if (verificarFecha.equals(String.valueOf(anio))) {
                 List lista_campos = tabla.getChildren();
                 Element campo;
@@ -240,55 +240,59 @@ public class CargaXml {
                 BigDecimal Imps = new BigDecimal(totalConIVA).subtract(new BigDecimal(totalSinImp)); 
                 BigDecimal impuesto = Imps.setScale(2, RoundingMode.HALF_EVEN);
                       
-                if (!cp.verificar_usuario("SELECT * FROM FACTURA WHERE id_factura='" + numFact + "'")) {
-                    String facturaQ = "INSERT INTO FACTURA (id_factura,id_cliente,id_establecimiento,tipo_factura,fecha_emision,estado_factura,ambiente_factura,total_sin_iva,iva,total_con_iva)"
-                            + "VALUES ('" + numFact + "','" + CI_Compr + "','" + ruc + "','" + tipo + "','" + fecha + "','" + estado + "','" + ambiente + "'," + totalSinImp + "," + impuesto + "," + totalConIVA + ")";
-                    System.out.println(facturaQ);
-                    cp.insertar(facturaQ);
+                if (CI_Compr.equalsIgnoreCase(cedulaCli)){
+                    if (!cp.verificar_usuario("SELECT * FROM FACTURA WHERE id_factura='" + numFact + "'")) {
+                        String facturaQ = "INSERT INTO FACTURA (id_factura,id_cliente,id_establecimiento,tipo_factura,fecha_emision,estado_factura,ambiente_factura,total_sin_iva,iva,total_con_iva)"
+                                + "VALUES ('" + numFact + "','" + CI_Compr + "','" + ruc + "','" + tipo + "','" + fecha + "','" + estado + "','" + ambiente + "'," + totalSinImp + "," + impuesto + "," + totalConIVA + ")";
+                        System.out.println(facturaQ);
+                        cp.insertar(facturaQ);
 
-                    Element detalles = (Element) lista_campos.get(2);
-                    List detalle = detalles.getChildren();
+                        Element detalles = (Element) lista_campos.get(2);
+                        List detalle = detalles.getChildren();
 
-                    Object datosProducto[][] = new Object[detalle.size()][3];
+                        Object datosProducto[][] = new Object[detalle.size()][3];
 
-                    for (int j = 0; j < detalle.size(); j++) {
+                        for (int j = 0; j < detalle.size(); j++) {
 
-                        campo = (Element) detalle.get(j);
+                            campo = (Element) detalle.get(j);
 
-                        // Detalle
-                        cont = elementos.indexOf("descripcion");
-                        String descripcion = "";
-                        if (cont != -1) {
-                            descripcion = campo.getChildTextTrim(elementos.get(cont).toString());
+                            // Detalle
+                            cont = elementos.indexOf("descripcion");
+                            String descripcion = "";
+                            if (cont != -1) {
+                                descripcion = campo.getChildTextTrim(elementos.get(cont).toString());
+                            }
+
+                            cont = elementos.indexOf("precioTotalSinImpuesto");
+                            Double total = 0.0;
+                            if (cont != -1) {
+                                total = Double.parseDouble(campo.getChildTextTrim(elementos.get(cont).toString()));
+                            }
+
+                            if (!descripcion.equals("")) {
+                                datosProducto[j][0] = descripcion;
+                                datosProducto[j][1] = total;
+                                datosProducto[j][2] = "";
+                            }
                         }
 
-                        cont = elementos.indexOf("precioTotalSinImpuesto");
-                        Double total = 0.0;
-                        if (cont != -1) {
-                            total = Double.parseDouble(campo.getChildTextTrim(elementos.get(cont).toString()));
+                        if (datosProducto.length != 0) {
+                            if (tipo.equals("Personal")) {
+                                SeleccionarTipoGastoPersonal seleccionarP = new SeleccionarTipoGastoPersonal(cp, datosProducto, numFact, anio, 
+                                        cedulaCli, tipo, nombreCompr,CI_Compr, ruc, nombreEst,dirMatriz, numFact, fechaCompleta, 
+                                        totalSinImp.toString(), impuesto.toString(), totalConIVA.toString());
+                                seleccionarP.setVisible(true);
+                            } else {
+                                SeleccionarTipoGastoNegocios seleccionarH = new SeleccionarTipoGastoNegocios(cp, datosProducto, numFact, anio, cedulaCli, tipo);
+                                seleccionarH.setVisible(true);
+                            }
                         }
-
-                        if (!descripcion.equals("")) {
-                            datosProducto[j][0] = descripcion;
-                            datosProducto[j][1] = total;
-                            datosProducto[j][2] = "";
-                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Esta factura ya fue ingresada");
                     }
-
-                    if (datosProducto.length != 0) {
-                        if (tipo.equals("Personal")) {
-                            SeleccionarTipoGastoPersonal seleccionarP = new SeleccionarTipoGastoPersonal(cp, datosProducto, numFact, anio, 
-                                    cedulaCli, tipo, nombreCompr,CI_Compr, ruc, nombreEst,dirMatriz, numFact, fechaCompleta, 
-                                    totalSinImp.toString(), impuesto.toString(), totalConIVA.toString());
-                            seleccionarP.setVisible(true);
-                        } else {
-                            SeleccionarTipoGastoNegocios seleccionarH = new SeleccionarTipoGastoNegocios(cp, datosProducto, numFact, anio, cedulaCli, tipo);
-                            seleccionarH.setVisible(true);
-                        }
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Esta factura ya fue ingresada");
-                }
+                }else{
+                    JOptionPane.showMessageDialog(null, "La identificación en la factura no corresponde al usuario actual");
+                }         
             } else {
                 JOptionPane.showMessageDialog(null, "El año de la factura no corresponde con el año seleccionado");
             }
