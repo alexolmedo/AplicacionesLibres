@@ -52,6 +52,8 @@ public class Exporter {
             }
             w.write();
             w.close();
+            out.flush();
+            out.close();
             return true;
         } catch (Exception e) {
             return false;
