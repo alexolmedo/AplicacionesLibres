@@ -157,7 +157,8 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
             int i = 0;
             while (rs.next()) {
                 System.out.println("estoy en el while");
-                for (int j = 0; j < numeroColumnas; j++) {                    
+                for (int j = 0; j < numeroColumnas; j++) {                        
+                    
                     tablaProv.setValueAt(rs.getObject(j + 1),i ,j );                    
                     System.out.println(rs.getObject(j + 1));
                 }

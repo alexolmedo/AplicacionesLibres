@@ -41,6 +41,8 @@ public class Exporter {
                 JTable table = tabla.get(index);
                 WritableSheet s = w.createSheet(nom_files.get(index), 0);
                 for (int i = 0; i < table.getColumnCount(); i++) {
+                    String NomCol = table.getColumnName(i);
+s.addCell(new Label(i, 0,NomCol));
                     for (int j = 0; j < table.getRowCount(); j++) {
                         Object object = table.getValueAt(j, i);
                         s.addCell(new Label(i, j, String.valueOf(object)));
