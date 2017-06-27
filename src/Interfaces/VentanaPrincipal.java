@@ -290,6 +290,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         jDesktopPane.removeAll();
+        jDesktopPane.repaint();
         fe.setVisible(false);
         hg.setVisible(false);
         fmn.setVisible(false);
@@ -301,6 +302,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         anio=Integer.parseInt(combo_anio.getSelectedItem().toString());
         jDesktopPane.removeAll();
+        jDesktopPane.repaint();
         fmp.setVisible(false);
         fmn.setVisible(false);
         hg.setVisible(false);
@@ -335,6 +337,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No se tienen registros de este año");
         } else {
             jDesktopPane.removeAll();
+            jDesktopPane.repaint();
             fmp.setVisible(false);
             fmn.setVisible(false);
             fe.setVisible(false);
@@ -346,6 +349,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         jDesktopPane.removeAll();
+        jDesktopPane.repaint();
         fe.setVisible(false);
         hg.setVisible(false);
         fmp.setVisible(false);
@@ -356,6 +360,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         jDesktopPane.removeAll();
+        jDesktopPane.repaint();
         fe.setVisible(false);
         hg.setVisible(false);
         fmp.setVisible(false);
@@ -382,17 +387,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
 
         jDesktopPane.removeAll();
-            fmp.setVisible(false);
-            fmn.setVisible(false);
-            fe.setVisible(false);
-            rp.setVisible(false);
-            hg.setVisible(false);
-            rPV.cargar_Provee();
-            rPV.setVisible(true);
-            ArrayList nombCLIente  = conn.ddl("select nombre_cliente from cliente where id_cliente ='" +this.cedula_usuario +"'");
-            rPV.cargarDato(cedula_usuario);
-            rPV.cargarTabla();
-            jDesktopPane.add(rPV);
+        jDesktopPane.repaint();
+        fmp.setVisible(false);
+        fmn.setVisible(false);
+        fe.setVisible(false);
+        rp.setVisible(false);
+        hg.setVisible(false);
+        rPV.cargar_Provee();
+        rPV.setVisible(true);
+        ArrayList nombCLIente  = conn.ddl("select nombre_cliente from cliente where id_cliente ='" +this.cedula_usuario +"'");
+        rPV.cargarDato(cedula_usuario);
+        rPV.cargarTabla();
+        jDesktopPane.add(rPV);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
     
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
@@ -404,6 +410,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No se tienen registros de este año");
         } else {
             jDesktopPane.removeAll();
+            jDesktopPane.repaint();
             fmp.setVisible(false);
             rPV.setVisible(false);
             fmn.setVisible(false);
@@ -429,6 +436,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
         // TODO add your handling code here:
         jDesktopPane.removeAll();
+        jDesktopPane.repaint();
         fmp.setVisible(false);
         fmn.setVisible(false);
         fe.setVisible(false);
@@ -445,6 +453,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
         // TODO add your handling code here:
         jDesktopPane.removeAll();
+        jDesktopPane.repaint();
         fmp.setVisible(false);
         fmn.setVisible(false);
         fe.setVisible(false);
