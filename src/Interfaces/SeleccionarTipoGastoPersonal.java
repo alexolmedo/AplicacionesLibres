@@ -579,7 +579,7 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
         }
 
         if (validado == true) {
-            String query;
+            String query, query1 ="";
 
             double totales[] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 
@@ -613,9 +613,11 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
             } else {
                 query = "INSERT INTO HISTORIAL_PAGOS_PERSONALES VALUES (" + anio + ",'" + cedula + "'," + totales[3] + "," + totales[1] + "," + totales[0] + "," + totales[2] + "," + totales[4] + "," + totales[5] + ")";
                 System.out.println("Estoy en el else");
+                query1= "update cliente set nombre_cliente = '" + nombre_Cli.getText() + "'";
             }
 
             conTipo.insertar(query);
+            conTipo.insertar(query1);
 
             JOptionPane.showMessageDialog(this, "Factura ingresada exitosamente");
             recargar(conTipo);

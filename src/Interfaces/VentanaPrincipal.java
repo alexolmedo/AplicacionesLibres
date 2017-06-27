@@ -21,6 +21,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     HistorialGastos hg;
     Reportes rp;
     ReporteProveedor rPV;
+    ReporteNumFacPorAño rNFA;
+    ReporteFacturasAño rFA;
     String cedula_usuario;
     int anio;
     Conexionn conn;
@@ -48,6 +50,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         hg = new HistorialGastos(conn, cedula_usuario, anio);
         rp = new Reportes(conn, cedula_usuario, anio);
         rPV = new ReporteProveedor(conn, cedula_usuario, anio);
+        rNFA = new ReporteNumFacPorAño(conn, cedula_usuario, anio);
+        rFA = new ReporteFacturasAño(conn, cedula_usuario, anio);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -71,6 +75,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem10 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
         m_Usuario = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
@@ -172,6 +178,22 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu4.add(jMenuItem9);
+
+        jMenuItem10.setText("Reporte Nro Facturas Proveedor");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem10);
+
+        jMenuItem11.setText("Reporte Facturas por Año");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem11);
 
         jMenuBar1.add(jMenu4);
 
@@ -367,6 +389,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             hg.setVisible(false);
             rPV.cargar_Provee();
             rPV.setVisible(true);
+            ArrayList nombCLIente  = conn.ddl("select nombre_cliente from cliente where id_cliente ='" +this.cedula_usuario +"'");
+            rPV.cargarDato(cedula_usuario);
+            rPV.cargarTabla();
             jDesktopPane.add(rPV);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
     
@@ -400,6 +425,39 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void combo_anioPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_combo_anioPopupMenuWillBecomeInvisible
         setYear();
     }//GEN-LAST:event_combo_anioPopupMenuWillBecomeInvisible
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        // TODO add your handling code here:
+        jDesktopPane.removeAll();
+        fmp.setVisible(false);
+        fmn.setVisible(false);
+        fe.setVisible(false);
+        rp.setVisible(false);        
+        hg.setVisible(false);                         
+        rPV.setVisible(false);        
+        rNFA.setVisible(true);
+        ArrayList nombCLIente  = conn.ddl("select nombre_cliente from cliente where id_cliente ='" +this.cedula_usuario +"'");
+        rNFA.cargarCliente((String) nombCLIente.get(0));
+        rNFA.cargarTabla();
+        jDesktopPane.add(rNFA);
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        // TODO add your handling code here:
+        jDesktopPane.removeAll();
+        fmp.setVisible(false);
+        fmn.setVisible(false);
+        fe.setVisible(false);
+        rp.setVisible(false);        
+        hg.setVisible(false);                         
+        rPV.setVisible(false);        
+        rNFA.setVisible(false);
+        rFA.setVisible(true);
+        ArrayList nombCLIente  = conn.ddl("select nombre_cliente from cliente where id_cliente ='" +this.cedula_usuario +"'");
+        rFA.cargarDato((String) nombCLIente.get(0));
+        rFA.cargarTabla();
+        jDesktopPane.add(rFA);
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -455,6 +513,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
