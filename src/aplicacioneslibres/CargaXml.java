@@ -176,12 +176,6 @@ public class CargaXml {
 
                 String numFact = estab + "-" + emision + "-" + secuencial;
 
-                if (!cp.verificar_usuario("SELECT * FROM ESTABLECIMIENTO WHERE id_establecimiento='" + ruc + "'")) {
-                    String establecimiento = "INSERT INTO ESTABLECIMIENTO (id_establecimiento,nombre_establecimiento,direccion_establecimiento)"
-                            + "VALUES ('" + ruc + "','" + nombreEst + "','" + dirMatriz + "')";
-                    cp.insertar(establecimiento);
-                }
-
                 //Se obtiene la raiz de la factura
                 Element factura = (Element) lista_campos.get(1);
 
@@ -242,6 +236,14 @@ public class CargaXml {
                       
                 if (CI_Compr.equalsIgnoreCase(cedulaCli)){
                     if (!cp.verificar_usuario("SELECT * FROM FACTURA WHERE id_factura='" + numFact + "'")) {
+                        
+                        //Inserta establecimiento en caso de no existir
+                        if (!cp.verificar_usuario("SELECT * FROM ESTABLECIMIENTO WHERE id_establecimiento='" + ruc + "'")) {
+                            String establecimiento = "INSERT INTO ESTABLECIMIENTO (id_establecimiento,nombre_establecimiento,direccion_establecimiento)"
+                                    + "VALUES ('" + ruc + "','" + nombreEst + "','" + dirMatriz + "')";
+                            cp.insertar(establecimiento);
+                        }
+                        
                         String facturaQ = "INSERT INTO FACTURA (id_factura,id_cliente,id_establecimiento,tipo_factura,fecha_emision,estado_factura,ambiente_factura,total_sin_iva,iva,total_con_iva)"
                                 + "VALUES ('" + numFact + "','" + CI_Compr + "','" + ruc + "','" + tipo + "','" + fecha + "','" + estado + "','" + ambiente + "'," + totalSinImp + "," + impuesto + "," + totalConIVA + ")";
                         System.out.println(facturaQ);
