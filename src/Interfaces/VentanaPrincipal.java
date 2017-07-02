@@ -398,8 +398,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         rPV.cargar_Provee();
         rPV.setVisible(true);
         rPV.setSize(jDesktopPane.getSize());
-        //ArrayList nombCLIente  = conn.ddl("select nombre_cliente from cliente where id_cliente ='" +this.cedula_usuario +"'");
-        rPV.cargarDato(cedula_usuario);
+        ArrayList nombCLIente  = conn.ddl("select nombre_cliente from cliente where id_cliente ='" +this.cedula_usuario +"'");
+        rPV.cargarDato((String) nombCLIente.get(0));
         rPV.cargarTabla();
         jDesktopPane.add(rPV);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
