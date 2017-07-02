@@ -585,21 +585,34 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
 
             if (!txtVivienda.getText().equals("0.0")) {
                 totales[0] = ingresarTipo(txtVivienda, lblVivienda);
+            } else {
+                IngrTipo0(lblVivienda);
             }
             if (!txtSalud.getText().equals("0.0")) {
                 totales[1] = ingresarTipo(txtSalud, lblSalud);
             }
+            else {
+                IngrTipo0(lblSalud);
+            }
             if (!txtEducacion.getText().equals("0.0")) {
                 totales[2] = ingresarTipo(txtEducacion, lblEducacion);
+            } else {
+                IngrTipo0(lblEducacion);
             }
             if (!txtAlimentacion.getText().equals("0.0")) {
                 totales[3] = ingresarTipo(txtAlimentacion, lblAlimentacion);
+            } else {
+                IngrTipo0(lblAlimentacion);
             }
             if (!txtVestimenta.getText().equals("0.0")) {
                 totales[4] = ingresarTipo(txtVestimenta, lblVestimenta);
+            } else  {
+                IngrTipo0(lblVestimenta);
             }
             if (!txtOtro.getText().equals("0.0")) {
                 totales[5] = ingresarTipo(txtOtro, lblOtro);
+            } else {
+                IngrTipo0(lblOtro);
             }
 
             if (conTipo.verificar_usuario("SELECT * FROM HISTORIAL_PAGOS_PERSONALES WHERE anio_historial_p=" + anio + " AND id_cliente='" + cedula + "'")) {
@@ -645,6 +658,12 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
             this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void IngrTipo0(JLabel lblTipo) {
+        String q;
+        q = "INSERT INTO TIPO_GASTO (id_factura,tipo,total)"
+                + "VALUES('" + numFac + "','" + lblTipo.getText() + "'," + 0 + ")";
+        conTipo.insertar(q);
+    }
     private void recargar(Conexionn conn) {
          ArrayList auxRec = new ArrayList();
         Interfaces.FacturaManualPersonal.combo_Establecimientos.removeAllItems();

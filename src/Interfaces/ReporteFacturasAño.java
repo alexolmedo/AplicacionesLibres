@@ -74,7 +74,21 @@ public class ReporteFacturasAño extends javax.swing.JInternalFrame {
         Statement st;
         try {
             st = conn.getConn().createStatement();
-            String c = String.format("select id_Factura, factura.id_establecimiento, nombre_establecimiento, total_sin_IVA, IVA, Total_con_iva from factura join establecimiento on (factura.id_establecimiento = establecimiento.id_establecimiento) where (select substr(cast(fecha_emision as char),7) ='%s')",anio);            
+            String c = String.format("select * from (select id_Factura, factura.id_establecimiento, nombre_establecimiento, total_sin_IVA, IVA, Total_con_iva \n" +
+            "from factura join establecimiento on (factura.id_establecimiento = establecimiento.id_establecimiento) \n" +
+                    "where (select substr(cast(fecha_emision as char),7) ='%s') and id_cliente = '%s') as Tab1\n" +
+                    "join (select t1.id_factura, TV, TE, TOt, TA, TVes, TS \n" +
+                    "from (select id_factura, total as 'TV' from tipo_gasto where tipo = 'Vivienda') as t1\n" +
+                    "join (select id_factura, total as 'TE' from tipo_gasto where tipo = 'Educacion') as t2 \n" +
+                    "on (t1.id_factura = t2.id_factura)\n" +
+                    "join (select id_factura, total as 'TOt' from tipo_gasto where tipo = 'Otro') as t3 \n" +
+                    "on (t3.id_factura = t2.id_factura)\n" +
+                    "join (select id_factura, total as 'TA' from tipo_gasto where tipo = 'Alimentacion') as t4 \n" +
+                    "on (t4.id_factura = t3.id_factura)\n" +
+                    "join (select id_factura, total as 'TVes' from tipo_gasto where tipo = 'Vestimenta') as t5 \n" +
+                    "on (t5.id_factura = t4.id_factura)\n" +
+                    "join (select id_factura, total as 'TS' from tipo_gasto where tipo = 'Salud') as t6 \n" +
+                    "on (t6.id_factura = t5.id_factura)) as Tab2 on (Tab1.id_factura = tab2.id_Factura)",anio, cedula_usuario);            
             ResultSet rs = st.executeQuery(c);
             System.out.println(c);
             ResultSetMetaData rsMd = rs.getMetaData();
@@ -119,7 +133,7 @@ public class ReporteFacturasAño extends javax.swing.JInternalFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setEnabled(false);
-        setPreferredSize(new java.awt.Dimension(880, 650));
+        setPreferredSize(new java.awt.Dimension(1035, 410));
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
                 formComponentShown(evt);
@@ -134,11 +148,11 @@ public class ReporteFacturasAño extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Id Factura", "RUC Prov", "Nomb Prov", "Total sin IVA", "IVA", "Total con IVA"
+                "Id Factura", "RUC Prov", "Nomb Prov", "Total sin IVA", "IVA", "Total con IVA", "Num Fac", "T. Vivienda", "T. Educacion", "T. Otro", "T. Alimentacion", "T. Vestimenta", "T. Salud"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -172,26 +186,29 @@ public class ReporteFacturasAño extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(lbl_Reporte))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(nomCli, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(61, 61, 61)
-                        .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
-                        .addComponent(CI, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(473, 473, 473)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(lbl_Reporte))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(nomCli, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(61, 61, 61)
+                                .addComponent(jLabel5)
+                                .addGap(18, 18, 18)
+                                .addComponent(CI, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 380, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton2)
                         .addGap(18, 18, 18)
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 629, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(223, Short.MAX_VALUE))
+                        .addComponent(jScrollPane2)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -206,11 +223,11 @@ public class ReporteFacturasAño extends javax.swing.JInternalFrame {
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
-                .addContainerGap(288, Short.MAX_VALUE))
+                .addGap(30, 30, 30))
         );
 
         pack();
