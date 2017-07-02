@@ -60,7 +60,7 @@ public class ReporteFacturasAño extends javax.swing.JInternalFrame {
                 = (MouseMotionListener[]) north.getListeners(MouseMotionListener.class);
         for (MouseMotionListener action : actions) {
             north.removeMouseMotionListener(action);
-        }                      
+        }    
     }
     
     public void cargarDato(String sfd) {
@@ -70,6 +70,7 @@ public class ReporteFacturasAño extends javax.swing.JInternalFrame {
     }
     
     public void cargarTabla() {
+        labelAnio.setText(String.valueOf(anio));
         tablaProv.setVisible(true);
         Statement st;
         try {
@@ -130,6 +131,7 @@ public class ReporteFacturasAño extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         nomCli = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
+        labelAnio = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setEnabled(false);
@@ -179,6 +181,9 @@ public class ReporteFacturasAño extends javax.swing.JInternalFrame {
             }
         });
 
+        labelAnio.setFont(new java.awt.Font("Open Sans", 0, 36)); // NOI18N
+        labelAnio.setText("jLabel1");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -198,7 +203,10 @@ public class ReporteFacturasAño extends javax.swing.JInternalFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(2, 2, 2)
-                                        .addComponent(lbl_Reporte))
+                                        .addComponent(lbl_Reporte)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(labelAnio)
+                                        .addGap(0, 0, Short.MAX_VALUE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(16, 16, 16)
                                         .addComponent(jLabel3)
@@ -214,7 +222,9 @@ public class ReporteFacturasAño extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addComponent(lbl_Reporte)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_Reporte)
+                    .addComponent(labelAnio))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -353,6 +363,7 @@ public class ReporteFacturasAño extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel labelAnio;
     private javax.swing.JLabel lbl_Reporte;
     private javax.swing.JTextField nomCli;
     private javax.swing.JTable tablaProv;

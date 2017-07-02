@@ -40,7 +40,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
 
-    private void setYear(){
+    public void setYear(){
         jDesktopPane.removeAll();
         jDesktopPane.repaint();
         this.anio=Integer.parseInt(combo_anio.getSelectedItem().toString());
@@ -73,10 +73,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         m_FactElect = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
+        jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
-        jMenuItem11 = new javax.swing.JMenuItem();
         m_Usuario = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
@@ -164,23 +163,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jMenu4.setText("Reportes");
 
-        jMenuItem8.setText("Reporte Facturas por Proveedor");
-        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem8ActionPerformed(evt);
-            }
-        });
-        jMenu4.add(jMenuItem8);
-
-        jMenuItem9.setText("Reporte Historial Gastos por Año");
-        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem9ActionPerformed(evt);
-            }
-        });
-        jMenu4.add(jMenuItem9);
-
-        jMenuItem10.setText("Reporte Nro Facturas Proveedor");
+        jMenuItem10.setText("Número de Facturas por Año");
         jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem10ActionPerformed(evt);
@@ -188,13 +171,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         jMenu4.add(jMenuItem10);
 
-        jMenuItem11.setText("Reporte Facturas por Año");
-        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem8.setText("Número de Facturas por Proveedor");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem11ActionPerformed(evt);
+                jMenuItem8ActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem11);
+        jMenu4.add(jMenuItem8);
+
+        jMenuItem9.setText("Acumulado de Gastos por Año");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem9);
 
         jMenuBar1.add(jMenu4);
 
@@ -404,6 +395,27 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jDesktopPane.add(rPV);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
     
+    public void reporteDetalleAnio(String anioRecibido){
+        //rFA = new ReporteFacturasAño(conn, cedula_usuario, Integer.getInteger(anioRecibido));
+        combo_anio.setSelectedItem(anioRecibido);
+        setYear();
+        jDesktopPane.removeAll();
+        jDesktopPane.repaint();
+        fmp.setVisible(false);
+        fmn.setVisible(false);
+        fe.setVisible(false);
+        rp.setVisible(false);        
+        hg.setVisible(false);                         
+        rPV.setVisible(false);        
+        rNFA.setVisible(false);
+        rFA.setVisible(true);
+        rFA.setSize(jDesktopPane.getSize());
+        ArrayList nombCLIente  = conn.ddl("select nombre_cliente from cliente where id_cliente ='" +this.cedula_usuario +"'");
+        rFA.cargarDato((String) nombCLIente.get(0));
+        rFA.cargarTabla();
+        jDesktopPane.add(rFA);
+    }
+    
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
 
         historial_p = conn.ddl(String.format("select * from historial_pagos_personales where anio_historial_p=%s and id_cliente='%s'", anio, cedula_usuario));
@@ -454,25 +466,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         rNFA.cargarTabla();
         jDesktopPane.add(rNFA);
     }//GEN-LAST:event_jMenuItem10ActionPerformed
-
-    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
-        // TODO add your handling code here:
-        jDesktopPane.removeAll();
-        jDesktopPane.repaint();
-        fmp.setVisible(false);
-        fmn.setVisible(false);
-        fe.setVisible(false);
-        rp.setVisible(false);        
-        hg.setVisible(false);                         
-        rPV.setVisible(false);        
-        rNFA.setVisible(false);
-        rFA.setVisible(true);
-        rFA.setSize(jDesktopPane.getSize());
-        ArrayList nombCLIente  = conn.ddl("select nombre_cliente from cliente where id_cliente ='" +this.cedula_usuario +"'");
-        rFA.cargarDato((String) nombCLIente.get(0));
-        rFA.cargarTabla();
-        jDesktopPane.add(rFA);
-    }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -529,7 +522,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
