@@ -71,7 +71,7 @@ public class Conexionn {
         ArrayList n = new ArrayList();
         try {
             Statement comando = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-            ResultSet resultado = comando.executeQuery("SELECT * FROM gastosanualespersonales");
+            ResultSet resultado = comando.executeQuery("SELECT * FROM gastosanualespersonales ORDER BY anio_gastos DESC");
             while (resultado.next()) {
                 n.add(resultado.getString("anio_gastos"));
             }

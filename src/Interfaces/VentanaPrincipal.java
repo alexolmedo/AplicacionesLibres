@@ -28,15 +28,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     Conexionn conn;
     ArrayList historial_p, historial_n;
 
-    public VentanaPrincipal(String cedula_usuario) {
+    public VentanaPrincipal(String cedula_ventana) {
+        cedula_usuario = cedula_ventana;
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/ico_21-1.png")).getImage());
         setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
 
         conn = new Conexionn();
         cargar_anios();
-        setYear();        
-        this.cedula_usuario = cedula_usuario;
+        setYear();      
         setLocationRelativeTo(null);
     }
 
@@ -95,6 +95,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Ordenador de Facturas");
+        setPreferredSize(new java.awt.Dimension(1024, 768));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -309,7 +310,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         rp.setVisible(false);
         rPV.setVisible(false);
         fe = new FacturaElectronicaNew(cedula_usuario, anio);
-        fe.setVisible(true);        
+        fe.setVisible(true);   
+        fe.setSize(jDesktopPane.getSize());
         jDesktopPane.add(fe);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
@@ -395,7 +397,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         hg.setVisible(false);
         rPV.cargar_Provee();
         rPV.setVisible(true);
-        ArrayList nombCLIente  = conn.ddl("select nombre_cliente from cliente where id_cliente ='" +this.cedula_usuario +"'");
+        rPV.setSize(jDesktopPane.getSize());
+        //ArrayList nombCLIente  = conn.ddl("select nombre_cliente from cliente where id_cliente ='" +this.cedula_usuario +"'");
         rPV.cargarDato(cedula_usuario);
         rPV.cargarTabla();
         jDesktopPane.add(rPV);
@@ -417,6 +420,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             fe.setVisible(false);
             rp.setVisible(false);
             hg.setVisible(true);
+            hg.setSize(jDesktopPane.getSize());
             jDesktopPane.add(hg);
         }               
     }//GEN-LAST:event_jMenuItem9ActionPerformed
@@ -444,6 +448,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         hg.setVisible(false);                         
         rPV.setVisible(false);        
         rNFA.setVisible(true);
+        rNFA.setSize(jDesktopPane.getSize());
         ArrayList nombCLIente  = conn.ddl("select nombre_cliente from cliente where id_cliente ='" +this.cedula_usuario +"'");
         rNFA.cargarCliente((String) nombCLIente.get(0));
         rNFA.cargarTabla();
@@ -462,6 +467,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         rPV.setVisible(false);        
         rNFA.setVisible(false);
         rFA.setVisible(true);
+        rFA.setSize(jDesktopPane.getSize());
         ArrayList nombCLIente  = conn.ddl("select nombre_cliente from cliente where id_cliente ='" +this.cedula_usuario +"'");
         rFA.cargarDato((String) nombCLIente.get(0));
         rFA.cargarTabla();
