@@ -182,7 +182,7 @@ public class ReporteFacturasAño extends javax.swing.JInternalFrame {
         });
 
         labelAnio.setFont(new java.awt.Font("Open Sans", 0, 36)); // NOI18N
-        labelAnio.setText("jLabel1");
+        labelAnio.setText("0000");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

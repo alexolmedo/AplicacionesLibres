@@ -23,6 +23,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     ReporteProveedor rPV;
     ReporteNumFacPorAño rNFA;
     ReporteFacturasAño rFA;
+    ReporteProveedorAcumulado rFP;
     String cedula_usuario;
     int anio;
     Conexionn conn;
@@ -52,6 +53,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         rPV = new ReporteProveedor(conn, cedula_usuario, anio);
         rNFA = new ReporteNumFacPorAño(conn, cedula_usuario, anio);
         rFA = new ReporteFacturasAño(conn, cedula_usuario, anio);
+        rFP = new ReporteProveedorAcumulado(conn, cedula_usuario, anio);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -414,6 +416,27 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         rFA.cargarDato((String) nombCLIente.get(0));
         rFA.cargarTabla();
         jDesktopPane.add(rFA);
+    }
+    
+    public void reporteDetalleProveedor(String rucProveedor){
+        //rFA = new ReporteFacturasAño(conn, cedula_usuario, Integer.getInteger(anioRecibido));
+        setYear();
+        jDesktopPane.removeAll();
+        jDesktopPane.repaint();
+        fmp.setVisible(false);
+        fmn.setVisible(false);
+        fe.setVisible(false);
+        rp.setVisible(false);        
+        hg.setVisible(false);                         
+        rPV.setVisible(false);        
+        rNFA.setVisible(false);
+        rFA.setVisible(false);
+        rFP.setVisible(true);
+        rFP.setSize(jDesktopPane.getSize());
+        ArrayList nombCLIente  = conn.ddl("select nombre_cliente from cliente where id_cliente ='" +this.cedula_usuario +"'");
+        rFP.cargarDato((String) nombCLIente.get(0));
+        rFP.cargarTabla(rucProveedor);
+        jDesktopPane.add(rFP);
     }
     
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
