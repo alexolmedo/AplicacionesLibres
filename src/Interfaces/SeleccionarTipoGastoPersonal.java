@@ -557,9 +557,9 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton2)
+                    .addComponent(jButton1))
                 .addContainerGap())
         );
 
@@ -585,34 +585,21 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
 
             if (!txtVivienda.getText().equals("0.0")) {
                 totales[0] = ingresarTipo(txtVivienda, lblVivienda);
-            } else {
-                IngrTipo0(lblVivienda);
             }
             if (!txtSalud.getText().equals("0.0")) {
                 totales[1] = ingresarTipo(txtSalud, lblSalud);
             }
-            else {
-                IngrTipo0(lblSalud);
-            }
             if (!txtEducacion.getText().equals("0.0")) {
                 totales[2] = ingresarTipo(txtEducacion, lblEducacion);
-            } else {
-                IngrTipo0(lblEducacion);
             }
             if (!txtAlimentacion.getText().equals("0.0")) {
                 totales[3] = ingresarTipo(txtAlimentacion, lblAlimentacion);
-            } else {
-                IngrTipo0(lblAlimentacion);
             }
             if (!txtVestimenta.getText().equals("0.0")) {
                 totales[4] = ingresarTipo(txtVestimenta, lblVestimenta);
-            } else  {
-                IngrTipo0(lblVestimenta);
             }
             if (!txtOtro.getText().equals("0.0")) {
                 totales[5] = ingresarTipo(txtOtro, lblOtro);
-            } else {
-                IngrTipo0(lblOtro);
             }
 
             if (conTipo.verificar_usuario("SELECT * FROM HISTORIAL_PAGOS_PERSONALES WHERE anio_historial_p=" + anio + " AND id_cliente='" + cedula + "'")) {
