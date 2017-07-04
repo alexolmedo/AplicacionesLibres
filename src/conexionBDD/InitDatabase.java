@@ -121,6 +121,10 @@ public class InitDatabase {
                     ");" +
                     "create  index RELATIONSHIP_1_FK on TIPO_GASTO (\n" +
                     "ID_FACTURA\n" +
+                    "create table RELACIONGASTO (\n" +
+                    "   DESCRIPCIONRELACION           VARCHAR(30)          not null,\n" +
+                    "   TIPO_GASTO       VARCHAR(50)          not null,\n" +
+                    ");" +
                     ");";
             stmt.executeUpdate(sql);
             String datos = " INSERT INTO GASTOSANUALESPERSONALES VALUES (2013, 3630.25, 14521.00, 3630.25, 3630.25, 3630.25);"
