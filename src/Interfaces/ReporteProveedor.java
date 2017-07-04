@@ -6,6 +6,11 @@
 package Interfaces;
 
 import ReportExc.Exporter;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import conexionBDD.Conexionn;
 import groovy.sql.ResultSetMetaDataWrapper;
 import java.awt.Component;
@@ -13,6 +18,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -197,8 +204,9 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
         CI = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         comboProv = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
+        botonExcel = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        botonPdf = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setEnabled(false);
@@ -271,14 +279,21 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton2.setText("Exportar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        botonExcel.setText("Exportar Excel");
+        botonExcel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                botonExcelActionPerformed(evt);
             }
         });
 
         jLabel1.setText("Seleccione un proveedor para mostrar en más detalle:");
+
+        botonPdf.setText("Exportar Pdf");
+        botonPdf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonPdfActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -289,7 +304,9 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton2)
+                        .addComponent(botonPdf)
+                        .addGap(18, 18, 18)
+                        .addComponent(botonExcel)
                         .addGap(18, 18, 18)
                         .addComponent(jButton1))
                     .addComponent(jScrollPane2)
@@ -309,7 +326,7 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
                                 .addComponent(comboProv, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(lbl_Reporte)
                             .addComponent(jLabel1))
-                        .addGap(0, 88, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -334,8 +351,10 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(54, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(botonExcel)
+                        .addComponent(botonPdf)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -372,7 +391,7 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_comboProvPopupMenuWillBecomeInvisible
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void botonExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonExcelActionPerformed
         // TODO add your handling code here:
         if (tablaProv.getRowCount() > 0) {
             JFileChooser chooser = new JFileChooser();
@@ -398,13 +417,51 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
         }else{
             JOptionPane.showMessageDialog(this, "No hay datos para exportar","Mensaje de error",JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_botonExcelActionPerformed
 
     private void tablaProvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProvMouseClicked
         System.out.println("año seleccionado "+tablaProv.getValueAt(tablaProv.getSelectedRow(), 0).toString());
         VentanaPrincipal vent = (VentanaPrincipal) SwingUtilities.getWindowAncestor(this);
         vent.reporteDetalleProveedor(tablaProv.getValueAt(tablaProv.getSelectedRow(), 1).toString());
     }//GEN-LAST:event_tablaProvMouseClicked
+
+    private void botonPdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonPdfActionPerformed
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos pdf", "pdf");
+        chooser.setFileFilter(filter);
+        chooser.setDialogTitle("Guardar archivo");
+        chooser.setAcceptAllFileFilterUsed(false);
+        
+        if (chooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {  
+        
+            String file = chooser.getSelectedFile().toString().concat(".pdf");
+            
+            try{
+            Document doc = new Document(PageSize.A4.rotate());
+            PdfWriter.getInstance(doc, new FileOutputStream(new File(file)));
+            doc.open();
+            PdfPTable pdfTable = new PdfPTable(tablaProv.getColumnCount());
+            for (int i = 0; i < tablaProv.getColumnCount(); i++) {
+                    pdfTable.addCell(tablaProv.getColumnName(i));
+                }
+                //extracting data from the JTable and inserting it to PdfPTable
+                for (int rows = 0; rows < tablaProv.getRowCount(); rows++) {
+                    for (int cols = 0; cols < tablaProv.getColumnCount(); cols++) {
+                        pdfTable.addCell(tablaProv.getModel().getValueAt(rows, cols).toString());
+
+                    }
+                }
+                doc.add(pdfTable);
+                doc.close();
+                JOptionPane.showMessageDialog(null, "Los datos fueron exportados a pdf en el directorio seleccionado", "Mensaje de Informacion", JOptionPane.INFORMATION_MESSAGE);
+
+            } catch (DocumentException ex) {
+
+            } catch (FileNotFoundException ex) {
+
+            }
+        }
+    }//GEN-LAST:event_botonPdfActionPerformed
 
     public void toExcel(JTable table, File file) {
         try {
@@ -478,9 +535,10 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField CI;
+    private javax.swing.JButton botonExcel;
+    private javax.swing.JButton botonPdf;
     private javax.swing.JComboBox<String> comboProv;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

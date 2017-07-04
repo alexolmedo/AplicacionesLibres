@@ -58,7 +58,9 @@
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                      <Component id="botonPDF" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="botonExcel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jButton1" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -90,7 +92,8 @@
               <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="botonExcel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="botonPDF" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="313" max="32767" attributes="0"/>
           </Group>
@@ -173,18 +176,26 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CIActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="botonExcel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Exportar"/>
+        <Property name="text" type="java.lang.String" value="Exportar Excel"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonExcelActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="text" type="java.lang.String" value="Seleccione un a&#xf1;o para mostrar las facturas en detalle."/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="botonPDF">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Exportar Pdf"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonPDFActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
