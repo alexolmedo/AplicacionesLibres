@@ -169,10 +169,19 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
         tablaProductos.getColumnModel().getColumn(1).setMaxWidth(100);
         tablaProductos.getColumnModel().getColumn(2).setMinWidth(150);
         tablaProductos.getColumnModel().getColumn(2).setMaxWidth(150);
+        
+        for(int i=0;i<tipos.length;i++){
+                if(conTipo.verificar_usuario("SELECT DESCRIPCIONRELACION FROM RELACIONGASTO WHERE descripcionrelacion='" + tablaProductos.getValueAt(i, 0) + "'")){
+                    String q = "SELECT TIPO_GASTO FROM RELACIONGASTO WHERE descripcionrelacion='" + tablaProductos.getValueAt(i, 0) + "'";
+                    ArrayList n = conTipo.ddl(q);          
+                    tablaProductos.setValueAt(n.get(0), i, 2);
+                }
+        }
 
         setLocationRelativeTo(getParent());
         setResizable(false);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        
     }
 
     /**
@@ -627,6 +636,15 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
                 query = "INSERT INTO HISTORIAL_PAGOS_PERSONALES VALUES (" + anio + ",'" + cedula + "'," + totales[3] + "," + totales[1] + "," + totales[0] + "," + totales[2] + "," + totales[4] + "," + totales[5] + ")";
                 System.out.println("Estoy en el else");
                 query1= "update cliente set nombre_cliente = '" + nombre_Cli.getText() + "'";
+            }
+            
+            for (int i = 0; i < tipoEstado.length; i++) {
+                if (!conTipo.verificar_usuario("SELECT DESCRIPCIONRELACION FROM RELACIONGASTO WHERE descripcionrelacion='" + tablaProductos.getValueAt(i, 0) + "'")) {
+                    String q;
+                    q = "INSERT INTO RELACIONGASTO (descripcionrelacion,tipo_gasto)"
+                            + "VALUES('" + tablaProductos.getValueAt(i, 0)+ "','" + tablaProductos.getValueAt(i, 2)+ "')";
+                    conTipo.insertar(q);
+                }
             }
 
             conTipo.insertar(query);
