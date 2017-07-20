@@ -87,7 +87,7 @@ public class ReporteFacturasAño extends javax.swing.JInternalFrame {
                     "join (select id_factura, total as 'TS' from tipo_gasto where tipo = 'Salud') as t6 \n" +
                     "on (t6.id_factura = t5.id_factura)) as Tab2 on (Tab1.id_factura = tab2.id_Factura)",anio, cedula_usuario);            
             ResultSet rs = st.executeQuery(c);
-            System.out.println(c);
+            //System.out.println(c);
             ResultSetMetaData rsMd = rs.getMetaData();
             int numeroColumnas = rsMd.getColumnCount();
             //System.out.println("estoy en dfdfg" + rs.getString(0));
