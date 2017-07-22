@@ -125,6 +125,10 @@ public class InitDatabase {
                     "create table RELACIONGASTO (\n" +
                     "   DESCRIPCIONRELACION           VARCHAR(30)          not null,\n" +
                     "   TIPO_GASTO       VARCHAR(50)          not null\n" +
+                    ");" +
+                    "create table PROV_GASTO (\n" +
+                    "   PROVEEDOR           VARCHAR(100)          not null,\n" +
+                    "   TIPO_GASTO       VARCHAR(50)          not null\n" +
                     ");";
                     
             stmt.executeUpdate(sql);

@@ -170,13 +170,20 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
         tablaProductos.getColumnModel().getColumn(2).setMinWidth(150);
         tablaProductos.getColumnModel().getColumn(2).setMaxWidth(150);
         
-        for(int i=0;i<tipos.length;i++){
-                if(conTipo.verificar_usuario("SELECT DESCRIPCIONRELACION FROM RELACIONGASTO WHERE descripcionrelacion='" + tablaProductos.getValueAt(i, 0) + "'")){
-                    String q = "SELECT TIPO_GASTO FROM RELACIONGASTO WHERE descripcionrelacion='" + tablaProductos.getValueAt(i, 0) + "'";
-                    ArrayList n = conTipo.ddl(q);          
-                    tablaProductos.setValueAt(n.get(0), i, 2);
-                }
+        for (int i=0; i<tipos.length;i++) {
+            String q = "SELECT TIPO_GASTO FROM PROV_GASTO WHERE PROVEEDOR = '" + RUC +"'";
+            ArrayList n = conTipo.ddl(q);
+            tablaProductos.setValueAt(n.get(0), i, 2);
+            
+            if(conTipo.verificar_usuario("SELECT DESCRIPCIONRELACION FROM RELACIONGASTO WHERE descripcionrelacion='" + tablaProductos.getValueAt(i, 0) + "'")){                    
+                String q1 = "SELECT TIPO_GASTO FROM RELACIONGASTO WHERE descripcionrelacion='" + tablaProductos.getValueAt(i, 0) + "'";                
+                ArrayList n1 = conTipo.ddl(q1);                          
+                tablaProductos.setValueAt(n1.get(0), i, 2);                
+            }
         }
+        /*for(int i=0;i<tipos.length;i++){              
+            
+        }*/
 
         setLocationRelativeTo(getParent());
         setResizable(false);
@@ -664,12 +671,13 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        String query ="";
+        String query ="";       
          //if (conTipo.verificar_usuario("SELECT * FROM HISTORIAL_PAGOS_PERSONALES WHERE anio_historial_p=" + anio + " AND id_cliente='" + cedula + "'")) {
-                query = "delete from factura where id_factura = '" + numFac +"'";
-                System.out.println("Estoy en el if");
+                query = "delete from factura where id_factura = '" + numFac +"'";                
+                
+                //System.out.println("Estoy en el if");
             //} 
-         conTipo.insertar(query);
+         conTipo.insertar(query);         
 
             System.out.println("LA factura no se ingresa");
             recargar(conTipo);
