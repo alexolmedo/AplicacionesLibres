@@ -335,7 +335,7 @@ public class ReporteFacturasAño extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_botonPdfActionPerformed
 
     private void tablaProvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProvMouseClicked
-        ReporteFactura reporte = new ReporteFactura();
+        ReporteFactura reporte = new ReporteFactura(tablaProv.getValueAt(tablaProv.getSelectedRow(), 0).toString());
         reporte.setVisible(true);
     }//GEN-LAST:event_tablaProvMouseClicked
 

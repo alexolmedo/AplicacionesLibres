@@ -10,12 +10,15 @@ package Interfaces;
  * @author Alexander
  */
 public class ReporteFactura extends javax.swing.JFrame {
+    static String codFactura;
 
     /**
      * Creates new form ReporteFactura
      */
-    public ReporteFactura() {
+    public ReporteFactura(String codFactura) {
+        this.codFactura=codFactura;
         initComponents();
+        cod.setText(codFactura);
     }
 
     /**
@@ -141,7 +144,7 @@ public class ReporteFactura extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(lbCodigo4)
                 .addGap(37, 37, 37)
-                .addComponent(cod, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cod, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbCodigo5)
                 .addGap(64, 64, 64)
@@ -452,7 +455,7 @@ public class ReporteFactura extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ReporteFactura().setVisible(true);
+                new ReporteFactura(codFactura).setVisible(true);
             }
         });
     }
