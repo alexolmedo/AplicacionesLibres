@@ -28,12 +28,14 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
     File[] ficheros;
     String cedula_usuario;
     int anio;
+    private String tipo;
 
-    public FacturaElectronicaNew(String cedula, int anio) {
+    public FacturaElectronicaNew(String cedula, int anio, String tipo) {
         initComponents();
         //setIconImage(new ImageIcon(getClass().getResource("/Imagenes/ico_21-1.png")).getImage());
         this.cedula_usuario = cedula;
         this.anio = anio;
+        this.tipo = tipo;
         jLabel3.setVisible(false);
         jComboBox2.setVisible(false);
         //Bloquear el movimiento del Frame
@@ -168,7 +170,7 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
                     CargaXml carga = new CargaXml();
                     try {
                         carga.cargarXml(jTextField1.getText() + "/" + ficheroSeleccionado,
-                                cedula_usuario, anio, jComboBox2.getSelectedItem().toString());
+                                cedula_usuario, anio, tipo);
                     } catch (IOException ex) {
                         Logger.getLogger(FacturaElectronicaNew.class.getName()).log(Level.SEVERE, null, ex);
                     }

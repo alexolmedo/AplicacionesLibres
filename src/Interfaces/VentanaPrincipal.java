@@ -47,7 +47,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         this.anio=Integer.parseInt(combo_anio.getSelectedItem().toString());
         fmp = new FacturaManualPersonal(conn, cedula_usuario, anio);
         fmn = new FacturaManualNegocio(conn, cedula_usuario, anio);
-        fe = new FacturaElectronicaNew(cedula_usuario, anio);
+        fe = new FacturaElectronicaNew(cedula_usuario, anio,"Negocio");
         hg = new HistorialGastos(conn, cedula_usuario, anio);
         rp = new Reportes(conn, cedula_usuario, anio);
         rPV = new ReporteProveedor(conn, cedula_usuario, anio);
@@ -321,7 +321,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         hg.setVisible(false);
         rp.setVisible(false);
         rPV.setVisible(false);
-        fe = new FacturaElectronicaNew(cedula_usuario, anio);
+        fe = new FacturaElectronicaNew(cedula_usuario, anio,"Personal");
         fe.setVisible(true);   
         fe.setSize(jDesktopPane.getSize());
         jDesktopPane.add(fe);
@@ -516,20 +516,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
         // TODO add your handling code here:
-        
         anio=Integer.parseInt(combo_anio.getSelectedItem().toString());
         jDesktopPane.removeAll();
         jDesktopPane.repaint();
-        fmp.setVisible(false);        
+        fmp.setVisible(false);
+        fmn.setVisible(false);
         hg.setVisible(false);
         rp.setVisible(false);
         rPV.setVisible(false);
-        fe.setVisible(false);  
-        fmn = new FacturaManualNegocio(conn, cedula_usuario, anio);
-        fmn.setVisible(true);
-        fmn.setSize(jDesktopPane.getSize());
-        jDesktopPane.add(fmn);
-        
+        fe = new FacturaElectronicaNew(cedula_usuario, anio,"Negocio");
+        fe.setVisible(true);   
+        fe.setSize(jDesktopPane.getSize());
+        jDesktopPane.add(fe);
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     /**
