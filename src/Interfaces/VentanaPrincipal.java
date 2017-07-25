@@ -80,6 +80,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jmGastosNegocio = new javax.swing.JMenu();
+        jMenuItem11 = new javax.swing.JMenuItem();
         m_Usuario = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
         m_FactFisic = new javax.swing.JMenu();
@@ -206,6 +207,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 jmGastosNegocioActionPerformed(evt);
             }
         });
+
+        jMenuItem11.setText("Ingresar");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
+        jmGastosNegocio.add(jMenuItem11);
+
         jMenuBar1.add(jmGastosNegocio);
 
         m_Usuario.setText("Usuario");
@@ -501,21 +511,26 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void jmGastosNegocioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmGastosNegocioActionPerformed
         // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jmGastosNegocioActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        // TODO add your handling code here:
+        
         anio=Integer.parseInt(combo_anio.getSelectedItem().toString());
         jDesktopPane.removeAll();
         jDesktopPane.repaint();
-        fmp.setVisible(false);
-        fmn = new FacturaManualNegocio(conn, cedula_usuario, anio);
-        fmn.setVisible(true);
+        fmp.setVisible(false);        
         hg.setVisible(false);
         rp.setVisible(false);
         rPV.setVisible(false);
-        fe = new FacturaElectronicaNew(cedula_usuario, anio);
-        fe.setVisible(false);   
+        fe.setVisible(false);  
+        fmn = new FacturaManualNegocio(conn, cedula_usuario, anio);
+        fmn.setVisible(true);
         fmn.setSize(jDesktopPane.getSize());
         jDesktopPane.add(fmn);
         
-    }//GEN-LAST:event_jmGastosNegocioActionPerformed
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -572,6 +587,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

@@ -67,7 +67,6 @@ public class FacturaElectronicaNew extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         Cancelar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(590, 670));
 
         jScrollPane1.setViewportView(jList1);
