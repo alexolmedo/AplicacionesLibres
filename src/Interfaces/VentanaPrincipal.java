@@ -24,6 +24,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     ReporteNumFacPorAño rNFA;
     ReporteFacturasAño rFA;
     ReporteProveedorAcumulado rFP;
+    ReporteProdPorTipoPorAño rPTA;
     String cedula_usuario;
     int anio;
     Conexionn conn;
@@ -54,6 +55,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         rNFA = new ReporteNumFacPorAño(conn, cedula_usuario, anio);
         rFA = new ReporteFacturasAño(conn, cedula_usuario, anio);
         rFP = new ReporteProveedorAcumulado(conn, cedula_usuario, anio);
+        rPTA = new ReporteProdPorTipoPorAño(conn, cedula_usuario, anio);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -78,6 +80,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
         m_Usuario = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
@@ -96,7 +99,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Ordenador de Facturas");
-        setPreferredSize(new java.awt.Dimension(1024, 768));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -188,6 +190,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu4.add(jMenuItem9);
+
+        jMenuItem11.setText("Reporte Productos por Tipo y Año");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem11);
 
         jMenuBar1.add(jMenu4);
 
@@ -490,6 +500,26 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jDesktopPane.add(rNFA);
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        // TODO add your handling code here:
+        jDesktopPane.removeAll();
+        jDesktopPane.repaint();
+        fmp.setVisible(false);
+        fmn.setVisible(false);
+        fe.setVisible(false);
+        rp.setVisible(false);        
+        hg.setVisible(false);                         
+        rPV.setVisible(false);        
+        rNFA.setVisible(false);
+        rPTA.setVisible(true);
+        rPTA.setSize(jDesktopPane.getSize());
+        ArrayList nombCLIente  = conn.ddl("select nombre_cliente from cliente where id_cliente ='" +this.cedula_usuario +"'");
+        rPTA.cargarDato((String) nombCLIente.get(0));
+        rPTA.cargarTablaP();
+        jDesktopPane.add(rPTA);
+        
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -545,6 +575,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
