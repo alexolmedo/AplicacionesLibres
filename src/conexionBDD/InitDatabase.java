@@ -59,6 +59,16 @@ public class InitDatabase {
                     "create unique index FACTURA_PK on FACTURA (\n" +
                     "ID_FACTURA\n" +
                     ");" +
+                    
+                    "create table DETALLE (\n" +
+                    "   ID_FACTURA           VARCHAR(20)          not null,\n" +
+                    "   NOMBRE_PRODUCTO      CHAR(50)             not null,\n" +
+                    "   TOTAL                MONEY             not null,\n" +
+                    "   TIPO                 VARCHAR(15)          not null,\n" +
+                    "   PRIMARY KEY (ID_FACTURA, NOMBRE_PRODUCTO)\n" +
+                    ");" +
+                    
+                    
                     "create  index RELATIONSHIP_3_FK on FACTURA (\n" +
                     "ID_ESTABLECIMIENTO\n" +
                     ");" +
