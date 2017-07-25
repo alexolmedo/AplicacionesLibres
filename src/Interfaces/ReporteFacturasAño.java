@@ -30,6 +30,7 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
@@ -156,6 +157,11 @@ public class ReporteFacturasAño extends javax.swing.JInternalFrame {
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+        });
+        tablaProv.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaProvMouseClicked(evt);
             }
         });
         jScrollPane2.setViewportView(tablaProv);
@@ -327,6 +333,11 @@ public class ReporteFacturasAño extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_botonPdfActionPerformed
+
+    private void tablaProvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProvMouseClicked
+        ReporteFactura reporte = new ReporteFactura();
+        reporte.setVisible(true);
+    }//GEN-LAST:event_tablaProvMouseClicked
 
     public void toExcel(JTable table, File file) {
         try {
