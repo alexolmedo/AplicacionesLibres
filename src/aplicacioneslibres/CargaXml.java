@@ -244,7 +244,8 @@ public class CargaXml {
                             Object seleccion = JOptionPane.showInputDialog(null,"Se ha detectado el proveedor\n" +nombreEst + "\nSeleccione el tipo de gasto principal:","Nuevo Proveedor Detectado",                                                                                                    
                                     JOptionPane.QUESTION_MESSAGE,null,  // null para icono defecto
                                     new Object[] {"Eduacion", "Vivienda", "Salud", "Alimentacion", "Vestimenta", "Otro" }, "Seleccione un tipo de Gasto");
-
+                            
+                            
                             String TipoGasto_Es = "Insert into Prov_gasto (proveedor,tipo_gasto) "
                                     + "VALUES ('" + ruc + "','"+seleccion.toString() +"')";
                                     
