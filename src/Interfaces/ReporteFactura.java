@@ -2,21 +2,25 @@ package Interfaces;
 
 import conexionBDD.Conexionn;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 
 public class ReporteFactura extends javax.swing.JFrame {
     static String codFactura;
     Conexionn conn;
 
     public ReporteFactura(String codFactura) {
+        
         conn=new Conexionn();
         this.codFactura=codFactura;
         initComponents();
         cod.setText(codFactura);
         setDatos(); 
+        setLocationRelativeTo(null);
     }
 
     @SuppressWarnings("unchecked")
@@ -42,7 +46,7 @@ public class ReporteFactura extends javax.swing.JFrame {
         nombre_Cli = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaDetalle = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -195,20 +199,37 @@ public class ReporteFactura extends javax.swing.JFrame {
 
         jLabel1.setText("FACTURA");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaDetalle.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Producto", "Total", "Tipo"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tablaDetalle);
 
         jButton1.setText("Cancelar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Exportar Excel");
 
@@ -262,7 +283,7 @@ public class ReporteFactura extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtVivienda, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
                     .addComponent(txtSalud))
-                .addGap(28, 28, 28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblAlimentacion)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -270,9 +291,9 @@ public class ReporteFactura extends javax.swing.JFrame {
                         .addComponent(lblVestimenta)))
                 .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtAlimentacion, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
-                    .addComponent(txtVestimenta))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtAlimentacion)
+                    .addComponent(txtVestimenta, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(165, 165, 165)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblEducacion, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblOtro, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -368,7 +389,6 @@ public class ReporteFactura extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -385,6 +405,7 @@ public class ReporteFactura extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addComponent(jScrollPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -434,15 +455,75 @@ public class ReporteFactura extends javax.swing.JFrame {
             rs = st.executeQuery(c);
             RUC_CI_Cli.setText(rs.getObject(1).toString());
             nombre_Cli.setText(rs.getObject(2).toString());
+            
+            c = String.format("select total from tipo_gasto where tipo='Vivienda' and id_factura='%s'",cod.getText());
+            rs = st.executeQuery(c);
+            txtVivienda.setText(rs.getObject(1).toString());
+            
+            c = String.format("select total from tipo_gasto where tipo='Alimentacion' and id_factura='%s'",cod.getText());
+            rs = st.executeQuery(c);
+            txtAlimentacion.setText(rs.getObject(1).toString());
+            
+            c = String.format("select total from tipo_gasto where tipo='Otro' and id_factura='%s'",cod.getText());
+            rs = st.executeQuery(c);
+            txtOtro.setText(rs.getObject(1).toString());
+            
+            c = String.format("select total from tipo_gasto where tipo='Salud' and id_factura='%s'",cod.getText());
+            rs = st.executeQuery(c);
+            txtSalud.setText(rs.getObject(1).toString());
+            
+            c = String.format("select total from tipo_gasto where tipo='Vestimenta' and id_factura='%s'",cod.getText());
+            rs = st.executeQuery(c);
+            txtVestimenta.setText(rs.getObject(1).toString());
+            
+            c = String.format("select total from tipo_gasto where tipo='Educacion' and id_factura='%s'",cod.getText());
+            rs = st.executeQuery(c);
+            txtEducacion.setText(rs.getObject(1).toString());
+            
+            cargarTabla();
+            
                         
         } catch (SQLException ex) {
             Logger.getLogger(ReporteFactura.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
+        public void cargarTabla() {
+        tablaDetalle.setVisible(true);
+        Statement st;
+        try {
+            st = conn.getConn().createStatement();
+            String c = String.format("select nombre_producto, total, tipo from detalle where id_factura='%s'",cod.getText());            
+            ResultSet rs = st.executeQuery(c);
+            //System.out.println(c);
+            ResultSetMetaData rsMd = rs.getMetaData();
+            int numeroColumnas = rsMd.getColumnCount();
+            //System.out.println("estoy en dfdfg" + rs.getString(0));
+            
+            DefaultTableModel dm = (DefaultTableModel) tablaDetalle.getModel();
+            int i = 0;
+            while (rs.next()) {
+                //System.out.println("estoy en el while");
+                dm.addRow(new Object[]{"", "", ""});
+                for (int j = 0; j < numeroColumnas; j++) {                    
+                    tablaDetalle.setValueAt(rs.getObject(j + 1),i ,j );                    
+                    //System.out.println(rs.getObject(j + 1));
+                }
+                i++;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ReporteProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     private void txtSaludActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSaludActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSaludActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -499,7 +580,6 @@ public class ReporteFactura extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lbCodigo;
     private javax.swing.JLabel lbCodigo1;
     private javax.swing.JLabel lbCodigo2;
@@ -515,6 +595,7 @@ public class ReporteFactura extends javax.swing.JFrame {
     private javax.swing.JLabel lblVivienda;
     private javax.swing.JTextField nomb_Prov;
     private javax.swing.JTextField nombre_Cli;
+    private javax.swing.JTable tablaDetalle;
     private javax.swing.JTextField totalConIVA;
     private javax.swing.JTextField totalSinIVA;
     private javax.swing.JTextField txtAlimentacion;
