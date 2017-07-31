@@ -25,6 +25,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     ReporteFacturasAño rFA;
     ReporteProveedorAcumulado rFP;
     ReporteProdPorTipoPorAño rPTA;
+    TiposGastosNegocios TGN;
     String cedula_usuario;
     int anio;
     Conexionn conn;
@@ -56,6 +57,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         rFA = new ReporteFacturasAño(conn, cedula_usuario, anio);
         rFP = new ReporteProveedorAcumulado(conn, cedula_usuario, anio);
         rPTA = new ReporteProdPorTipoPorAño(conn, cedula_usuario, anio);
+        TGN = new TiposGastosNegocios(conn, cedula_usuario, anio);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -76,12 +78,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         m_FactElect = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem12 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
         m_Usuario = new javax.swing.JMenu();
+        jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         m_FactFisic = new javax.swing.JMenu();
@@ -155,13 +159,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         m_FactElect.setText("Facturas Electronicas");
 
-        jMenuItem2.setText("Ingresar");
+        jMenuItem2.setText("Gastos Personales");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);
             }
         });
         m_FactElect.add(jMenuItem2);
+
+        jMenuItem12.setText("Gastos de Negocio");
+        m_FactElect.add(jMenuItem12);
 
         jMenuBar1.add(m_FactElect);
 
@@ -202,6 +209,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu4);
 
         m_Usuario.setText("Usuario");
+
+        jMenuItem13.setText("Tipos de Gastos de Negocio");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
+        m_Usuario.add(jMenuItem13);
 
         jMenuItem3.setText("Darme de baja del sistema");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
@@ -520,6 +535,26 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        // TODO add your handling code here:
+        jDesktopPane.removeAll();
+        jDesktopPane.repaint();
+        fmp.setVisible(false);
+        fmn.setVisible(false);
+        fe.setVisible(false);
+        rp.setVisible(false);        
+        hg.setVisible(false);                         
+        rPV.setVisible(false);        
+        rNFA.setVisible(false);
+        rPTA.setVisible(false);
+        TGN.setVisible(true);
+        TGN.setSize(jDesktopPane.getSize());
+        ArrayList nombCLIente  = conn.ddl("select nombre_cliente from cliente where id_cliente ='" +this.cedula_usuario +"'");
+        TGN.cargarDato((String) nombCLIente.get(0));
+        TGN.cargarTabla();
+        jDesktopPane.add(TGN);
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -576,6 +611,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
+    private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
