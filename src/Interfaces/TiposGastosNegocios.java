@@ -83,7 +83,7 @@ public class TiposGastosNegocios extends javax.swing.JInternalFrame {
             int i = 0;
             while (rs.next()) {
                 //System.out.println("estoy en el while");
-                //dm.addRow(new Object[]{"", "", ""});
+                dm.addRow(new Object[]{"", "", ""});
                 for (int j = 0; j < numeroColumnas; j++) {                    
                     tablaProv.setValueAt(rs.getObject(j + 1),i ,j );                    
                     //System.out.println(rs.getObject(j + 1));
@@ -95,7 +95,17 @@ public class TiposGastosNegocios extends javax.swing.JInternalFrame {
             Logger.getLogger(ReporteProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
+    public void limpiarTabla () {
+            
+        DefaultTableModel dm = (DefaultTableModel) tablaProv.getModel();
+        int rowCount = dm.getRowCount();
+        //Remove rows one by one from the end of the table
+        for (int i = rowCount - 1; i >= 0; i--) {
+            dm.removeRow(i);
+        }   
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -252,6 +262,7 @@ public class TiposGastosNegocios extends javax.swing.JInternalFrame {
             String query = "INSERT INTO TIPO_GASTO_NEG (id_usuario, tipo_gasto)"
                             + "VALUES('" + cedula_usuario.toString() + "','" + tipoGN + "')";
             conn.insertar(query);
+            limpiarTabla();
             cargarTabla();
         } catch (Exception e) {            
             System.out.println(e.getMessage());
