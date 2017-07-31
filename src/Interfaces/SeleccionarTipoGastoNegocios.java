@@ -39,6 +39,8 @@ public class SeleccionarTipoGastoNegocios extends javax.swing.JFrame {
     int anio;
     String cedula, tipo;
 
+    String nombreEst;
+
     /**
      * Creates new form SeleccionarTipoGasto
      *
@@ -49,14 +51,83 @@ public class SeleccionarTipoGastoNegocios extends javax.swing.JFrame {
      * @param cedula
      * @param tipo
      */
-    public SeleccionarTipoGastoNegocios(Conexionn conn, Object[][] tipos, String factura, int anio, String cedula, String tipo) {
+    public SeleccionarTipoGastoNegocios(Conexionn conn, Object[][] tipos, String factura, int anio, String cedula, String tipo, String nombreEst) {
         initComponents();
+        lblMercaderia.setVisible(false);
+        lblArriendo.setVisible(false);
+        lblCapacitacion.setVisible(false);
+        lblHerramientas.setVisible(false);
+        lblMovilizacion.setVisible(false);
+        lblServicios.setVisible(false);
+        lblSueldos.setVisible(false);
+        lblSuministros.setVisible(false);
+        lblViaticos.setVisible(false);
+        
+        txtArriendo.setVisible(false);
+        txtCapacitacion.setVisible(false);
+        txtHerramientas.setVisible(false);
+        txtMercaderia.setVisible(false);
+        txtMovilizacion.setVisible(false);
+        txtServicios.setVisible(false);
+        txtSueldos.setVisible(false);
+        txtSuministros.setVisible(false);
+        txtViaticos.setVisible(false);
+        
+        
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/ico_21-1.png")).getImage());
         this.conTipo = conn;
         this.numFac = factura;
         this.anio = anio;
         this.cedula = cedula;
         this.tipo = tipo;
+        this.nombreEst = nombreEst;
+
+        if (conTipo.verificar_usuario("SELECT NEGOCIO FROM TIPO_GASTO_NEGOCIO WHERE NEGOCIO='" + nombreEst + "'")) {
+            String q1 = "SELECT * FROM TIPO_GASTO_NEGOCIO WHERE NEGOCIO='" + nombreEst + "'";
+            ArrayList n1 = conTipo.ddl(q1);
+            for (int i = 1; i < n1.size(); i++) {
+                System.out.println("n"+i+" "+n1.get(i));
+                switch (i) {
+                    case 1:
+                        lblMercaderia.setVisible(Boolean.valueOf(n1.get(i).toString()));
+                        txtMercaderia.setVisible(Boolean.valueOf(n1.get(i).toString()));
+                        break;
+                    case 2:
+                        lblArriendo.setVisible(Boolean.valueOf(n1.get(i).toString()));
+                        txtArriendo.setVisible(Boolean.valueOf(n1.get(i).toString()));
+                        break;
+                    case 3:
+                        lblServicios.setVisible(Boolean.valueOf(n1.get(i).toString()));
+                        txtServicios.setVisible(Boolean.valueOf(n1.get(i).toString()));
+                        break;
+                    case 4:
+                        lblSueldos.setVisible(Boolean.valueOf(n1.get(i).toString()));
+                        txtSueldos.setVisible(Boolean.valueOf(n1.get(i).toString()));
+                        break;
+                    case 5:
+                        lblMovilizacion.setVisible(Boolean.valueOf(n1.get(i).toString()));
+                        txtMovilizacion.setVisible(Boolean.valueOf(n1.get(i).toString()));
+                        break;
+                    case 6:
+                        lblViaticos.setVisible(Boolean.valueOf(n1.get(i).toString()));
+                        txtViaticos.setVisible(Boolean.valueOf(n1.get(i).toString()));
+                        break;
+                    case 7:
+                        lblCapacitacion.setVisible(Boolean.valueOf(n1.get(i).toString()));
+                        txtCapacitacion.setVisible(Boolean.valueOf(n1.get(i).toString()));
+                        break;
+                    case 8:
+                        lblSuministros.setVisible(Boolean.valueOf(n1.get(i).toString()));
+                        txtSuministros.setVisible(Boolean.valueOf(n1.get(i).toString()));
+                        break;
+                    case 9:
+                        lblHerramientas.setVisible(Boolean.valueOf(n1.get(i).toString()));
+                        txtHerramientas.setVisible(Boolean.valueOf(n1.get(i).toString()));
+                        break;
+                }
+            }
+        }
+       
 
         String nombreCabeceras[] = {"Descripcion", "Precio Total", "Tipo de Gasto"};
 
@@ -444,18 +515,18 @@ public class SeleccionarTipoGastoNegocios extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void recargar(Conexionn conn) {
-         ArrayList auxRec = new ArrayList();
+        ArrayList auxRec = new ArrayList();
         Interfaces.FacturaManualPersonal.combo_Establecimientos.removeAllItems();
         Interfaces.FacturaManualNegocio.combo_Establecimientos.removeAllItems();
         Interfaces.FacturaManualPersonal.combo_Establecimientos.addItem("");
         Interfaces.FacturaManualNegocio.combo_Establecimientos.addItem("");
         auxRec = conn.cargarEstablecimiento();
-        for (Object est : auxRec) {            
+        for (Object est : auxRec) {
             Interfaces.FacturaManualPersonal.combo_Establecimientos.addItem(est.toString());
             Interfaces.FacturaManualNegocio.combo_Establecimientos.addItem(est.toString());
         }
     }
-    
+
     public void restarAgregado(JTextField txtField, int row) {
         double total;
         total = Double.parseDouble(txtField.getText());

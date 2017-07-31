@@ -37,6 +37,10 @@ public class SeleccionGastosNegocio extends javax.swing.JFrame {
         this.cedulaCli = cedulaCli;
         this.tipo = tipo;
         this.nombreEst = nombreEst;
+        
+        
+        
+        
     }
 
     /**
@@ -207,11 +211,15 @@ public class SeleccionGastosNegocio extends javax.swing.JFrame {
             boolean otros = cbOtros.isSelected();
 
             if(!cp.verificar_usuario("SELECT NEGOCIO FROM TIPO_GASTO_NEGOCIO WHERE NEGOCIO='" + nombreEst+ "'")){
-                
+                String query = "INSERT INTO TIPO_GASTO_NEGOCIO VALUES ('" + nombreEst + "','" + merca + "','" 
+                        + arriendo + "','" + serviciosBasicos + "','" + sueldos + "','" + movi + "','" + viaticos + "','" 
+                        + capacitacion +"','"+ suministros+"','"+ herramientas+"','"+otros+ "')";                
+                cp.ddl(query);
             }
             
-            SeleccionarTipoGastoNegocios seleccionarH = new SeleccionarTipoGastoNegocios(cp, datosProducto, numFact, anio, cedulaCli, tipo);
+            SeleccionarTipoGastoNegocios seleccionarH = new SeleccionarTipoGastoNegocios(cp, datosProducto, numFact, anio, cedulaCli, tipo,nombreEst);
             seleccionarH.setVisible(true);
+            this.dispose();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
