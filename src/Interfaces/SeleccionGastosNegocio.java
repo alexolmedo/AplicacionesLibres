@@ -5,6 +5,7 @@
  */
 package Interfaces;
 
+import conexionBDD.Conexionn;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,11 +14,29 @@ import javax.swing.JOptionPane;
  */
 public class SeleccionGastosNegocio extends javax.swing.JFrame {
 
+    Conexionn cp;
+    Object datosProducto[][];
+    String numFact;
+    int anio;
+    String cedulaCli;
+    String tipo;
+    String nombreEst;
+    
     /**
      * Creates new form SeleccionGastosNegocio
      */
     public SeleccionGastosNegocio() {
         initComponents();
+    }
+    public SeleccionGastosNegocio(Conexionn cp,Object datosProducto[][],String numFact,int anio,String cedulaCli,String tipo,String nombreEst) {
+        initComponents();
+        this.cp = cp;
+        this.datosProducto = datosProducto;
+        this.numFact = numFact;
+        this.anio = anio;
+        this.cedulaCli = cedulaCli;
+        this.tipo = tipo;
+        this.nombreEst = nombreEst;
     }
 
     /**
@@ -30,7 +49,7 @@ public class SeleccionGastosNegocio extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        cdArriendo = new javax.swing.JCheckBox();
+        cbArriendo = new javax.swing.JCheckBox();
         cbServiciosBasicos = new javax.swing.JCheckBox();
         cbmercaderia = new javax.swing.JCheckBox();
         cbSueldos = new javax.swing.JCheckBox();
@@ -46,7 +65,7 @@ public class SeleccionGastosNegocio extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Selccione el tipo de Gastos para su Negocio", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
-        cdArriendo.setText("Arriendo");
+        cbArriendo.setText("Arriendo");
 
         cbServiciosBasicos.setText("Sevicios Básicos");
         cbServiciosBasicos.addActionListener(new java.awt.event.ActionListener() {
@@ -90,7 +109,7 @@ public class SeleccionGastosNegocio extends javax.swing.JFrame {
                     .addComponent(cbHerramientasTrabajo))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cdArriendo)
+                    .addComponent(cbArriendo)
                     .addComponent(cbSueldos)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(cbSuministrosOficina, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -103,7 +122,7 @@ public class SeleccionGastosNegocio extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addComponent(cbmercaderia)
                         .addGap(18, 18, 18)
                         .addComponent(cbServiciosBasicos)
@@ -114,17 +133,16 @@ public class SeleccionGastosNegocio extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cbHerramientasTrabajo)
-                            .addComponent(cbOtros))
-                        .addContainerGap(27, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(cdArriendo)
+                            .addComponent(cbOtros)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(cbArriendo)
                         .addGap(18, 18, 18)
                         .addComponent(cbSueldos)
                         .addGap(18, 18, 18)
                         .addComponent(cbViaticos)
                         .addGap(18, 18, 18)
-                        .addComponent(cbSuministrosOficina)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(cbSuministrosOficina)))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         jButton1.setText("ACEPTAR");
@@ -176,6 +194,24 @@ public class SeleccionGastosNegocio extends javax.swing.JFrame {
                 !cbSueldos.isSelected() && !cbSuministrosOficina.isSelected() && !cbViaticos.isSelected() &&
                 !cbmercaderia.isSelected()){
             JOptionPane.showMessageDialog(null, "Seleccione al menos un tipo de gasto para su Negocio");
+        }else{
+            boolean merca = cbmercaderia.isSelected();
+            boolean arriendo = cbArriendo.isSelected();
+            boolean serviciosBasicos = cbServiciosBasicos.isSelected();
+            boolean sueldos = cbSueldos.isSelected();
+            boolean movi = cbMovilizacion.isSelected();
+            boolean viaticos = cbViaticos.isSelected();
+            boolean capacitacion = cbCapacitacion.isSelected();
+            boolean suministros = cbSuministrosOficina.isSelected();
+            boolean herramientas = cbHerramientasTrabajo.isSelected();
+            boolean otros = cbOtros.isSelected();
+
+            if(!cp.verificar_usuario("SELECT NEGOCIO FROM TIPO_GASTO_NEGOCIO WHERE NEGOCIO='" + nombreEst+ "'")){
+                
+            }
+            
+            SeleccionarTipoGastoNegocios seleccionarH = new SeleccionarTipoGastoNegocios(cp, datosProducto, numFact, anio, cedulaCli, tipo);
+            seleccionarH.setVisible(true);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -215,6 +251,7 @@ public class SeleccionGastosNegocio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox cbArriendo;
     private javax.swing.JCheckBox cbCapacitacion;
     private javax.swing.JCheckBox cbHerramientasTrabajo;
     private javax.swing.JCheckBox cbMovilizacion;
@@ -224,7 +261,6 @@ public class SeleccionGastosNegocio extends javax.swing.JFrame {
     private javax.swing.JCheckBox cbSuministrosOficina;
     private javax.swing.JCheckBox cbViaticos;
     private javax.swing.JCheckBox cbmercaderia;
-    private javax.swing.JCheckBox cdArriendo;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

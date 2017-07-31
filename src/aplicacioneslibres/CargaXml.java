@@ -4,8 +4,7 @@
  */
 package aplicacioneslibres;
 
-import Interfaces.SeleccionarTipoGastoNegocios;
-import Interfaces.SeleccionarTipoGastoPersonal;
+import Interfaces.*;
 import conexionBDD.Conexionn;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -300,8 +299,10 @@ public class CargaXml {
                                 
                                 
                             } else {
-                                SeleccionarTipoGastoNegocios seleccionarH = new SeleccionarTipoGastoNegocios(cp, datosProducto, numFact, anio, cedulaCli, tipo);
-                                seleccionarH.setVisible(true);
+                                SeleccionGastosNegocio sgNegocio = new SeleccionGastosNegocio(cp, datosProducto, numFact, anio, cedulaCli, tipo,nombreEst);
+                                sgNegocio.setVisible(true);
+                                //SeleccionarTipoGastoNegocios seleccionarH = new SeleccionarTipoGastoNegocios(cp, datosProducto, numFact, anio, cedulaCli, tipo);
+                                //seleccionarH.setVisible(true);
                             }
                         }
                     } else {

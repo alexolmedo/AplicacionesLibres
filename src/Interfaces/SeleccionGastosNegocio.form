@@ -79,7 +79,7 @@
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="cdArriendo" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="cbArriendo" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="cbSueldos" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="cbSuministrosOficina" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -96,7 +96,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Group type="102" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
                           <Component id="cbmercaderia" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="cbServiciosBasicos" min="-2" max="-2" attributes="0"/>
@@ -109,25 +109,24 @@
                               <Component id="cbHerramientasTrabajo" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="cbOtros" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="27" max="32767" attributes="0"/>
                       </Group>
-                      <Group type="102" attributes="0">
-                          <Component id="cdArriendo" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="cbArriendo" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="cbSueldos" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="cbViaticos" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="cbSuministrosOficina" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
+                  <EmptySpace pref="27" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JCheckBox" name="cdArriendo">
+        <Component class="javax.swing.JCheckBox" name="cbArriendo">
           <Properties>
             <Property name="text" type="java.lang.String" value="Arriendo"/>
           </Properties>
