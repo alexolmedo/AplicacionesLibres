@@ -419,13 +419,22 @@ public class ReporteFactura extends javax.swing.JFrame {
         
         try {
             st = conn.getConn().createStatement();
-            String c = String.format("select factura.id_establecimiento, nombre_establecimiento, direccion_establecimiento from factura, establecimiento where factura.id_establecimiento=establecimiento.id_establecimiento and id_factura='%s'",cod.getText());
+            String c = String.format("select factura.id_establecimiento, nombre_establecimiento, direccion_establecimiento, fecha_emision, total_sin_iva, iva, total_con_iva from factura, establecimiento where factura.id_establecimiento=establecimiento.id_establecimiento and id_factura='%s'",cod.getText());
             ResultSet rs = st.executeQuery(c);
-            System.out.println(c);
+
             RUC_PRov.setText(rs.getObject(1).toString());
             nomb_Prov.setText(rs.getObject(2).toString());
             dir_Prov.setText(rs.getObject(3).toString());
+            fecha.setText(rs.getObject(4).toString());
+            totalSinIVA.setText(rs.getObject(5).toString());
+            IVA.setText(rs.getObject(6).toString());
+            totalConIVA.setText(rs.getObject(7).toString());
             
+            c = String.format("select factura.id_cliente, cliente.nombre_cliente from factura, cliente where factura.id_cliente=cliente.id_cliente and id_factura='%s'",cod.getText());
+            rs = st.executeQuery(c);
+            RUC_CI_Cli.setText(rs.getObject(1).toString());
+            nombre_Cli.setText(rs.getObject(2).toString());
+                        
         } catch (SQLException ex) {
             Logger.getLogger(ReporteFactura.class.getName()).log(Level.SEVERE, null, ex);
         }
