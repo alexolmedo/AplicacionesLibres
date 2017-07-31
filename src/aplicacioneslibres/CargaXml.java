@@ -4,7 +4,7 @@
  */
 package aplicacioneslibres;
 
-import Interfaces.SeleccionarTipoGastoNegocios;
+import Interfaces.SeleccionarTipoGastoNegocios1;
 import Interfaces.SeleccionarTipoGastoPersonal;
 import conexionBDD.Conexionn;
 import java.io.BufferedReader;
@@ -299,7 +299,7 @@ public class CargaXml {
                                 
                                 
                             } else {
-                                SeleccionarTipoGastoNegocios seleccionarH = new SeleccionarTipoGastoNegocios(cp, datosProducto, numFact, anio, cedulaCli, tipo);
+                                SeleccionarTipoGastoNegocios1 seleccionarH = new SeleccionarTipoGastoNegocios1(cp, datosProducto, numFact, anio, cedulaCli, tipo);
                                 seleccionarH.setVisible(true);
                             }
                         }

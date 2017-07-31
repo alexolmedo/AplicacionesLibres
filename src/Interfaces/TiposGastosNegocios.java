@@ -83,7 +83,7 @@ public class TiposGastosNegocios extends javax.swing.JInternalFrame {
             int i = 0;
             while (rs.next()) {
                 //System.out.println("estoy en el while");
-                dm.addRow(new Object[]{"", "", ""});
+                //dm.addRow(new Object[]{"", "", ""});
                 for (int j = 0; j < numeroColumnas; j++) {                    
                     tablaProv.setValueAt(rs.getObject(j + 1),i ,j );                    
                     //System.out.println(rs.getObject(j + 1));
@@ -251,7 +251,8 @@ public class TiposGastosNegocios extends javax.swing.JInternalFrame {
             String tipoGN = JOptionPane.showInputDialog("Ingrese el tipo de gasto de negocio que quiere agregar!");
             String query = "INSERT INTO TIPO_GASTO_NEG (id_usuario, tipo_gasto)"
                             + "VALUES('" + cedula_usuario.toString() + "','" + tipoGN + "')";
-            conn.insertar(query);            
+            conn.insertar(query);
+            cargarTabla();
         } catch (Exception e) {            
             System.out.println(e.getMessage());
         }        

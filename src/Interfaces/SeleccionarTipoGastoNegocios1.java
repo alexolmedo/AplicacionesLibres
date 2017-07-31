@@ -25,7 +25,7 @@ import javax.swing.table.TableModel;
  *
  * @author andreu
  */
-public class SeleccionarTipoGastoNegocios extends javax.swing.JFrame {
+public class SeleccionarTipoGastoNegocios1 extends javax.swing.JFrame {
 
     final JComboBox comboBox;
     JTable tablaProductos;
@@ -49,7 +49,7 @@ public class SeleccionarTipoGastoNegocios extends javax.swing.JFrame {
      * @param cedula
      * @param tipo
      */
-    public SeleccionarTipoGastoNegocios(Conexionn conn, Object[][] tipos, String factura, int anio, String cedula, String tipo) {
+    public SeleccionarTipoGastoNegocios1(Conexionn conn, Object[][] tipos, String factura, int anio, String cedula, String tipo) {
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/ico_21-1.png")).getImage());
         this.conTipo = conn;
@@ -505,14 +505,18 @@ public class SeleccionarTipoGastoNegocios extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SeleccionarTipoGastoNegocios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SeleccionarTipoGastoNegocios1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SeleccionarTipoGastoNegocios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SeleccionarTipoGastoNegocios1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SeleccionarTipoGastoNegocios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SeleccionarTipoGastoNegocios1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SeleccionarTipoGastoNegocios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SeleccionarTipoGastoNegocios1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
