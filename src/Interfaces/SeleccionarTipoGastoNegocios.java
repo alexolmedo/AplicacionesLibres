@@ -166,6 +166,7 @@ public class SeleccionarTipoGastoNegocios extends javax.swing.JFrame {
         comboBox.addItem("Capacitacion");
         comboBox.addItem("Suministros");
         comboBox.addItem("Herramientas");
+        comboBox.addItem("Otros");
 
         tablaProductos.getModel().addTableModelListener(new TableModelListener() {
             @Override
