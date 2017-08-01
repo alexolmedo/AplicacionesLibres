@@ -299,7 +299,8 @@ public class CargaXml {
                                 
                                 
                             } else {
-                                SeleccionGastosNegocio sgNegocio = new SeleccionGastosNegocio(cp, datosProducto, numFact, anio, cedulaCli, tipo,nombreEst);
+                                SeleccionGastosNegocio sgNegocio = new SeleccionGastosNegocio(cp, datosProducto, numFact, anio, cedulaCli, tipo,nombreEst,
+                                totalSinImp.toString(), impuesto.toString(), totalConIVA.toString());
                                 sgNegocio.setVisible(true);
                                 //SeleccionarTipoGastoNegocios seleccionarH = new SeleccionarTipoGastoNegocios(cp, datosProducto, numFact, anio, cedulaCli, tipo);
                                 //seleccionarH.setVisible(true);

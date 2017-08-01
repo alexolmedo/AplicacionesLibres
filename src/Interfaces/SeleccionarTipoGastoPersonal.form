@@ -479,9 +479,9 @@
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="IVA" min="-2" pref="124" max="-2" attributes="0"/>
-                      <Component id="totalSinIVA" min="-2" pref="124" max="-2" attributes="0"/>
-                      <Component id="totalConIVA" min="-2" pref="124" max="-2" attributes="0"/>
+                      <Component id="txtIVA" min="-2" pref="124" max="-2" attributes="0"/>
+                      <Component id="txttotalSinIVA" min="-2" pref="124" max="-2" attributes="0"/>
+                      <Component id="txttotalConIVA" min="-2" pref="124" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
               </Group>
@@ -493,17 +493,17 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="totalSinIVA" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txttotalSinIVA" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="IVA" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtIVA" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="totalConIVA" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txttotalConIVA" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -526,17 +526,17 @@
             <Property name="text" type="java.lang.String" value="Total con IVA"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="totalSinIVA">
+        <Component class="javax.swing.JTextField" name="txttotalSinIVA">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="totalConIVA">
+        <Component class="javax.swing.JTextField" name="txttotalConIVA">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="IVA">
+        <Component class="javax.swing.JTextField" name="txtIVA">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
           </Properties>

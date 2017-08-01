@@ -80,9 +80,9 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
         cod.setText(Codigo);
         this.fecha.setText(fecha);
         
-        totalSinIVA.setText(totalS);
-        this.IVA.setText(IVA);
-        totalConIVA.setText(totalC);
+        txttotalSinIVA.setText(totalS);
+        this.txtIVA.setText(IVA);
+        txttotalConIVA.setText(totalC);
         
         tablaProductos = new JTable(tipos, nombreCabeceras){
             @Override
@@ -237,9 +237,9 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        totalSinIVA = new javax.swing.JTextField();
-        totalConIVA = new javax.swing.JTextField();
-        IVA = new javax.swing.JTextField();
+        txttotalSinIVA = new javax.swing.JTextField();
+        txttotalConIVA = new javax.swing.JTextField();
+        txtIVA = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -483,11 +483,11 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
 
         jLabel4.setText("Total con IVA");
 
-        totalSinIVA.setEditable(false);
+        txttotalSinIVA.setEditable(false);
 
-        totalConIVA.setEditable(false);
+        txttotalConIVA.setEditable(false);
 
-        IVA.setEditable(false);
+        txtIVA.setEditable(false);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -501,9 +501,9 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(IVA, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(totalSinIVA, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(totalConIVA, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtIVA, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txttotalSinIVA, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txttotalConIVA, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32))
         );
         jPanel5Layout.setVerticalGroup(
@@ -512,15 +512,15 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(totalSinIVA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txttotalSinIVA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(IVA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtIVA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(totalConIVA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txttotalConIVA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -772,7 +772,6 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField IVA;
     private javax.swing.JTextField RUC_CI_Cli;
     private javax.swing.JTextField RUC_PRov;
     private javax.swing.JTextField cod;
@@ -805,13 +804,14 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
     private javax.swing.JLabel lblVivienda;
     private javax.swing.JTextField nomb_Prov;
     private javax.swing.JTextField nombre_Cli;
-    private javax.swing.JTextField totalConIVA;
-    private javax.swing.JTextField totalSinIVA;
     private javax.swing.JTextField txtAlimentacion;
     private javax.swing.JTextField txtEducacion;
+    private javax.swing.JTextField txtIVA;
     private javax.swing.JTextField txtOtro;
     private javax.swing.JTextField txtSalud;
     private javax.swing.JTextField txtVestimenta;
     private javax.swing.JTextField txtVivienda;
+    private javax.swing.JTextField txttotalConIVA;
+    private javax.swing.JTextField txttotalSinIVA;
     // End of variables declaration//GEN-END:variables
 }

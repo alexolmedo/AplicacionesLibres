@@ -22,13 +22,17 @@ public class SeleccionGastosNegocio extends javax.swing.JFrame {
     String tipo;
     String nombreEst;
     
+    String totalSinImp, impuesto, totalConIVA;
+    
     /**
      * Creates new form SeleccionGastosNegocio
      */
     public SeleccionGastosNegocio() {
         initComponents();
     }
-    public SeleccionGastosNegocio(Conexionn cp,Object datosProducto[][],String numFact,int anio,String cedulaCli,String tipo,String nombreEst) {
+    public SeleccionGastosNegocio(Conexionn cp,Object datosProducto[][],String numFact,
+            int anio,String cedulaCli,String tipo,String nombreEst,String totalSinImp, 
+            String impuesto,String totalConIVA) {
         initComponents();
         this.cp = cp;
         this.datosProducto = datosProducto;
@@ -37,9 +41,12 @@ public class SeleccionGastosNegocio extends javax.swing.JFrame {
         this.cedulaCli = cedulaCli;
         this.tipo = tipo;
         this.nombreEst = nombreEst;
+        this.totalConIVA = totalConIVA;
+        this.totalSinImp = totalSinImp;
+        this.impuesto = impuesto;
+   
         
-        
-        
+        lblnegocio.setText(nombreEst);       
         
     }
 
@@ -63,6 +70,7 @@ public class SeleccionGastosNegocio extends javax.swing.JFrame {
         cbSuministrosOficina = new javax.swing.JCheckBox();
         cbHerramientasTrabajo = new javax.swing.JCheckBox();
         cbOtros = new javax.swing.JCheckBox();
+        lblnegocio = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -99,12 +107,15 @@ public class SeleccionGastosNegocio extends javax.swing.JFrame {
 
         cbOtros.setText("Otros");
 
+        lblnegocio.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblnegocio.setText("jLabel1");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(37, Short.MAX_VALUE)
+                .addContainerGap(23, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cbServiciosBasicos)
                     .addComponent(cbMovilizacion)
@@ -119,12 +130,18 @@ public class SeleccionGastosNegocio extends javax.swing.JFrame {
                         .addComponent(cbSuministrosOficina, javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(cbOtros))
                     .addComponent(cbViaticos))
-                .addContainerGap())
+                .addGap(20, 20, 20))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(145, 145, 145)
+                .addComponent(lblnegocio)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
+                .addComponent(lblnegocio)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addComponent(cbmercaderia)
@@ -146,7 +163,7 @@ public class SeleccionGastosNegocio extends javax.swing.JFrame {
                         .addComponent(cbViaticos)
                         .addGap(18, 18, 18)
                         .addComponent(cbSuministrosOficina)))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addGap(16, 16, 16))
         );
 
         jButton1.setText("ACEPTAR");
@@ -174,10 +191,10 @@ public class SeleccionGastosNegocio extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -217,7 +234,8 @@ public class SeleccionGastosNegocio extends javax.swing.JFrame {
                 cp.ddl(query);
             }
             
-            SeleccionarTipoGastoNegocios seleccionarH = new SeleccionarTipoGastoNegocios(cp, datosProducto, numFact, anio, cedulaCli, tipo,nombreEst);
+            SeleccionarTipoGastoNegocios seleccionarH = new SeleccionarTipoGastoNegocios(cp, datosProducto, numFact, anio, cedulaCli, tipo,nombreEst,totalSinImp, 
+            impuesto,totalConIVA);
             seleccionarH.setVisible(true);
             this.dispose();
         }
@@ -271,5 +289,6 @@ public class SeleccionGastosNegocio extends javax.swing.JFrame {
     private javax.swing.JCheckBox cbmercaderia;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblnegocio;
     // End of variables declaration//GEN-END:variables
 }
