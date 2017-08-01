@@ -138,7 +138,7 @@ public class ReporteFactura extends javax.swing.JFrame {
                     .addComponent(lbCodigo6)))
         );
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalle Factura"));
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos Factura"));
 
         lbCodigo4.setText("Código");
 
