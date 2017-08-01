@@ -92,7 +92,7 @@ public class ReporteFactura extends javax.swing.JFrame {
 
         lbCodigo.setText("RUC");
 
-        lbCodigo1.setText("Nombre");
+        lbCodigo1.setText("Nombre Proveedor");
 
         RUC_PRov.setEditable(false);
 
