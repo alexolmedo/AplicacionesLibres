@@ -168,10 +168,13 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Datos Factura"/>
+            <TitledBorder title="Detalle Factura"/>
           </Border>
         </Property>
       </Properties>
+      <AccessibilityProperties>
+        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Detalle Factura"/>
+      </AccessibilityProperties>
 
       <Layout>
         <DimensionLayout dim="0">

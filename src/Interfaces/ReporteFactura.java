@@ -138,7 +138,7 @@ public class ReporteFactura extends javax.swing.JFrame {
                     .addComponent(lbCodigo6)))
         );
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos Factura"));
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalle Factura"));
 
         lbCodigo4.setText("Código");
 
@@ -456,6 +456,8 @@ public class ReporteFactura extends javax.swing.JFrame {
                     .addComponent(botonPdf))
                 .addContainerGap())
         );
+
+        jPanel4.getAccessibleContext().setAccessibleName("Detalle Factura");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
