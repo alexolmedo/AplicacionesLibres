@@ -26,6 +26,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     ReporteProveedorAcumulado rFP;
     ReporteProdPorTipoPorAño rPTA;
     TiposGastosNegocios TGN;
+    FacturaElecNegoNew FENN;
     String cedula_usuario;
     int anio;
     Conexionn conn;
@@ -58,6 +59,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         rFP = new ReporteProveedorAcumulado(conn, cedula_usuario, anio);
         rPTA = new ReporteProdPorTipoPorAño(conn, cedula_usuario, anio);
         TGN = new TiposGastosNegocios(conn, cedula_usuario, anio);
+        FENN = new FacturaElecNegoNew(cedula_usuario, anio);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -168,6 +170,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         m_FactElect.add(jMenuItem2);
 
         jMenuItem12.setText("Gastos de Negocio");
+        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem12ActionPerformed(evt);
+            }
+        });
         m_FactElect.add(jMenuItem12);
 
         jMenuBar1.add(m_FactElect);
@@ -554,6 +561,23 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         TGN.cargarTabla();
         jDesktopPane.add(TGN);
     }//GEN-LAST:event_jMenuItem13ActionPerformed
+
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+        // TODO add your handling code here:
+        anio=Integer.parseInt(combo_anio.getSelectedItem().toString());
+        jDesktopPane.removeAll();
+        jDesktopPane.repaint();
+        fmp.setVisible(false);
+        fmn.setVisible(false);
+        hg.setVisible(false);
+        rp.setVisible(false);
+        rPV.setVisible(false);
+        fe = new FacturaElectronicaNew(cedula_usuario, anio);
+        fe.setVisible(false);   
+        FENN.setVisible(true);
+        FENN.setSize(jDesktopPane.getSize());
+        jDesktopPane.add(FENN);
+    }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     /**
      * @param args the command line arguments

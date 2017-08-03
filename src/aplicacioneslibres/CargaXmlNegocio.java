@@ -33,7 +33,7 @@ import org.jdom2.input.SAXBuilder;
  *
  * @author root
  */
-public class CargaXml {
+public class CargaXmlNegocio {
 
     public void cargarXml(String name, String cedulaCli, int anio, String tipo) throws IOException {
         //Se crea un SAXBuilder para poder parsear el archivo
@@ -241,10 +241,11 @@ public class CargaXml {
                         //Inserta establecimiento en caso de no existir
                         if (!cp.verificar_usuario("SELECT * FROM ESTABLECIMIENTO WHERE id_establecimiento='" + ruc + "'")) {
                             
-                            System.out.println("Estamos en el if");                                                            
+                            System.out.println("Estamos en el if");  
+                                                        
                             Object seleccion = JOptionPane.showInputDialog(null,"Se ha detectado el proveedor\n" +nombreEst + "\nSeleccione el tipo de gasto principal:","Nuevo Proveedor Detectado",                                                                                                    
                                     JOptionPane.QUESTION_MESSAGE,null,  // null para icono defecto
-                                    new Object[] {"Eduacion", "Vivienda", "Salud", "Alimentacion", "Vestimenta", "Otro" }, "Seleccione un tipo de Gasto");
+                                    cp.cargarTipoGasNegocio(cedulaCli).toArray(), "Seleccione un tipo de Gasto");
 
                             String TipoGasto_Es = "Insert into Prov_gasto (proveedor,tipo_gasto) "
                                     + "VALUES ('" + ruc + "','"+seleccion.toString() +"')";

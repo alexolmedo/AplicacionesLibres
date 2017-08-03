@@ -31,7 +31,6 @@ public class Conexionn {
             System.out.println("Connection Failed! Check output console");
             e.printStackTrace();
         }
-
     }
 
     public ArrayList cargarEstablecimiento() {
@@ -50,7 +49,23 @@ public class Conexionn {
         return n;
     }
     
-        public ArrayList cargarCliente(String id_ES) {
+    public ArrayList cargarTipoGasNegocio(String cedulaCli) {
+        ArrayList n = new ArrayList();
+        try {
+            Statement comando = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+            ResultSet resultado = comando.executeQuery(String.format("Select tipo_gasto from tipo_gasto_neg where id_usuario = '%s'",cedulaCli));
+            while (resultado.next()) {
+                n.add(resultado.getString("tipo_gasto"));
+            }
+            resultado.close();
+            comando.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return n;
+    }
+      
+    public ArrayList cargarCliente(String id_ES) {
         ArrayList n = new ArrayList();
         try {
             Statement comando = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
