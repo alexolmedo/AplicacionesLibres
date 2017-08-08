@@ -202,7 +202,7 @@ public class ReporteProdPorTipoPorAño extends javax.swing.JInternalFrame {
         });
 
         lbl_Reporte.setFont(new java.awt.Font("Open Sans", 1, 36)); // NOI18N
-        lbl_Reporte.setText("Reporte Facturas por Proveedor ");
+        lbl_Reporte.setText("Reporte Facturas por Tipo de Gasto ");
 
         tablaProv.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -250,7 +250,7 @@ public class ReporteProdPorTipoPorAño extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel5.setText("Proveedor");
+        jLabel5.setText("Tipo de Gasto");
 
         comboProv.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Vivienda", "Salud", "Educacion", "Alimentacion", "Vestimenta", "Otro" }));
         comboProv.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
@@ -310,7 +310,7 @@ public class ReporteProdPorTipoPorAño extends javax.swing.JInternalFrame {
                                 .addComponent(comboProv, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(lbl_Reporte)
                             .addComponent(jLabel1))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 156, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -338,7 +338,7 @@ public class ReporteProdPorTipoPorAño extends javax.swing.JInternalFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(botonExcel)
                         .addComponent(botonPdf)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(112, Short.MAX_VALUE))
         );
 
         pack();

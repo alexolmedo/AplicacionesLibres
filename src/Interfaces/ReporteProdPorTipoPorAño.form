@@ -60,7 +60,7 @@
                           <Component id="lbl_Reporte" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="156" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -96,7 +96,7 @@
                       <Component id="botonPdf" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="112" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -107,7 +107,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Open Sans" size="36" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Reporte Facturas por Proveedor "/>
+        <Property name="text" type="java.lang.String" value="Reporte Facturas por Tipo de Gasto "/>
       </Properties>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane2">
@@ -185,7 +185,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Proveedor"/>
+        <Property name="text" type="java.lang.String" value="Tipo de Gasto"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="comboProv">
