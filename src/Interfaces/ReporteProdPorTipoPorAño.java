@@ -189,7 +189,6 @@ public class ReporteProdPorTipoPorAño extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         comboProv = new javax.swing.JComboBox<>();
         botonExcel = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         botonPdf = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -202,7 +201,7 @@ public class ReporteProdPorTipoPorAño extends javax.swing.JInternalFrame {
         });
 
         lbl_Reporte.setFont(new java.awt.Font("Open Sans", 1, 36)); // NOI18N
-        lbl_Reporte.setText("Reporte Facturas por Tipo de Gasto ");
+        lbl_Reporte.setText("Reporte Productos por Tipo de Gasto ");
 
         tablaProv.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -270,8 +269,6 @@ public class ReporteProdPorTipoPorAño extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel1.setText("Seleccione un proveedor para mostrar en más detalle:");
-
         botonPdf.setText("Exportar Pdf");
         botonPdf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -308,9 +305,8 @@ public class ReporteProdPorTipoPorAño extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
                                 .addComponent(comboProv, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(lbl_Reporte)
-                            .addComponent(jLabel1))
-                        .addGap(0, 156, Short.MAX_VALUE)))
+                            .addComponent(lbl_Reporte))
+                        .addGap(0, 130, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -328,9 +324,7 @@ public class ReporteProdPorTipoPorAño extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(comboProv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel1)
-                .addGap(14, 14, 14)
+                .addGap(46, 46, 46)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -527,7 +521,6 @@ public class ReporteProdPorTipoPorAño extends javax.swing.JInternalFrame {
     private javax.swing.JButton botonPdf;
     private javax.swing.JComboBox<String> comboProv;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
