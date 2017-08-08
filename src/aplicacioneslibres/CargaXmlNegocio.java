@@ -41,6 +41,7 @@ public class CargaXmlNegocio {
         File xmlFile = new File(name);
         
         //Reformatear facturas de Payless
+        
         try{
             FileReader fr = new FileReader(xmlFile);
             String s;

@@ -39,8 +39,8 @@ public class SeleccionarTipoGastoNegocio extends javax.swing.JFrame {
     int anio;
     String cedula, tipo;
 
-    public SeleccionarTipoGastoNegocio(Conexionn conn, Object[][] tipos, String factura, int anio, 
-            String cedula, String tipo, String nombrCli, String id_Cli, String RUC,String NomComercial, 
+    public SeleccionarTipoGastoNegocio(Conexionn conn, Object[][] tipos, String factura, int anio,
+            String cedula, String tipo, String nombrCli, String id_Cli, String RUC, String NomComercial,
             String Direccion, String Codigo, String fecha, String totalS, String IVA, String totalC) {
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/ico_21-1.png")).getImage());
@@ -48,7 +48,7 @@ public class SeleccionarTipoGastoNegocio extends javax.swing.JFrame {
         this.numFac = factura;
         this.anio = anio;
         this.cedula = cedula;
-        this.tipo = tipo;               
+        this.tipo = tipo;
 
         String nombreCabeceras[] = {"Descripcion", "Precio Total", "Tipo de Gasto"};
 
@@ -56,25 +56,25 @@ public class SeleccionarTipoGastoNegocio extends javax.swing.JFrame {
         for (int i = 0; i < tipos.length; i++) {
             tipoEstado[i] = "";
         }
-        
+
         //Datos Cliente
         RUC_CI_Cli.setText(id_Cli);
         nombre_Cli.setText(nombrCli);
-        
+
         //Datos Proveedor
         RUC_PRov.setText(RUC);
         nomb_Prov.setText(NomComercial);
         dir_Prov.setText(Direccion);
-        
+
         //Datos Factura
         cod.setText(Codigo);
         this.fecha.setText(fecha);
-        
+
         totalSinIVA.setText(totalS);
         this.IVA.setText(IVA);
         totalConIVA.setText(totalC);
-        
-        tablaProductos = new JTable(tipos, nombreCabeceras){
+
+        tablaProductos = new JTable(tipos, nombreCabeceras) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return column == 2;
@@ -85,12 +85,21 @@ public class SeleccionarTipoGastoNegocio extends javax.swing.JFrame {
         comboBox = new JComboBox();
         comboBox.addItem("");
 
-        comboBox.addItem("Vivienda");
-        comboBox.addItem("Salud");
-        comboBox.addItem("Educacion");
-        comboBox.addItem("Alimentacion");
-        comboBox.addItem("Vestimenta");
-        comboBox.addItem("Otro");
+        String q2 = "SELECT ID_USUARIO,COUNT(ID_USUARIO) FROM TIPO_GASTO_NEG WHERE ID_USUARIO = '" + cedula + "' GROUP BY ID_USUARIO";
+        
+        ArrayList num =  conTipo.ddl(q2);
+        System.out.println("num "+num);
+        int longitud = Integer.parseInt(num.get(1).toString());
+        for (int i = 1; i <longitud; i++) {
+
+            String query = "SELECT * FROM TIPO_GASTO_NEG WHERE ID_USUARIO = '" + cedula + "'";
+            ArrayList n = conTipo.ddl(query);
+            for (int j = 0; j<n.size(); j++){
+                System.out.println(">>>> " +n.get(j));
+            }
+            comboBox.addItem(n.get(1));
+
+        }
 
         tablaProductos.getModel().addTableModelListener(new TableModelListener() {
             @Override
@@ -157,16 +166,16 @@ public class SeleccionarTipoGastoNegocio extends javax.swing.JFrame {
         tablaProductos.getColumnModel().getColumn(1).setMaxWidth(100);
         tablaProductos.getColumnModel().getColumn(2).setMinWidth(150);
         tablaProductos.getColumnModel().getColumn(2).setMaxWidth(150);
-        
-        for (int i=0; i<tipos.length;i++) {
-            String q = "SELECT TIPO_GASTO FROM PROV_GASTO WHERE PROVEEDOR = '" + RUC +"'";
-            ArrayList n = conTipo.ddl(q);
-            tablaProductos.setValueAt(n.get(0), i, 2);
-            
-            if(conTipo.verificar_usuario("SELECT DESCRIPCIONRELACION FROM RELACIONGASTO WHERE descripcionrelacion='" + tablaProductos.getValueAt(i, 0) + "'")){                    
-                String q1 = "SELECT TIPO_GASTO FROM RELACIONGASTO WHERE descripcionrelacion='" + tablaProductos.getValueAt(i, 0) + "'";                
-                ArrayList n1 = conTipo.ddl(q1);                          
-                tablaProductos.setValueAt(n1.get(0), i, 2);                
+
+        for (int i = 0; i < tipos.length; i++) {
+            String q = "SELECT TIPO_GASTO FROM PROV_GASTO WHERE PROVEEDOR = '" + RUC + "'";
+            ArrayList lista = conTipo.ddl(q);
+            tablaProductos.setValueAt(lista.get(0), i, 2);
+
+            if (conTipo.verificar_usuario("SELECT DESCRIPCIONRELACION FROM RELACIONGASTO WHERE descripcionrelacion='" + tablaProductos.getValueAt(i, 0) + "'")) {
+                String q1 = "SELECT TIPO_GASTO FROM RELACIONGASTO WHERE descripcionrelacion='" + tablaProductos.getValueAt(i, 0) + "'";
+                ArrayList n1 = conTipo.ddl(q1);
+                tablaProductos.setValueAt(n1.get(0), i, 2);
             }
         }
         /*for(int i=0;i<tipos.length;i++){              
@@ -176,7 +185,7 @@ public class SeleccionarTipoGastoNegocio extends javax.swing.JFrame {
         setLocationRelativeTo(getParent());
         setResizable(false);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -578,7 +587,7 @@ public class SeleccionarTipoGastoNegocio extends javax.swing.JFrame {
         }
 
         if (validado == true) {
-            String query, query1 ="";
+            String query, query1 = "";
 
             double totales[] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 
@@ -589,8 +598,7 @@ public class SeleccionarTipoGastoNegocio extends javax.swing.JFrame {
             }
             if (!txtSalud.getText().equals("0.0")) {
                 totales[1] = ingresarTipo(txtSalud, lblSalud);
-            }
-            else {
+            } else {
                 IngrTipo0(lblSalud);
             }
             if (!txtEducacion.getText().equals("0.0")) {
@@ -605,7 +613,7 @@ public class SeleccionarTipoGastoNegocio extends javax.swing.JFrame {
             }
             if (!txtVestimenta.getText().equals("0.0")) {
                 totales[4] = ingresarTipo(txtVestimenta, lblVestimenta);
-            } else  {
+            } else {
                 IngrTipo0(lblVestimenta);
             }
             if (!txtOtro.getText().equals("0.0")) {
@@ -625,30 +633,26 @@ public class SeleccionarTipoGastoNegocio extends javax.swing.JFrame {
             } else {
                 query = "INSERT INTO HISTORIAL_PAGOS_PERSONALES VALUES (" + anio + ",'" + cedula + "'," + totales[3] + "," + totales[1] + "," + totales[0] + "," + totales[2] + "," + totales[4] + "," + totales[5] + ")";
                 System.out.println("Estoy en el else");
-                query1= "update cliente set nombre_cliente = '" + nombre_Cli.getText() + "'";
+                query1 = "update cliente set nombre_cliente = '" + nombre_Cli.getText() + "'";
             }
-            
+
             for (int i = 0; i < tipoEstado.length; i++) {
                 if (!conTipo.verificar_usuario("SELECT DESCRIPCIONRELACION FROM RELACIONGASTO WHERE descripcionrelacion='" + tablaProductos.getValueAt(i, 0) + "'")) {
                     String q;
                     q = "INSERT INTO RELACIONGASTO (descripcionrelacion,tipo_gasto)"
-                            + "VALUES('" + tablaProductos.getValueAt(i, 0)+ "','" + tablaProductos.getValueAt(i, 2)+ "')";
+                            + "VALUES('" + tablaProductos.getValueAt(i, 0) + "','" + tablaProductos.getValueAt(i, 2) + "')";
                     conTipo.insertar(q);
                 }
             }
 
-            
-            for (int i=0; i<tablaProductos.getRowCount();i++) {         
+            for (int i = 0; i < tablaProductos.getRowCount(); i++) {
                 String q;
                 q = "INSERT INTO DETALLE (ID_FACTURA,NOMBRE_PRODUCTO,TOTAL,TIPO)"
-                            + "VALUES('" +cod.getText()+"','"+ tablaProductos.getValueAt(i, 0)+ "','" + tablaProductos.getValueAt(i, 1)+ "','" + tablaProductos.getValueAt(i, 2)+ "')";
+                        + "VALUES('" + cod.getText() + "','" + tablaProductos.getValueAt(i, 0) + "','" + tablaProductos.getValueAt(i, 1) + "','" + tablaProductos.getValueAt(i, 2) + "')";
                 conTipo.insertar(q);
                 System.out.println(q);
             }
-            
-            
-            
-            
+
             conTipo.insertar(query);
             conTipo.insertar(query1);
 
@@ -666,17 +670,17 @@ public class SeleccionarTipoGastoNegocio extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        String query ="";       
-         //if (conTipo.verificar_usuario("SELECT * FROM HISTORIAL_PAGOS_PERSONALES WHERE anio_historial_p=" + anio + " AND id_cliente='" + cedula + "'")) {
-                query = "delete from factura where id_factura = '" + numFac +"'";                
-                
-                //System.out.println("Estoy en el if");
-            //} 
-         conTipo.insertar(query);         
+        String query = "";
+        //if (conTipo.verificar_usuario("SELECT * FROM HISTORIAL_PAGOS_PERSONALES WHERE anio_historial_p=" + anio + " AND id_cliente='" + cedula + "'")) {
+        query = "delete from factura where id_factura = '" + numFac + "'";
 
-            System.out.println("LA factura no se ingresa");
-            recargar(conTipo);
-            this.dispose();
+        //System.out.println("Estoy en el if");
+        //} 
+        conTipo.insertar(query);
+
+        System.out.println("LA factura no se ingresa");
+        recargar(conTipo);
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void IngrTipo0(JLabel lblTipo) {
@@ -685,19 +689,20 @@ public class SeleccionarTipoGastoNegocio extends javax.swing.JFrame {
                 + "VALUES('" + numFac + "','" + lblTipo.getText() + "'," + 0 + ")";
         conTipo.insertar(q);
     }
+
     private void recargar(Conexionn conn) {
-         ArrayList auxRec = new ArrayList();
+        ArrayList auxRec = new ArrayList();
         Interfaces.FacturaManualPersonal.combo_Establecimientos.removeAllItems();
         Interfaces.FacturaManualNegocio.combo_Establecimientos.removeAllItems();
         Interfaces.FacturaManualPersonal.combo_Establecimientos.addItem("");
         Interfaces.FacturaManualNegocio.combo_Establecimientos.addItem("");
         auxRec = conn.cargarEstablecimiento();
-        for (Object est : auxRec) {            
+        for (Object est : auxRec) {
             Interfaces.FacturaManualPersonal.combo_Establecimientos.addItem(est.toString());
             Interfaces.FacturaManualNegocio.combo_Establecimientos.addItem(est.toString());
         }
     }
-    
+
     public void restarAgregado(JTextField txtField, int row) {
         double total;
         total = Double.parseDouble(txtField.getText());
