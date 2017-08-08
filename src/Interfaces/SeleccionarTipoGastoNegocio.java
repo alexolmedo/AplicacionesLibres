@@ -93,11 +93,12 @@ public class SeleccionarTipoGastoNegocio extends javax.swing.JFrame {
         for (int i = 1; i <longitud; i++) {
 
             //String query = "SELECT TIPO_GASTO FROM TIPO_GASTO_NEG WHERE ID_USUARIO = '" + cedula + "'";
-            ArrayList n = conTipo.cargarTipoGasNegocio(cedula);
-            for (int j = 0; j<n.size(); j++){
-                System.out.println(">>>> " +n.get(j));
+            Object[] n = conn.cargarTipoGasNegocio(cedula).toArray();
+            for (int j = 0; j<n.length; j++){
+                System.out.println(">>>> " +n[j]);
+                comboBox.addItem(n[j]);
             }
-            comboBox.addItem(n.get(0));
+            //comboBox.addItem(n[]);
 
         }
 
