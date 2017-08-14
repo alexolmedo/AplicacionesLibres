@@ -38,23 +38,22 @@ public class RegistroLimitesAnio extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel7 = new javax.swing.JLabel();
+        txt_anio = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        btn_Registrar = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txt_vestimenta = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        txt_anio = new javax.swing.JTextField();
         txt_vivienda = new javax.swing.JTextField();
         txt_salud = new javax.swing.JTextField();
         txt_educacion = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         txt_alimentacion = new javax.swing.JTextField();
-        btn_Registrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(350, 450));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
@@ -68,84 +67,21 @@ public class RegistroLimitesAnio extends javax.swing.JFrame {
         jLabel7.setText("REGISTRO DE LIMITES");
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
 
-        jLabel4.setBackground(java.awt.Color.black);
-        jLabel4.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
-        jLabel4.setText("Alimentacion:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, -1, -1));
-
-        jLabel5.setBackground(java.awt.Color.black);
-        jLabel5.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
-        jLabel5.setText("Salud:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, -1, -1));
-
-        txt_vestimenta.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_vestimentaKeyTyped(evt);
-            }
-        });
-        getContentPane().add(txt_vestimenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 310, 120, 30));
-
-        jLabel6.setBackground(java.awt.Color.black);
-        jLabel6.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
-        jLabel6.setText("VIvienda:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, -1, -1));
-
-        jLabel10.setBackground(java.awt.Color.black);
-        jLabel10.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
-        jLabel10.setText("Vestimenta:");
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 320, -1, -1));
-
         txt_anio.setFont(new java.awt.Font("Noto Sans", 0, 18)); // NOI18N
         txt_anio.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_anioKeyTyped(evt);
             }
         });
-        getContentPane().add(txt_anio, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, 90, 30));
-
-        txt_vivienda.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_viviendaKeyTyped(evt);
-            }
-        });
-        getContentPane().add(txt_vivienda, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, 120, 30));
-
-        txt_salud.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_saludKeyTyped(evt);
-            }
-        });
-        getContentPane().add(txt_salud, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, 120, 30));
-
-        txt_educacion.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_educacionKeyTyped(evt);
-            }
-        });
-        getContentPane().add(txt_educacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 270, 120, 30));
-
-        jLabel11.setBackground(java.awt.Color.black);
-        jLabel11.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
-        jLabel11.setText("Educacion:");
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, -1, -1));
+        getContentPane().add(txt_anio, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, 90, 30));
 
         jLabel8.setBackground(java.awt.Color.black);
         jLabel8.setFont(new java.awt.Font("Open Sans Extrabold", 1, 14)); // NOI18N
         jLabel8.setText("AÑO:");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, -1));
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, -1, -1));
 
-        jLabel9.setBackground(java.awt.Color.black);
-        jLabel9.setFont(new java.awt.Font("Open Sans Extrabold", 1, 18)); // NOI18N
-        jLabel9.setText("LIMITES");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, -1, -1));
-
-        txt_alimentacion.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_alimentacionKeyTyped(evt);
-            }
-        });
-        getContentPane().add(txt_alimentacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 120, 30));
-
+        btn_Registrar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btn_Registrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/if_list-add-user_9381.png"))); // NOI18N
         btn_Registrar.setText("Registrar");
         btn_Registrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -153,6 +89,71 @@ public class RegistroLimitesAnio extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btn_Registrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 370, 150, 50));
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "LIMITES", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 18))); // NOI18N
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel4.setBackground(java.awt.Color.black);
+        jLabel4.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
+        jLabel4.setText("Alimentacion:");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, -1, -1));
+
+        jLabel5.setBackground(java.awt.Color.black);
+        jLabel5.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
+        jLabel5.setText("Salud:");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, -1, -1));
+
+        txt_vestimenta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_vestimentaKeyTyped(evt);
+            }
+        });
+        jPanel1.add(txt_vestimenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, 120, 30));
+
+        jLabel6.setBackground(java.awt.Color.black);
+        jLabel6.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
+        jLabel6.setText("VIvienda:");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, -1, -1));
+
+        jLabel10.setBackground(java.awt.Color.black);
+        jLabel10.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
+        jLabel10.setText("Vestimenta:");
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, -1, -1));
+
+        txt_vivienda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_viviendaKeyTyped(evt);
+            }
+        });
+        jPanel1.add(txt_vivienda, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 110, 120, 30));
+
+        txt_salud.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_saludKeyTyped(evt);
+            }
+        });
+        jPanel1.add(txt_salud, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 120, 30));
+
+        txt_educacion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_educacionKeyTyped(evt);
+            }
+        });
+        jPanel1.add(txt_educacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 150, 120, 30));
+
+        jLabel11.setBackground(java.awt.Color.black);
+        jLabel11.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
+        jLabel11.setText("Educacion:");
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, -1, -1));
+
+        txt_alimentacion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_alimentacionKeyTyped(evt);
+            }
+        });
+        jPanel1.add(txt_alimentacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, 120, 30));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 300, 240));
 
         pack();
         setLocationRelativeTo(null);
@@ -284,7 +285,7 @@ JOptionPane.showMessageDialog(null, "se cerrara");
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txt_alimentacion;
     private javax.swing.JTextField txt_anio;
     private javax.swing.JTextField txt_educacion;
