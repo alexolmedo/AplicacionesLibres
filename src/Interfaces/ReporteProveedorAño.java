@@ -127,8 +127,10 @@ public class ReporteProveedorAño extends javax.swing.JInternalFrame {
         lbl_Reporte.setFont(new java.awt.Font("Open Sans", 1, 48)); // NOI18N
         lbl_Reporte.setText("Reporte Facturas por Proveedor ");
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("Proveedor:");
 
+        comboProv.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         comboProv.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un proveedor..." }));
         comboProv.setToolTipText("");
         comboProv.addItemListener(new java.awt.event.ItemListener() {
@@ -151,6 +153,7 @@ public class ReporteProveedorAño extends javax.swing.JInternalFrame {
             }
         });
 
+        tablaProv.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         tablaProv.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null, null},
@@ -172,8 +175,10 @@ public class ReporteProveedorAño extends javax.swing.JInternalFrame {
         });
         jScrollPane2.setViewportView(tablaProv);
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("Cliente");
 
+        comboProv1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         comboProv1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un  cliente..." }));
         comboProv1.setToolTipText("");
         comboProv1.addItemListener(new java.awt.event.ItemListener() {
@@ -196,6 +201,8 @@ public class ReporteProveedorAño extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancel.png"))); // NOI18N
         jButton1.setText("Cancelar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -212,7 +219,10 @@ public class ReporteProveedorAño extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(comboProv1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(18, 18, 18)
+                                .addComponent(comboProv1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(lbl_Reporte)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -223,9 +233,7 @@ public class ReporteProveedorAño extends javax.swing.JInternalFrame {
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel3)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(comboProv, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(100, 100, 100)
-                                    .addComponent(jLabel4))))))
+                                    .addComponent(comboProv, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -241,7 +249,7 @@ public class ReporteProveedorAño extends javax.swing.JInternalFrame {
                     .addComponent(comboProv1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(19, 19, 19))
         );

@@ -22,6 +22,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     Reportes rp;
     ReporteProveedor rPV;
     ReporteNumFacPorAño rNFA;
+    ReporteNumFacPorAñoNegocio rNFANegocio;
     ReporteFacturasAño rFA;
     ReporteProveedorAcumulado rFP;
     ReporteProdPorTipoPorAño rPTA;
@@ -55,6 +56,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         rp = new Reportes(conn, cedula_usuario, anio);
         rPV = new ReporteProveedor(conn, cedula_usuario, anio);
         rNFA = new ReporteNumFacPorAño(conn, cedula_usuario, anio);
+        rNFANegocio = new ReporteNumFacPorAñoNegocio(conn, cedula_usuario, anio);
         rFA = new ReporteFacturasAño(conn, cedula_usuario, anio);
         rFP = new ReporteProveedorAcumulado(conn, cedula_usuario, anio);
         rPTA = new ReporteProdPorTipoPorAño(conn, cedula_usuario, anio);
@@ -82,10 +84,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
+        jMenu5 = new javax.swing.JMenu();
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
+        jMenu6 = new javax.swing.JMenu();
+        miNumeroFacAnioNegocio = new javax.swing.JMenuItem();
+        jMenuItem16 = new javax.swing.JMenuItem();
+        jMenuItem17 = new javax.swing.JMenuItem();
+        jMenuItem18 = new javax.swing.JMenuItem();
         m_Usuario = new javax.swing.JMenu();
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -187,43 +195,78 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/if_Report_669954.png"))); // NOI18N
         jMenu4.setText("Reportes");
 
+        jMenu5.setText("Facturas Personales");
+
+        jMenuItem10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/if_8_2136414.png"))); // NOI18N
         jMenuItem10.setText("Número de Facturas por Año");
         jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem10ActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem10);
+        jMenu5.add(jMenuItem10);
 
+        jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/if_provider_45069.png"))); // NOI18N
         jMenuItem8.setText("Número de Facturas por Proveedor");
         jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem8ActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem8);
+        jMenu5.add(jMenuItem8);
 
-        jMenuItem9.setText("Acumulado de Gastos por Año");
-        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem9ActionPerformed(evt);
-            }
-        });
-        jMenu4.add(jMenuItem9);
-
+        jMenuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/if_product-sales-report_49607.png"))); // NOI18N
         jMenuItem11.setText("Reporte Productos por Tipo y Año");
         jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem11ActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem11);
+        jMenu5.add(jMenuItem11);
+
+        jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/if_13_62655.png"))); // NOI18N
+        jMenuItem9.setText("Acumulado de Gastos por Año");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem9);
+
+        jMenu4.add(jMenu5);
+
+        jMenu6.setText("Facturas por Negocio");
+
+        miNumeroFacAnioNegocio.setText("Número de Facturas por Año");
+        miNumeroFacAnioNegocio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miNumeroFacAnioNegocioActionPerformed(evt);
+            }
+        });
+        jMenu6.add(miNumeroFacAnioNegocio);
+
+        jMenuItem16.setText("Número de Facturas por Proveedor");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem16ActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItem16);
+
+        jMenuItem17.setText("Reporte Productos por Tipo y Año");
+        jMenu6.add(jMenuItem17);
+
+        jMenuItem18.setText("Acumulado de Gastos por Año");
+        jMenu6.add(jMenuItem18);
+
+        jMenu4.add(jMenu6);
 
         jMenuBar1.add(jMenu4);
 
         m_Usuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/if_user_285655.png"))); // NOI18N
         m_Usuario.setText("Usuario");
 
+        jMenuItem13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/if_20_1874854.png"))); // NOI18N
         jMenuItem13.setText("Tipos de Gastos de Negocio");
         jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -232,6 +275,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         m_Usuario.add(jMenuItem13);
 
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/if_files-folders-50_808598.png"))); // NOI18N
         jMenuItem3.setText("Darme de baja del sistema");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -240,6 +284,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         m_Usuario.add(jMenuItem3);
 
+        jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/if_exit_28363 (1).png"))); // NOI18N
         jMenuItem7.setText("Salir");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -586,6 +631,30 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jDesktopPane.add(FENN);
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
+    private void miNumeroFacAnioNegocioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miNumeroFacAnioNegocioActionPerformed
+        // TODO add your handling code here:
+        jDesktopPane.removeAll();
+        jDesktopPane.repaint();
+        fmp.setVisible(false);
+        fmn.setVisible(false);
+        fe.setVisible(false);
+        rp.setVisible(false);        
+        hg.setVisible(false);                         
+        rPV.setVisible(false);        
+        rNFA.setVisible(false);
+        rNFANegocio.setVisible(true);
+        rNFANegocio.setSize(jDesktopPane.getSize());
+        ArrayList nombCLIente  = conn.ddl("select nombre_cliente from cliente where id_cliente ='" +this.cedula_usuario +"'");
+        rNFANegocio.cargarCliente( nombCLIente.get(0).toString());
+        rNFANegocio.cargarTabla();
+        jDesktopPane.add(rNFANegocio);
+    }//GEN-LAST:event_miNumeroFacAnioNegocioActionPerformed
+
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jMenuItem16ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -637,6 +706,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
@@ -644,6 +715,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem16;
+    private javax.swing.JMenuItem jMenuItem17;
+    private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -656,5 +730,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu m_FactElect;
     private javax.swing.JMenu m_FactFisic;
     private javax.swing.JMenu m_Usuario;
+    private javax.swing.JMenuItem miNumeroFacAnioNegocio;
     // End of variables declaration//GEN-END:variables
 }

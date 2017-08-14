@@ -49,123 +49,203 @@ public class EdicionLimitesAnio extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel7 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        txt_vestimenta = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        btn_Registrar = new javax.swing.JButton();
+        combo_anio = new javax.swing.JComboBox<>();
+        jPanel1 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         txt_vivienda = new javax.swing.JTextField();
         txt_salud = new javax.swing.JTextField();
         txt_educacion = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         txt_alimentacion = new javax.swing.JTextField();
-        btn_Registrar = new javax.swing.JButton();
-        combo_anio = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        txt_vestimenta = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(350, 450));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
             }
         });
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel7.setBackground(java.awt.Color.black);
         jLabel7.setFont(new java.awt.Font("Open Sans Extrabold", 1, 24)); // NOI18N
-        jLabel7.setForeground(java.awt.Color.black);
         jLabel7.setText("EDICION DE LIMITES");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
-
-        jLabel4.setBackground(java.awt.Color.black);
-        jLabel4.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
-        jLabel4.setText("Alimentacion:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, -1, -1));
-
-        jLabel5.setBackground(java.awt.Color.black);
-        jLabel5.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
-        jLabel5.setText("Salud:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, -1, -1));
-
-        txt_vestimenta.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_vestimentaKeyTyped(evt);
-            }
-        });
-        getContentPane().add(txt_vestimenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 310, 120, 30));
-
-        jLabel6.setBackground(java.awt.Color.black);
-        jLabel6.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
-        jLabel6.setText("VIvienda:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, -1, -1));
-
-        jLabel10.setBackground(java.awt.Color.black);
-        jLabel10.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
-        jLabel10.setText("Vestimenta:");
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 320, -1, -1));
-
-        txt_vivienda.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_viviendaKeyTyped(evt);
-            }
-        });
-        getContentPane().add(txt_vivienda, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, 120, 30));
-
-        txt_salud.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_saludKeyTyped(evt);
-            }
-        });
-        getContentPane().add(txt_salud, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, 120, 30));
-
-        txt_educacion.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_educacionKeyTyped(evt);
-            }
-        });
-        getContentPane().add(txt_educacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 270, 120, 30));
-
-        jLabel11.setBackground(java.awt.Color.black);
-        jLabel11.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
-        jLabel11.setText("Educacion:");
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, -1, -1));
 
         jLabel8.setBackground(java.awt.Color.black);
         jLabel8.setFont(new java.awt.Font("Open Sans Extrabold", 1, 14)); // NOI18N
-        jLabel8.setForeground(java.awt.Color.black);
         jLabel8.setText("AÑO:");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, -1));
 
-        jLabel9.setBackground(java.awt.Color.black);
-        jLabel9.setFont(new java.awt.Font("Open Sans Extrabold", 1, 18)); // NOI18N
-        jLabel9.setForeground(java.awt.Color.black);
-        jLabel9.setText("LIMITES");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, -1, -1));
-
-        txt_alimentacion.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_alimentacionKeyTyped(evt);
-            }
-        });
-        getContentPane().add(txt_alimentacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 120, 30));
-
+        btn_Registrar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btn_Registrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/if_edit_173002.png"))); // NOI18N
         btn_Registrar.setText("Editar");
         btn_Registrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_RegistrarActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_Registrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 370, 150, 50));
 
         combo_anio.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 combo_anioItemStateChanged(evt);
             }
         });
-        getContentPane().add(combo_anio, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 60, 120, -1));
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "LIMITES", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
+
+        jLabel6.setBackground(java.awt.Color.black);
+        jLabel6.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
+        jLabel6.setText("VIvienda:");
+
+        jLabel10.setBackground(java.awt.Color.black);
+        jLabel10.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
+        jLabel10.setText("Vestimenta:");
+
+        txt_vivienda.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txt_vivienda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_viviendaKeyTyped(evt);
+            }
+        });
+
+        txt_salud.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txt_salud.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_saludKeyTyped(evt);
+            }
+        });
+
+        txt_educacion.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txt_educacion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_educacionKeyTyped(evt);
+            }
+        });
+
+        jLabel11.setBackground(java.awt.Color.black);
+        jLabel11.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
+        jLabel11.setText("Educacion:");
+
+        jLabel4.setBackground(java.awt.Color.black);
+        jLabel4.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
+        jLabel4.setText("Alimentacion:");
+
+        txt_alimentacion.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txt_alimentacion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_alimentacionKeyTyped(evt);
+            }
+        });
+
+        jLabel5.setBackground(java.awt.Color.black);
+        jLabel5.setFont(new java.awt.Font("Open Sans", 1, 14)); // NOI18N
+        jLabel5.setText("Salud:");
+
+        txt_vestimenta.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txt_vestimenta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_vestimentaKeyTyped(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel4))
+                .addGap(36, 36, 36)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txt_alimentacion, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_salud, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_vivienda, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_educacion, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_vestimenta, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(27, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel4))
+                    .addComponent(txt_alimentacion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(txt_salud, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txt_vivienda, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(18, 18, 18)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_educacion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_vestimenta, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addGap(58, 58, 58))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(71, 71, 71)
+                        .addComponent(jLabel8)
+                        .addGap(18, 18, 18)
+                        .addComponent(combo_anio, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(94, 94, 94)
+                        .addComponent(btn_Registrar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel7)
+                .addGap(17, 17, 17)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(combo_anio, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_Registrar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         pack();
         setLocationRelativeTo(null);
@@ -301,7 +381,7 @@ JOptionPane.showMessageDialog(null, "se cerrara");
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txt_alimentacion;
     private javax.swing.JTextField txt_educacion;
     private javax.swing.JTextField txt_salud;
