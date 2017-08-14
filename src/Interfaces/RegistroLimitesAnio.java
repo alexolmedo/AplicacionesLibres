@@ -88,7 +88,7 @@ public class RegistroLimitesAnio extends javax.swing.JFrame {
                 btn_RegistrarActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_Registrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 370, 150, 50));
+        getContentPane().add(btn_Registrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 350, 150, 50));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "LIMITES", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 18))); // NOI18N
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
