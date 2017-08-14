@@ -230,7 +230,6 @@ public class SeleccionarTipoGastoNegocio extends javax.swing.JFrame {
         cod = new javax.swing.JTextField();
         fecha = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
-        Calcular = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableTiposGasto = new javax.swing.JTable();
@@ -240,6 +239,7 @@ public class SeleccionarTipoGastoNegocio extends javax.swing.JFrame {
         totalSinIVA = new javax.swing.JTextField();
         totalConIVA = new javax.swing.JTextField();
         IVA = new javax.swing.JTextField();
+        Calcular = new javax.swing.JButton();
 
         jLabel5.setText("jLabel5");
 
@@ -406,13 +406,6 @@ public class SeleccionarTipoGastoNegocio extends javax.swing.JFrame {
             }
         });
 
-        Calcular.setText("Calcular");
-        Calcular.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CalcularActionPerformed(evt);
-            }
-        });
-
         jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jTableTiposGasto.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -445,24 +438,36 @@ public class SeleccionarTipoGastoNegocio extends javax.swing.JFrame {
         IVA.setEditable(false);
         IVA.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
+        Calcular.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        Calcular.setText("Calcular");
+        Calcular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CalcularActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(82, 82, 82)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
                     .addComponent(jLabel2)
                     .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(IVA, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(totalSinIVA, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(totalConIVA, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(39, 39, 39))
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(108, 108, 108)
+                .addComponent(Calcular)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -484,7 +489,9 @@ public class SeleccionarTipoGastoNegocio extends javax.swing.JFrame {
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(totalConIVA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Calcular)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -503,8 +510,6 @@ public class SeleccionarTipoGastoNegocio extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Calcular)
-                .addGap(26, 26, 26)
                 .addComponent(jButton1)
                 .addGap(47, 47, 47)
                 .addComponent(jButton2)
@@ -525,12 +530,11 @@ public class SeleccionarTipoGastoNegocio extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(Calcular))
-                .addContainerGap(21, Short.MAX_VALUE))
+                    .addComponent(jButton2))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
@@ -705,14 +709,13 @@ public class SeleccionarTipoGastoNegocio extends javax.swing.JFrame {
          
         for (int i=0; i<jTableTiposGasto.getRowCount(); i++ ){
             for (int j=0; j<tablaProductos.getRowCount(); j++) {
-                if (tablaProductos.getValueAt(j, 2).equals(jTableTiposGasto.getValueAt(i,0))) {
-        
+                if (tablaProductos.getValueAt(j, 2).equals(jTableTiposGasto.getValueAt(i,0))) {        
                     jTableTiposGasto.setValueAt((Double.parseDouble(jTableTiposGasto.getValueAt(i,1).toString()) + Double.parseDouble(tablaProductos.getValueAt(j, 1).toString())), i, 1);
                 }
             }
         } 
     }
-
+    
     /**
      * @param args the command line arguments
      */
