@@ -114,6 +114,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jPanel1.setMaximumSize(new java.awt.Dimension(32767, 30));
         jPanel1.setPreferredSize(new java.awt.Dimension(126, 30));
 
+        combo_anio.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         combo_anio.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 combo_anioItemStateChanged(evt);
@@ -134,6 +135,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Año");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -144,13 +146,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addGap(8, 8, 8)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(combo_anio, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(combo_anio, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 10, Short.MAX_VALUE)
+                .addGap(0, 9, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(combo_anio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)))
@@ -159,8 +161,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jDesktopPane.setPreferredSize(null);
         jDesktopPane.setRequestFocusEnabled(false);
 
+        m_FactElect.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/if_document_3709.png"))); // NOI18N
         m_FactElect.setText("Facturas Electronicas");
 
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/if_personal_loan_44640.png"))); // NOI18N
         jMenuItem2.setText("Gastos Personales");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -169,6 +173,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         m_FactElect.add(jMenuItem2);
 
+        jMenuItem12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/if_Business_graph_pie_chart_revenue_business_growth_graph_growth_chart_1886556.png"))); // NOI18N
         jMenuItem12.setText("Gastos de Negocio");
         jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -179,6 +184,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(m_FactElect);
 
+        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/if_Report_669954.png"))); // NOI18N
         jMenu4.setText("Reportes");
 
         jMenuItem10.setText("Número de Facturas por Año");
@@ -215,6 +221,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu4);
 
+        m_Usuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/if_user_285655.png"))); // NOI18N
         m_Usuario.setText("Usuario");
 
         jMenuItem13.setText("Tipos de Gastos de Negocio");
@@ -299,7 +306,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDesktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE))
+                .addComponent(jDesktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE))
         );
 
         pack();

@@ -47,6 +47,7 @@ public class V_RegistroUsuario extends javax.swing.JFrame {
         btn_registrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Registro");
         setResizable(false);
 
         btn_salir.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
