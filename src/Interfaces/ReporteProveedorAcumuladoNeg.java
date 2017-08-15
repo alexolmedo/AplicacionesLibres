@@ -68,6 +68,19 @@ public class ReporteProveedorAcumuladoNeg extends javax.swing.JInternalFrame {
         for (MouseMotionListener action : actions) {
             north.removeMouseMotionListener(action);
         }    
+        
+        ArrayList tipoGastosNeg = conn.cargarTipoGasNegocio(cedula_usuario);
+        DefaultTableModel dm = (DefaultTableModel) jTableTiposGasto.getModel();
+            int i = 0;
+            for (int l=0; l<tipoGastosNeg.size(); l++) {
+                System.out.println("estoy en el while");
+                dm.addRow(new Object [] {"",""});
+                //for (int j = 0; j < 2; j++) {                                      
+                    jTableTiposGasto.setValueAt(tipoGastosNeg.get(l).toString(),l ,0 );
+                    jTableTiposGasto.setValueAt("0.0",l ,1 );
+                    //System.out.println(rs.getObject(j + 1));
+                //}
+            }
     }
     
     public void cargarDato(String sfd) {
@@ -140,6 +153,8 @@ public class ReporteProveedorAcumuladoNeg extends javax.swing.JInternalFrame {
         botonExcel = new javax.swing.JButton();
         labelAnio = new javax.swing.JLabel();
         botonPdf = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTableTiposGasto = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setEnabled(false);
@@ -158,11 +173,11 @@ public class ReporteProveedorAcumuladoNeg extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "RUC Prov", "Nomb Prov", "Num Fac", "T. Vivienda", "T. Educacion", "T. Otro", "T. Alimentacion", "T. Vestimenta", "T. Salud"
+                "RUC Prov", "Nomb Prov", "Num Fac"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -211,14 +226,34 @@ public class ReporteProveedorAcumuladoNeg extends javax.swing.JInternalFrame {
             }
         });
 
+        jTableTiposGasto.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jTableTiposGasto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jTableTiposGasto.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Tipo de Gasto", "Total"
+            }
+        ));
+        jScrollPane3.setViewportView(jTableTiposGasto);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(336, 336, 336)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(botonPdf)
+                                .addGap(18, 18, 18)
+                                .addComponent(botonExcel))
+                            .addComponent(jButton1)))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(layout.createSequentialGroup()
                             .addGap(2, 2, 2)
@@ -234,12 +269,8 @@ public class ReporteProveedorAcumuladoNeg extends javax.swing.JInternalFrame {
                             .addComponent(jLabel5)
                             .addGap(18, 18, 18)
                             .addComponent(CI, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(botonPdf)
-                            .addGap(18, 18, 18)
-                            .addComponent(botonExcel))
                         .addComponent(jScrollPane2)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -256,13 +287,16 @@ public class ReporteProveedorAcumuladoNeg extends javax.swing.JInternalFrame {
                     .addComponent(CI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botonExcel)
-                    .addComponent(botonPdf))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(botonExcel)
+                            .addComponent(botonPdf))
+                        .addGap(11, 11, 11)
+                        .addComponent(jButton1))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(98, Short.MAX_VALUE))
         );
 
         pack();
@@ -451,6 +485,8 @@ public class ReporteProveedorAcumuladoNeg extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable jTableTiposGasto;
     private javax.swing.JLabel labelAnio;
     private javax.swing.JLabel lbl_Reporte;
     private javax.swing.JTextField nomCli;
