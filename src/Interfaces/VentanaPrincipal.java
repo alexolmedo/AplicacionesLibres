@@ -27,6 +27,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     ReporteFacturasAño rFA;
     ReporteProveedorAcumulado rFP;
     ReporteProdPorTipoPorAño rPTA;
+    ReporteFacturasAñoNegocio rFAN;
     ReporteProdPorTipoPorAñoNegocio rPTipoAnioNegocio;
     TiposGastosNegocios TGN;
     FacturaElecNegoNew FENN;
@@ -61,6 +62,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         rNFA = new ReporteNumFacPorAño(conn, cedula_usuario, anio);
         rNFANegocio = new ReporteNumFacPorAñoNegocio(conn, cedula_usuario, anio);
         rFA = new ReporteFacturasAño(conn, cedula_usuario, anio);
+        rFAN = new ReporteFacturasAñoNegocio(conn, cedula_usuario, anio);
         rFP = new ReporteProveedorAcumulado(conn, cedula_usuario, anio);
         rPTA = new ReporteProdPorTipoPorAño(conn, cedula_usuario, anio);
         rPTipoAnioNegocio = new ReporteProdPorTipoPorAñoNegocio(conn, cedula_usuario, anio);
@@ -498,6 +500,28 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         rFA.cargarDato((String) nombCLIente.get(0));
         rFA.cargarTabla();
         jDesktopPane.add(rFA);
+    }
+    
+    public void reporteDetalleAnioNegocio(String anioRecibido){
+        //rFA = new ReporteFacturasAño(conn, cedula_usuario, Integer.getInteger(anioRecibido));
+        combo_anio.setSelectedItem(anioRecibido);
+        setYear();
+        jDesktopPane.removeAll();
+        jDesktopPane.repaint();
+        fmp.setVisible(false);
+        fmn.setVisible(false);
+        fe.setVisible(false);
+        rp.setVisible(false);        
+        hg.setVisible(false);                         
+        rPV.setVisible(false);        
+        rNFA.setVisible(false);
+        rFA.setVisible(false);
+        rFAN.setVisible(true);
+        rFAN.setSize(jDesktopPane.getSize());
+        ArrayList nombCLIente  = conn.ddl("select nombre_cliente from cliente where id_cliente ='" +this.cedula_usuario +"'");
+        rFAN.cargarDato((String) nombCLIente.get(0));
+        rFAN.cargarTabla();
+        jDesktopPane.add(rFAN);
     }
     
     public void reporteDetalleProveedor(String rucProveedor){
