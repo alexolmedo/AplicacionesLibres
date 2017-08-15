@@ -68,7 +68,7 @@ public class ReporteProveedorAcumuladoNeg extends javax.swing.JInternalFrame {
         for (MouseMotionListener action : actions) {
             north.removeMouseMotionListener(action);
         }    
-        
+        tablaProv.setEnabled(false);
         ArrayList tipoGastosNeg = conn.cargarTipoGasNegocio(cedula_usuario);
         DefaultTableModel dm = (DefaultTableModel) jTableTiposGasto.getModel();
             int i = 0;
@@ -98,18 +98,8 @@ public class ReporteProveedorAcumuladoNeg extends javax.swing.JInternalFrame {
             String c = String.format("select id_establecimiento, nombre_establecimiento, count(id_establecimiento), sum(TV), sum(TE), sum(TOt), sum(TA), sum(TVes), sum(TS) from (select id_Factura, factura.id_establecimiento, nombre_establecimiento, total_sin_IVA, IVA, Total_con_iva \n" +
             "from factura join establecimiento on (factura.id_establecimiento = establecimiento.id_establecimiento) \n" +
                     "where (select substr(cast(fecha_emision as char),7) ='%s') and id_cliente = '%s' and establecimiento.nombre_establecimiento='%s') as Tab1\n" +
-                    "join (select t1.id_factura, TV, TE, TOt, TA, TVes, TS \n" +
-                    "from (select id_factura, total as 'TV' from tipo_gasto where tipo = 'Vivienda') as t1\n" +
-                    "join (select id_factura, total as 'TE' from tipo_gasto where tipo = 'Educacion') as t2 \n" +
-                    "on (t1.id_factura = t2.id_factura)\n" +
-                    "join (select id_factura, total as 'TOt' from tipo_gasto where tipo = 'Otro') as t3 \n" +
-                    "on (t3.id_factura = t2.id_factura)\n" +
-                    "join (select id_factura, total as 'TA' from tipo_gasto where tipo = 'Alimentacion') as t4 \n" +
-                    "on (t4.id_factura = t3.id_factura)\n" +
-                    "join (select id_factura, total as 'TVes' from tipo_gasto where tipo = 'Vestimenta') as t5 \n" +
-                    "on (t5.id_factura = t4.id_factura)\n" +
-                    "join (select id_factura, total as 'TS' from tipo_gasto where tipo = 'Salud') as t6 \n" +
                     "on (t6.id_factura = t5.id_factura)) as Tab2 on (Tab1.id_factura = tab2.id_Factura) group by id_establecimiento",anio, cedula_usuario, nombreProveedor);            
+            System.out.println("Consulta q dudo");
             ResultSet rs = st.executeQuery(c);
             System.out.println(c);
             ResultSetMetaData rsMd = rs.getMetaData();
@@ -131,6 +121,10 @@ public class ReporteProveedorAcumuladoNeg extends javax.swing.JInternalFrame {
         } catch (SQLException ex) {
             Logger.getLogger(ReporteProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public void calcularTablaTipoNegocio (){
+        
     }
 
     /**
@@ -165,7 +159,7 @@ public class ReporteProveedorAcumuladoNeg extends javax.swing.JInternalFrame {
             }
         });
 
-        lbl_Reporte.setFont(new java.awt.Font("Open Sans", 1, 36)); // NOI18N
+        lbl_Reporte.setFont(new java.awt.Font("Open Sans", 1, 24)); // NOI18N
         lbl_Reporte.setText("Acumulado Facturas del proveedor ");
 
         tablaProv.setModel(new javax.swing.table.DefaultTableModel(
@@ -199,11 +193,13 @@ public class ReporteProveedorAcumuladoNeg extends javax.swing.JInternalFrame {
         jLabel3.setText("Cliente:");
 
         CI.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        CI.setEnabled(false);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText("CI");
 
         nomCli.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        nomCli.setEnabled(false);
 
         botonExcel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         botonExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/if_application-xml_28904.png"))); // NOI18N
@@ -214,7 +210,7 @@ public class ReporteProveedorAcumuladoNeg extends javax.swing.JInternalFrame {
             }
         });
 
-        labelAnio.setFont(new java.awt.Font("Open Sans", 0, 36)); // NOI18N
+        labelAnio.setFont(new java.awt.Font("Open Sans", 0, 24)); // NOI18N
         labelAnio.setText("xyz");
 
         botonPdf.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -246,14 +242,16 @@ public class ReporteProveedorAcumuladoNeg extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(336, 336, 336)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 544, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(120, 120, 120)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(botonPdf)
                                 .addGap(18, 18, 18)
                                 .addComponent(botonExcel))
-                            .addComponent(jButton1)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addGap(103, 103, 103))))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(layout.createSequentialGroup()
                             .addGap(2, 2, 2)
@@ -296,7 +294,7 @@ public class ReporteProveedorAcumuladoNeg extends javax.swing.JInternalFrame {
                         .addGap(11, 11, 11)
                         .addComponent(jButton1))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addContainerGap(113, Short.MAX_VALUE))
         );
 
         pack();

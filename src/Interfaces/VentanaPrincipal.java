@@ -26,8 +26,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     ReporteNumFacPorAñoNegocio rNFANegocio;
     ReporteFacturasAño rFA;
     ReporteProveedorAcumulado rFP;
+    ReporteProveedorAcumuladoNeg rProvAcumuladoNeg;
     ReporteProdPorTipoPorAño rPTA;
-    ReporteFacturasAñoNegocio rFAN;
+    ReporteFacturasAñoNegocio rFactAnioNegocio;
     ReporteProdPorTipoPorAñoNegocio rPTipoAnioNegocio;
     TiposGastosNegocios TGN;
     FacturaElecNegoNew FENN;
@@ -62,8 +63,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         rNFA = new ReporteNumFacPorAño(conn, cedula_usuario, anio);
         rNFANegocio = new ReporteNumFacPorAñoNegocio(conn, cedula_usuario, anio);
         rFA = new ReporteFacturasAño(conn, cedula_usuario, anio);
-        rFAN = new ReporteFacturasAñoNegocio(conn, cedula_usuario, anio);
+        rFactAnioNegocio = new ReporteFacturasAñoNegocio(conn, cedula_usuario, anio);
         rFP = new ReporteProveedorAcumulado(conn, cedula_usuario, anio);
+        rProvAcumuladoNeg = new ReporteProveedorAcumuladoNeg(conn, cedula_usuario, anio);
         rPTA = new ReporteProdPorTipoPorAño(conn, cedula_usuario, anio);
         rPTipoAnioNegocio = new ReporteProdPorTipoPorAñoNegocio(conn, cedula_usuario, anio);
         TGN = new TiposGastosNegocios(conn, cedula_usuario, anio);
@@ -516,12 +518,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         rPV.setVisible(false);        
         rNFA.setVisible(false);
         rFA.setVisible(false);
-        rFAN.setVisible(true);
-        rFAN.setSize(jDesktopPane.getSize());
+        rFactAnioNegocio.setVisible(true);
+        rFactAnioNegocio.setSize(jDesktopPane.getSize());
         ArrayList nombCLIente  = conn.ddl("select nombre_cliente from cliente where id_cliente ='" +this.cedula_usuario +"'");
-        rFAN.cargarDato((String) nombCLIente.get(0));
-        rFAN.cargarTabla();
-        jDesktopPane.add(rFAN);
+        rFactAnioNegocio.cargarDato((String) nombCLIente.get(0));
+        rFactAnioNegocio.cargarTabla();
+        jDesktopPane.add(rFactAnioNegocio);
     }
     
     public void reporteDetalleProveedor(String rucProveedor){
@@ -543,6 +545,28 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         rFP.cargarDato((String) nombCLIente.get(0));
         rFP.cargarTabla(rucProveedor);
         jDesktopPane.add(rFP);
+    }
+    
+    public void reporteDetalleProveedorNegocio(String rucProveedor){
+        //rFA = new ReporteFacturasAño(conn, cedula_usuario, Integer.getInteger(anioRecibido));
+        setYear();
+        jDesktopPane.removeAll();
+        jDesktopPane.repaint();
+        fmp.setVisible(false);
+        fmn.setVisible(false);
+        fe.setVisible(false);
+        rp.setVisible(false);        
+        hg.setVisible(false);                         
+        rPV.setVisible(false);        
+        rNFA.setVisible(false);
+        rFA.setVisible(false);
+        rFP.setVisible(false);
+        rProvAcumuladoNeg.setVisible(true);
+        rProvAcumuladoNeg.setSize(jDesktopPane.getSize());
+        ArrayList nombCLIente  = conn.ddl("select nombre_cliente from cliente where id_cliente ='" +this.cedula_usuario +"'");
+        rProvAcumuladoNeg.cargarDato((String) nombCLIente.get(0));
+        rProvAcumuladoNeg.cargarTabla(rucProveedor);
+        jDesktopPane.add(rProvAcumuladoNeg);
     }
     
     private void combo_anioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combo_anioItemStateChanged

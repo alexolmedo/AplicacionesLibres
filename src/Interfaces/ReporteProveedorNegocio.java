@@ -446,7 +446,8 @@ public class ReporteProveedorNegocio extends javax.swing.JInternalFrame {
     private void tablaProvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProvMouseClicked
         System.out.println("año seleccionado "+tablaProv.getValueAt(tablaProv.getSelectedRow(), 0).toString());
         VentanaPrincipal vent = (VentanaPrincipal) SwingUtilities.getWindowAncestor(this);
-        vent.reporteDetalleProveedor(tablaProv.getValueAt(tablaProv.getSelectedRow(), 1).toString());
+        vent.reporteDetalleProveedorNegocio(tablaProv.getValueAt(tablaProv.getSelectedRow(), 1).toString());
+        System.out.println("asd*** "+tablaProv.getValueAt(tablaProv.getSelectedRow(), 1).toString());
     }//GEN-LAST:event_tablaProvMouseClicked
 
     private void botonPdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonPdfActionPerformed
