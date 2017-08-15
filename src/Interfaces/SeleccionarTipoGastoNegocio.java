@@ -91,6 +91,7 @@ public class SeleccionarTipoGastoNegocio extends javax.swing.JFrame {
         ArrayList num =  conTipo.ddl(q2);
         System.out.println("num "+num);
         int longitud = Integer.parseInt(num.get(1).toString());
+        
         for (int i = 1; i <longitud; i++) {
 
             //String query = "SELECT TIPO_GASTO FROM TIPO_GASTO_NEG WHERE ID_USUARIO = '" + cedula + "'";

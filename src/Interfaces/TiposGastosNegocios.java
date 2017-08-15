@@ -57,7 +57,7 @@ public class TiposGastosNegocios extends javax.swing.JInternalFrame {
                 = (MouseMotionListener[]) north.getListeners(MouseMotionListener.class);
         for (MouseMotionListener action : actions) {
             north.removeMouseMotionListener(action);
-        }    
+        }                    
     }
     
     public void cargarDato(String sfd) {
@@ -155,11 +155,6 @@ public class TiposGastosNegocios extends javax.swing.JInternalFrame {
                 return types [columnIndex];
             }
         });
-        tablaProv.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tablaProvMouseClicked(evt);
-            }
-        });
         jScrollPane2.setViewportView(tablaProv);
 
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -184,6 +179,11 @@ public class TiposGastosNegocios extends javax.swing.JInternalFrame {
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/if_minus_1645995.png"))); // NOI18N
         jButton2.setText("Eliminar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/if_plus_1646001.png"))); // NOI18N
@@ -261,11 +261,6 @@ public class TiposGastosNegocios extends javax.swing.JInternalFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void tablaProvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProvMouseClicked
-        ReporteFactura reporte = new ReporteFactura(tablaProv.getValueAt(tablaProv.getSelectedRow(), 0).toString());
-        reporte.setVisible(true);
-    }//GEN-LAST:event_tablaProvMouseClicked
-
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         try {            
@@ -279,6 +274,18 @@ public class TiposGastosNegocios extends javax.swing.JInternalFrame {
             System.out.println(e.getMessage());
         }        
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        try {
+            String query = String.format("delete from tipo_gasto_neg where tipo_gasto = '%s' and id_usuario = '%s'",tablaProv.getValueAt(tablaProv.getSelectedRow(), 0),cedula_usuario);            
+            conn.insertar(query);
+            limpiarTabla();
+            cargarTabla();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     public void toExcel(JTable table, File file) {
         try {
