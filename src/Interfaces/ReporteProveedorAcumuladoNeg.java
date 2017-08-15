@@ -95,13 +95,17 @@ public class ReporteProveedorAcumuladoNeg extends javax.swing.JInternalFrame {
         Statement st;
         try {
             st = conn.getConn().createStatement();
+            String co =" SELECT E.ID_ESTABLECIMIENTO, E.NOMBRE_ESTABLECIMIENTO, COUNT(ID_ESTABLECIMIENTO) FROM ESTABLECIMIENTO E JOIN"
+                    + " FACTURA F ON F.ID_ESTABLECIMIENTO=E.ID_ESTABLECIMIENTO"
+                    + " WHERE e.NOMBRE_ESTABLECIMIENTO ='"+nombreProveedor+"' ";
             String c = String.format("select id_establecimiento, nombre_establecimiento, count(id_establecimiento), sum(TV), sum(TE), sum(TOt), sum(TA), sum(TVes), sum(TS) from (select id_Factura, factura.id_establecimiento, nombre_establecimiento, total_sin_IVA, IVA, Total_con_iva \n" +
             "from factura join establecimiento on (factura.id_establecimiento = establecimiento.id_establecimiento) \n" +
                     "where (select substr(cast(fecha_emision as char),7) ='%s') and id_cliente = '%s' and establecimiento.nombre_establecimiento='%s') as Tab1\n" +
                     "on (t6.id_factura = t5.id_factura)) as Tab2 on (Tab1.id_factura = tab2.id_Factura) group by id_establecimiento",anio, cedula_usuario, nombreProveedor);            
             System.out.println("Consulta q dudo");
-            ResultSet rs = st.executeQuery(c);
-            System.out.println(c);
+            System.out.println(co);
+            ResultSet rs = st.executeQuery(co);
+            
             ResultSetMetaData rsMd = rs.getMetaData();
             int numeroColumnas = rsMd.getColumnCount();
             //System.out.println("estoy en dfdfg" + rs.getString(0));
