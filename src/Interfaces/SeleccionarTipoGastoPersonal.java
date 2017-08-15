@@ -159,7 +159,7 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
         tablaProductos.getColumnModel().getColumn(2).setMaxWidth(150);
         
         for (int i=0; i<tipos.length;i++) {
-            String q = "SELECT TIPO_GASTO FROM PROV_GASTO WHERE PROVEEDOR = '" + RUC +"'";
+            String q = "SELECT TIPO_GASTO FROM PROV_GASTO WHERE PROVEEDOR = '" + RUC +"' and tipo_fac='Personal'";
             ArrayList n = conTipo.ddl(q);
             tablaProductos.setValueAt(n.get(0), i, 2);
             

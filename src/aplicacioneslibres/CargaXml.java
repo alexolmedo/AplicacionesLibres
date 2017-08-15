@@ -239,20 +239,22 @@ public class CargaXml {
                     if (!cp.verificar_usuario("SELECT * FROM FACTURA WHERE id_factura='" + numFact + "'")) {
                                                                                                                                                                                                                                                                                                           
                         //Inserta establecimiento en caso de no existir
-                        if (!cp.verificar_usuario("SELECT * FROM ESTABLECIMIENTO WHERE id_establecimiento='" + ruc + "'")) {
-                            
-                            System.out.println("Estamos en el if");                                                            
-                            Object seleccion = JOptionPane.showInputDialog(null,"Se ha detectado el proveedor\n" +nombreEst + "\nSeleccione el tipo de gasto principal:","Nuevo Proveedor Detectado",                                                                                                    
+                        if (!cp.verificar_usuario("select * from prov_gasto where tipo_fac='Personal' and proveedor='" + ruc + "'")) {
+                           Object seleccion = JOptionPane.showInputDialog(null,"Se ha detectado el proveedor\n" +nombreEst + "\nSeleccione el tipo de gasto principal:","Nuevo Proveedor Detectado",                                                                                                    
                                     JOptionPane.QUESTION_MESSAGE,null,  // null para icono defecto
                                     new Object[] {"Eduacion", "Vivienda", "Salud", "Alimentacion", "Vestimenta", "Otro" }, "Seleccione un tipo de Gasto");
 
-                            String TipoGasto_Es = "Insert into Prov_gasto (proveedor,tipo_gasto) "
-                                    + "VALUES ('" + ruc + "','"+seleccion.toString() +"')";
-                                    
+                            String TipoGasto_Es = "Insert into Prov_gasto (tipo_fac,proveedor,tipo_gasto) "
+                                    + "VALUES ('Personal','" + ruc + "','"+seleccion.toString() +"')";
+                            cp.insertar(TipoGasto_Es);
+                        }
+                        
+                        if (!cp.verificar_usuario("SELECT * FROM ESTABLECIMIENTO WHERE id_establecimiento='" + ruc + "'")) {
+                            
+                            System.out.println("Estamos en el if");                                                                                                                           
                             String establecimiento = "INSERT INTO ESTABLECIMIENTO (id_establecimiento,nombre_establecimiento,direccion_establecimiento)"
                                     + "VALUES ('" + ruc + "','" + nombreEst + "','" + dirMatriz + "')";
-                            cp.insertar(establecimiento);
-                            cp.insertar(TipoGasto_Es);
+                            cp.insertar(establecimiento);                            ;
                         }
                         
                         String facturaQ = "INSERT INTO FACTURA (id_factura,id_cliente,id_establecimiento,tipo_factura,fecha_emision,estado_factura,ambiente_factura,total_sin_iva,iva,total_con_iva)"

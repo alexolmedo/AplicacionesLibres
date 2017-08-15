@@ -39,10 +39,9 @@ public class CargaXmlNegocio {
         //Se crea un SAXBuilder para poder parsear el archivo
         SAXBuilder builder = new SAXBuilder();
         File xmlFile = new File(name);
-        
+
         //Reformatear facturas de Payless
-        
-        try{
+        try {
             FileReader fr = new FileReader(xmlFile);
             String s;
             String totalStr = "";
@@ -50,19 +49,19 @@ public class CargaXmlNegocio {
                 while ((s = br.readLine()) != null) {
                     totalStr += s;
                 }
-                totalStr = totalStr.replaceAll("<RespuestaAutorizacionComprobante>","");
-                totalStr = totalStr.replaceAll("<autorizaciones>","");
-                totalStr = totalStr.replaceAll("</ambiente>    </autorizacion>","</ambiente>");
-                totalStr = totalStr.replaceAll("</autorizaciones></RespuestaAutorizacionComprobante>","</autorizacion>");
-                
+                totalStr = totalStr.replaceAll("<RespuestaAutorizacionComprobante>", "");
+                totalStr = totalStr.replaceAll("<autorizaciones>", "");
+                totalStr = totalStr.replaceAll("</ambiente>    </autorizacion>", "</ambiente>");
+                totalStr = totalStr.replaceAll("</autorizaciones></RespuestaAutorizacionComprobante>", "</autorizacion>");
+
                 FileWriter fw = new FileWriter(xmlFile);
                 fw.write(totalStr);
                 fw.close();
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         try {
             //Se crea el documento a traves del archivo
             Document document = (Document) builder.build(xmlFile);
@@ -80,7 +79,7 @@ public class CargaXmlNegocio {
             elementos.add("ptoEmi");
             elementos.add("secuencial");
             elementos.add("fechaEmision");
-            elementos.add("razonSocialComprador");            
+            elementos.add("razonSocialComprador");
             elementos.add("identificacionComprador");
             elementos.add("totalSinImpuestos");
             elementos.add("valor");
@@ -132,7 +131,7 @@ public class CargaXmlNegocio {
                 verificarFecha = tk.nextToken();
             }
             //System.out.println(verificarFecha);
-                      
+
             if (verificarFecha.equals(String.valueOf(anio))) {
                 List lista_campos = tabla.getChildren();
                 Element campo;
@@ -183,34 +182,33 @@ public class CargaXmlNegocio {
 
                 // Info Factura
                 cont = elementos.indexOf("fechaEmision");
-                
-                String fecha =  "";
+
+                String fecha = "";
                 if (cont != -1) {
                     String fechaA = "";
-                    fechaA = factura.getChildTextTrim(elementos.get(cont).toString());                    
+                    fechaA = factura.getChildTextTrim(elementos.get(cont).toString());
                     StringTokenizer tok = new StringTokenizer(fechaA, "/");
                     String d = tok.nextToken();
                     String m = tok.nextToken();
                     String a = tok.nextToken();
                     fecha = m + "/" + d + "/" + a;
                 }
-                
-                //System.out.println(fecha);
 
+                //System.out.println(fecha);
                 cont = elementos.indexOf("razonSocialComprador");
                 String nombreCompr = "";
                 if (cont != -1) {
                     nombreCompr = factura.getChildTextTrim(elementos.get(cont).toString());
                 }
                 //System.out.println(nombreCompr);
-                
+
                 cont = elementos.indexOf("identificacionComprador");
                 String CI_Compr = "";
                 if (cont != -1) {
                     CI_Compr = factura.getChildTextTrim(elementos.get(cont).toString());
                 }
                 //System.out.println(CI_Compr);
-                
+
                 cont = elementos.indexOf("totalSinImpuestos");
                 Double totalSinImp = 0.0;
                 if (cont != -1) {
@@ -226,37 +224,39 @@ public class CargaXmlNegocio {
                     Imps = Double.parseDouble(totalImp.getChildTextTrim(elementos.get(cont).toString()));
                     System.err.println(Imps);
                 }*/
-                
                 cont = elementos.indexOf("importeTotal");
                 Double totalConIVA = 0.0;
                 if (cont != -1) {
                     totalConIVA = Double.parseDouble(factura.getChildTextTrim(elementos.get(cont).toString()));
                 }
-               
-                BigDecimal Imps = new BigDecimal(totalConIVA).subtract(new BigDecimal(totalSinImp)); 
+
+                BigDecimal Imps = new BigDecimal(totalConIVA).subtract(new BigDecimal(totalSinImp));
                 BigDecimal impuesto = Imps.setScale(2, RoundingMode.HALF_EVEN);
-                      
-                if (CI_Compr.equalsIgnoreCase(cedulaCli)){
+
+                if (CI_Compr.equalsIgnoreCase(cedulaCli)) {
                     if (!cp.verificar_usuario("SELECT * FROM FACTURA WHERE id_factura='" + numFact + "'")) {
-                                                                                                                                                                                                                                                                                                          
+
                         //Inserta establecimiento en caso de no existir
-                        if (!cp.verificar_usuario("SELECT * FROM ESTABLECIMIENTO WHERE id_establecimiento='" + ruc + "'")) {
-                            
-                            System.out.println("Estamos en el if");  
-                                                        
-                            Object seleccion = JOptionPane.showInputDialog(null,"Se ha detectado el proveedor\n" +nombreEst + "\nSeleccione el tipo de gasto principal:","Nuevo Proveedor Detectado",                                                                                                    
-                                    JOptionPane.QUESTION_MESSAGE,null,  // null para icono defecto
+                        System.out.println("select * from prov_gasto where tipo_fac='Negocio' and proveedor='" + ruc + "'");
+                        if (!cp.verificar_usuario("select * from prov_gasto where tipo_fac='Negocio' and proveedor='" + ruc + "'")) {
+
+                            Object seleccion = JOptionPane.showInputDialog(null, "Se ha detectado el proveedor\n" + nombreEst + "\nSeleccione el tipo de gasto principal:", "Nuevo Proveedor Detectado",
+                                    JOptionPane.QUESTION_MESSAGE, null, // null para icono defecto
                                     cp.cargarTipoGasNegocio(cedulaCli).toArray(), "Seleccione un tipo de Gasto");
 
-                            String TipoGasto_Es = "Insert into Prov_gasto (proveedor,tipo_gasto) "
-                                    + "VALUES ('" + ruc + "','"+seleccion.toString() +"')";
-                                    
+                            String TipoGasto_Es = "Insert into Prov_gasto (tipo_fac, proveedor,tipo_gasto) "
+                                    + "VALUES ('Negocio','" + ruc + "','" + seleccion.toString() + "')";
+                            cp.insertar(TipoGasto_Es);
+                        }
+
+                        if (!cp.verificar_usuario("SELECT * FROM ESTABLECIMIENTO WHERE id_establecimiento='" + ruc + "'")) {
+
+                            System.out.println("Estamos en el if");
                             String establecimiento = "INSERT INTO ESTABLECIMIENTO (id_establecimiento,nombre_establecimiento,direccion_establecimiento)"
                                     + "VALUES ('" + ruc + "','" + nombreEst + "','" + dirMatriz + "')";
                             cp.insertar(establecimiento);
-                            cp.insertar(TipoGasto_Es);
                         }
-                        
+
                         String facturaQ = "INSERT INTO FACTURA (id_factura,id_cliente,id_establecimiento,tipo_factura,fecha_emision,estado_factura,ambiente_factura,total_sin_iva,iva,total_con_iva)"
                                 + "VALUES ('" + numFact + "','" + CI_Compr + "','" + ruc + "','" + tipo + "','" + fecha + "','" + estado + "','" + ambiente + "'," + totalSinImp + "," + impuesto + "," + totalConIVA + ")";
                         System.out.println(facturaQ);
@@ -292,19 +292,17 @@ public class CargaXmlNegocio {
                         }
 
                         if (datosProducto.length != 0) {
-                            if (tipo.equals("Personal")) {                                                                
-                               
-                                SeleccionarTipoGastoPersonal seleccionarP = new SeleccionarTipoGastoPersonal(cp, datosProducto, numFact, anio, 
-                                        cedulaCli, tipo, nombreCompr,CI_Compr, ruc, nombreEst,dirMatriz, numFact, fechaCompleta, 
+                            if (tipo.equals("Personal")) {
+
+                                SeleccionarTipoGastoPersonal seleccionarP = new SeleccionarTipoGastoPersonal(cp, datosProducto, numFact, anio,
+                                        cedulaCli, tipo, nombreCompr, CI_Compr, ruc, nombreEst, dirMatriz, numFact, fechaCompleta,
                                         totalSinImp.toString(), impuesto.toString(), totalConIVA.toString());
                                 seleccionarP.setVisible(true);
-                                
-                                
-                                
+
                             } else {
-                                
-                                SeleccionarTipoGastoNegocio seleccionarH = new SeleccionarTipoGastoNegocio(cp, datosProducto, numFact, anio, 
-                                        cedulaCli, tipo, nombreCompr, CI_Compr, ruc, nombreEst,dirMatriz, numFact, fechaCompleta, 
+
+                                SeleccionarTipoGastoNegocio seleccionarH = new SeleccionarTipoGastoNegocio(cp, datosProducto, numFact, anio,
+                                        cedulaCli, tipo, nombreCompr, CI_Compr, ruc, nombreEst, dirMatriz, numFact, fechaCompleta,
                                         totalSinImp.toString(), impuesto.toString(), totalConIVA.toString());
                                 seleccionarH.setVisible(true);
                                 //SeleccionarTipoGastoNegocios1 seleccionarH = new SeleccionarTipoGastoNegocios1(cp, datosProducto, numFact, anio, cedulaCli, tipo);
@@ -314,9 +312,9 @@ public class CargaXmlNegocio {
                     } else {
                         JOptionPane.showMessageDialog(null, "Esta factura ya fue ingresada");
                     }
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "La identificación en la factura no corresponde al usuario actual");
-                }         
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "El año de la factura no corresponde con el año seleccionado");
             }
