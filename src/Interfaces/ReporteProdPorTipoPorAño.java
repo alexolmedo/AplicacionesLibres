@@ -95,7 +95,7 @@ public class ReporteProdPorTipoPorAño extends javax.swing.JInternalFrame {
         try {
             st = conn.getConn().createStatement();
             String c = String.format("select nombre_producto, nombre_establecimiento, sum(total)  from (select substr(cast(fecha_emision as char),7), id_factura, id_establecimiento\n" +
-                    "from factura where id_cliente = '%s' and (select substr(cast(fecha_emision as char),7)) = '%s') as T1 "
+                    "from factura where id_cliente = '%s' and tipo_factura='Personal' and (select substr(cast(fecha_emision as char),7)) = '%s') as T1 "
                     + "join detalle on (T1.id_factura = detalle.id_factura) join\n" +
                     "establecimiento on (T1.id_establecimiento = establecimiento.id_establecimiento) where tipo = '%s' group by nombre_producto", cedula_usuario, anio, comboProv.getSelectedItem().toString());            
             ResultSet rs = st.executeQuery(c);
@@ -142,7 +142,7 @@ public class ReporteProdPorTipoPorAño extends javax.swing.JInternalFrame {
         try {
             st = conn.getConn().createStatement();
             String c = String.format("select nombre_producto, nombre_establecimiento, sum(total)  from (select substr(cast(fecha_emision as char),7), id_factura, id_establecimiento\n" +
-                    "from factura where id_cliente = '%s' and (select substr(cast(fecha_emision as char),7)) = '%s') as T1 "
+                    "from factura where id_cliente = '%s' and tipo_factura='Personal' and (select substr(cast(fecha_emision as char),7)) = '%s') as T1 "
                     + "join detalle on (T1.id_factura = detalle.id_factura) join\n" +
                     "establecimiento on (T1.id_establecimiento = establecimiento.id_establecimiento) group by nombre_producto", cedula_usuario, anio);            
             ResultSet rs = st.executeQuery(c);
@@ -218,11 +218,6 @@ public class ReporteProdPorTipoPorAño extends javax.swing.JInternalFrame {
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
-            }
-        });
-        tablaProv.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tablaProvMouseClicked(evt);
             }
         });
         jScrollPane2.setViewportView(tablaProv);
@@ -405,12 +400,6 @@ public class ReporteProdPorTipoPorAño extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "No hay datos para exportar","Mensaje de error",JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_botonExcelActionPerformed
-
-    private void tablaProvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProvMouseClicked
-        System.out.println("año seleccionado "+tablaProv.getValueAt(tablaProv.getSelectedRow(), 0).toString());
-        VentanaPrincipal vent = (VentanaPrincipal) SwingUtilities.getWindowAncestor(this);
-        vent.reporteDetalleProveedor(tablaProv.getValueAt(tablaProv.getSelectedRow(), 1).toString());
-    }//GEN-LAST:event_tablaProvMouseClicked
 
     private void botonPdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonPdfActionPerformed
         JFileChooser chooser = new JFileChooser();

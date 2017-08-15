@@ -72,10 +72,11 @@ public class ReporteProdPorTipoPorAñoNegocio extends javax.swing.JInternalFrame
             north.removeMouseMotionListener(action);
         }
         
-        String q2 = "SELECT ID_USUARIO,COUNT(ID_USUARIO) FROM TIPO_GASTO_NEG WHERE ID_USUARIO = '" + cedula_usuario + "' GROUP BY ID_USUARIO";
-        ArrayList num =  conn.ddl(q2);
-        System.out.println("num "+num);
-        int longitud = Integer.parseInt(num.get(1).toString());
+        //String q2 = "SELECT ID_USUARIO,COUNT(ID_USUARIO) FROM TIPO_GASTO_NEG WHERE ID_USUARIO = '" + cedula_usuario + "' GROUP BY ID_USUARIO";
+        //ArrayList num =  conn.ddl(q2);
+        //System.out.println("num "+num);
+        //int longitud = Integer.parseInt(num.get(1).toString());
+        int longitud = conn.cargarTipoGasNegocio(cedula_usuario).size();
         
         for (int i = 1; i <longitud; i++) {
 
@@ -111,7 +112,7 @@ public class ReporteProdPorTipoPorAñoNegocio extends javax.swing.JInternalFrame
         try {
             st = conn.getConn().createStatement();
             String c = String.format("select nombre_producto, nombre_establecimiento, sum(total)  from (select substr(cast(fecha_emision as char),7), id_factura, id_establecimiento\n" +
-                    "from factura where id_cliente = '%s' and (select substr(cast(fecha_emision as char),7)) = '%s') as T1 "
+                    "from factura where id_cliente = '%s' and tipo_factura='Negocio' and (select substr(cast(fecha_emision as char),7)) = '%s') as T1 "
                     + "join detalle on (T1.id_factura = detalle.id_factura) join\n" +
                     "establecimiento on (T1.id_establecimiento = establecimiento.id_establecimiento) where tipo = '%s' group by nombre_producto", cedula_usuario, anio, comboProv.getSelectedItem().toString());            
             ResultSet rs = st.executeQuery(c);
@@ -158,7 +159,7 @@ public class ReporteProdPorTipoPorAñoNegocio extends javax.swing.JInternalFrame
         try {
             st = conn.getConn().createStatement();
             String c = String.format("select nombre_producto, nombre_establecimiento, sum(total)  from (select substr(cast(fecha_emision as char),7), id_factura, id_establecimiento\n" +
-                    "from factura where id_cliente = '%s' and (select substr(cast(fecha_emision as char),7)) = '%s') as T1 "
+                    "from factura where id_cliente = '%s' and tipo_factura='Negocio' and (select substr(cast(fecha_emision as char),7)) = '%s') as T1 "
                     + "join detalle on (T1.id_factura = detalle.id_factura) join\n" +
                     "establecimiento on (T1.id_establecimiento = establecimiento.id_establecimiento) group by nombre_producto", cedula_usuario, anio);            
             ResultSet rs = st.executeQuery(c);
@@ -234,11 +235,6 @@ public class ReporteProdPorTipoPorAñoNegocio extends javax.swing.JInternalFrame
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
-            }
-        });
-        tablaProv.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tablaProvMouseClicked(evt);
             }
         });
         jScrollPane2.setViewportView(tablaProv);
@@ -318,7 +314,7 @@ public class ReporteProdPorTipoPorAñoNegocio extends javax.swing.JInternalFrame
                         .addComponent(botonExcel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1))
-                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 689, Short.MAX_VALUE)
                     .addComponent(lbl_Reporte)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -421,12 +417,6 @@ public class ReporteProdPorTipoPorAñoNegocio extends javax.swing.JInternalFrame
             JOptionPane.showMessageDialog(this, "No hay datos para exportar","Mensaje de error",JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_botonExcelActionPerformed
-
-    private void tablaProvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProvMouseClicked
-        System.out.println("año seleccionado "+tablaProv.getValueAt(tablaProv.getSelectedRow(), 0).toString());
-        VentanaPrincipal vent = (VentanaPrincipal) SwingUtilities.getWindowAncestor(this);
-        vent.reporteDetalleProveedor(tablaProv.getValueAt(tablaProv.getSelectedRow(), 1).toString());
-    }//GEN-LAST:event_tablaProvMouseClicked
 
     private void botonPdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonPdfActionPerformed
         JFileChooser chooser = new JFileChooser();

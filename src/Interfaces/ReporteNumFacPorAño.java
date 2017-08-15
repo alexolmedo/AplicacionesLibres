@@ -86,9 +86,9 @@ public class ReporteNumFacPorAño extends javax.swing.JInternalFrame {
         Statement st;
         try {
             st = conn.getConn().createStatement();
-            String c = String.format("select substr(cast(fecha_emision as char), count(*) from factura tipo_fac='Personal' where id_cliente = '%s' and (select substr(cast(fecha_emision as char),7)) = '%s'", cedula_usuario, anio);
+            String c = String.format("select substr(cast(fecha_emision as char), count(*) from factura where tipo_factura='Personal' and id_cliente = '%s' and (select substr(cast(fecha_emision as char),7)) = '%s'", cedula_usuario, anio);
             System.out.println(c);
-            ResultSet rs = st.executeQuery(String.format("select substr(cast(fecha_emision as char),7), count(*) from factura where tipo_fac='Negocio' and id_cliente = '%s' group by (select substr(cast(fecha_emision as char),7))", cedula_usuario, anio));
+            ResultSet rs = st.executeQuery(String.format("select substr(cast(fecha_emision as char),7), count(*) from factura where tipo_factura='Personal' and id_cliente = '%s' group by (select substr(cast(fecha_emision as char),7))", cedula_usuario, anio));
             System.out.println(c);
             ResultSetMetaData rsMd = rs.getMetaData();
             int numeroColumnas = rsMd.getColumnCount();

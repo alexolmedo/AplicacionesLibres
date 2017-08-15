@@ -114,8 +114,8 @@ public class ReporteProveedorNegocio extends javax.swing.JInternalFrame {
             String c = String.format("select factura.id_establecimiento, "
                     + "nombre_establecimiento, count(*) from factura join "
                     + "establecimiento on (factura.id_establecimiento = "
-                    + "establecimiento.id_establecimiento), prov_gasto.tipo_fac='Negocio'" 
-                    + "' group by factura.id_establecimiento"
+                    + "establecimiento.id_establecimiento) where factura.tipo_factura='Negocio'" 
+                    + " group by factura.id_establecimiento"
                     );            
             ResultSet rs = st.executeQuery(c);
             System.out.println(c);
@@ -163,7 +163,7 @@ public class ReporteProveedorNegocio extends javax.swing.JInternalFrame {
             String c = String.format("select factura.id_establecimiento, "
                     + "nombre_establecimiento, count(*) from factura join "
                     + "establecimiento on (factura.id_establecimiento = "
-                    + "establecimiento.id_establecimiento) where tipo_fac='Negocio' "
+                    + "establecimiento.id_establecimiento) where tipo_factura='Negocio' "
                     + "and factura.id_establecimiento = '%s'", idEstab.get(0));            
             ResultSet rs = st.executeQuery(c);
             System.out.println(c);

@@ -74,17 +74,6 @@ public class ReporteNumFacPorAñoNegocio extends javax.swing.JInternalFrame {
         }
 
         CI.setText(this.cedula_usuario);
-        cargar_Provee();
-    }
-    
-     public void cargar_Provee() {
-        comboProv.removeAllItems();
-        comboProv.addItem("---Todos los proveedores---");
-        ArrayList proov = conn.cargarEstablecimiento();
-        for (Object obj : proov) {
-            comboProv.addItem(obj.toString());
-            //System.out.println(obj.toString());
-        }
     }
 
     public void cargarCliente(String df) {
@@ -94,23 +83,13 @@ public class ReporteNumFacPorAñoNegocio extends javax.swing.JInternalFrame {
 
     public void cargarTabla() {
         tablaProv.setVisible(true);
-        ArrayList idEstab = conn.ddl(String.format("select id_establecimiento from "
-                + "establecimiento  where tipo_fac='Negocio' and nombre_establecimiento='%s'"
-                + "", comboProv.getSelectedItem().toString()));
         Statement st;
         try {
             st = conn.getConn().createStatement();
-            
-            String co = String.format("select nombre_establecimiento, substr(cast"
-                    + "(fecha_emision as char),7), count(*) from factura join "
-                    + "establecimiento on (factura.id_establecimiento = "
-                    + "establecimiento.id_establecimiento)");
-            
-            //String c = String.format("select substr(cast(fecha_emision as char), count(*) from factura where id_cliente = '%s' and (select substr(cast(fecha_emision as char),7)) = '%s'", cedula_usuario, anio);
-            //System.out.println(co);
-            //ResultSet rs = st.executeQuery(String.format("select substr(cast(fecha_emision as char),7), count(*) from factura where id_cliente = '%s' group by (select substr(cast(fecha_emision as char),7))", cedula_usuario, anio));
-            ResultSet rs = st.executeQuery(co);
-            System.out.println(co);
+            String c = String.format("select substr(cast(fecha_emision as char), count(*) from factura where tipo_factura='Personal' and id_cliente = '%s' and (select substr(cast(fecha_emision as char),7)) = '%s'", cedula_usuario, anio);
+            System.out.println(c);
+            ResultSet rs = st.executeQuery(String.format("select substr(cast(fecha_emision as char),7), count(*) from factura where tipo_factura='Negocio' and id_cliente = '%s' group by (select substr(cast(fecha_emision as char),7))", cedula_usuario, anio));
+            System.out.println(c);
             ResultSetMetaData rsMd = rs.getMetaData();
             int numeroColumnas = rsMd.getColumnCount();
             //System.out.println("estoy en dfdfg" + rs.getString(0));
@@ -119,49 +98,8 @@ public class ReporteNumFacPorAñoNegocio extends javax.swing.JInternalFrame {
             int i = 0;
             while (rs.next()) {
                 System.out.println("estoy en el while");
-                dm.addRow(new Object[]{"", ""});
-                for (int j = 0; j < numeroColumnas; j++) {
-                    tablaProv.setValueAt(rs.getObject(j + 1), i, j);
-                    System.out.println(rs.getObject(j + 1));
-                }
-                i++;
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(ReporteProveedor.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void cargarTablaP() {
-        
-        tablaProv.setVisible(true);
-        ArrayList idEstab = conn.ddl(String.format("select id_establecimiento from "
-                + "establecimiento where tipo_fac='Negocio' and nombre_establecimiento='%s'", comboProv.getSelectedItem().toString()));
-        
-        Statement st;
-        try {
-            st = conn.getConn().createStatement();
-            
-            String co = String.format("select nombre_establecimiento, substr(cast(fecha_emision as char),7), count(*) from factura join "
-                    + "establecimiento on (factura.id_establecimiento = "
-                    + "establecimiento.id_establecimiento)");
-            
-            String c = String.format("select nombre_establecimiento, substr(cast(fecha_emision as char),7), count(*) from factura join "
-                    + "establecimiento on (factura.id_establecimiento = "
-                    + "establecimiento.id_establecimiento) where factura.id_establecimiento = '%s'", idEstab.get(0));            
-            ResultSet rs = st.executeQuery(c);
-            System.out.println(c);
-            ResultSetMetaData rsMd = rs.getMetaData();
-            DefaultTableModel dm = (DefaultTableModel) tablaProv.getModel();
-            int numeroColumnas = 3;
-            //System.out.println("estoy en dfdfg" + rs.getString(0));
-
-            int i = 0;
-            while (rs.next()) {
-                dm.addRow(new Object[]{"", "", ""});
-                System.out.println("estoy en el while");
-                for (int j = 0; j < numeroColumnas; j++) {                        
-                    
+                dm.addRow(new Object [] {"",""});
+                for (int j = 0; j < numeroColumnas; j++) {                                      
                     tablaProv.setValueAt(rs.getObject(j + 1),i ,j );                    
                     System.out.println(rs.getObject(j + 1));
                 }
@@ -172,8 +110,7 @@ public class ReporteNumFacPorAñoNegocio extends javax.swing.JInternalFrame {
             Logger.getLogger(ReporteProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -189,8 +126,6 @@ public class ReporteNumFacPorAñoNegocio extends javax.swing.JInternalFrame {
         botonExcel = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         botonPDF = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        comboProv = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setEnabled(false);
@@ -213,11 +148,11 @@ public class ReporteNumFacPorAñoNegocio extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Proveedor", "Año", "Nro Facturas"
+                "Año", "Nro Facturas"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -280,21 +215,6 @@ public class ReporteNumFacPorAñoNegocio extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel2.setText("Proveedor");
-
-        comboProv.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        comboProv.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos" }));
-        comboProv.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
-            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
-            }
-            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
-                comboProvPopupMenuWillBecomeInvisible(evt);
-            }
-            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -309,6 +229,7 @@ public class ReporteNumFacPorAñoNegocio extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbl_Reporte, javax.swing.GroupLayout.PREFERRED_SIZE, 688, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(botonPDF)
                                 .addGap(18, 18, 18)
@@ -321,14 +242,8 @@ public class ReporteNumFacPorAñoNegocio extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel4)
                                 .addGap(18, 18, 18)
-                                .addComponent(CI, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(comboProv, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 166, Short.MAX_VALUE)))
+                                .addComponent(CI, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 156, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -344,17 +259,13 @@ public class ReporteNumFacPorAñoNegocio extends javax.swing.JInternalFrame {
                     .addComponent(CI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addGap(9, 9, 9)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(comboProv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonExcel)
                     .addComponent(botonPDF))
-                .addGap(16, 16, 16)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 224, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addContainerGap())
         );
@@ -383,13 +294,13 @@ public class ReporteNumFacPorAñoNegocio extends javax.swing.JInternalFrame {
 
     private void botonExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonExcelActionPerformed
         // TODO add your handling code here:
-        if (tablaProv.getRowCount() > 0) {
+         if (tablaProv.getRowCount() > 0) {
             JFileChooser chooser = new JFileChooser();
             FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos de excel", "xls");
             chooser.setFileFilter(filter);
             chooser.setDialogTitle("Guardar archivo");
             chooser.setAcceptAllFileFilterUsed(false);
-            if (chooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+            if (chooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {                
                 List<JTable> tb = new ArrayList<>();
                 List<String> nom = new ArrayList<>();
                 tb.add(tablaProv);
@@ -404,13 +315,13 @@ public class ReporteNumFacPorAñoNegocio extends javax.swing.JInternalFrame {
                     JOptionPane.showMessageDialog(null, "Hubo un error " + e.getMessage(), " Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "No hay datos para exportar", "Mensaje de error", JOptionPane.ERROR_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(this, "No hay datos para exportar","Mensaje de error",JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_botonExcelActionPerformed
 
     private void tablaProvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProvMouseClicked
-        System.out.println("año seleccionado " + tablaProv.getValueAt(tablaProv.getSelectedRow(), 0).toString());
+        System.out.println("año seleccionado "+tablaProv.getValueAt(tablaProv.getSelectedRow(), 0).toString());
         VentanaPrincipal vent = (VentanaPrincipal) SwingUtilities.getWindowAncestor(this);
         vent.reporteDetalleAnio(tablaProv.getValueAt(tablaProv.getSelectedRow(), 0).toString());
     }//GEN-LAST:event_tablaProvMouseClicked
@@ -421,17 +332,17 @@ public class ReporteNumFacPorAñoNegocio extends javax.swing.JInternalFrame {
         chooser.setFileFilter(filter);
         chooser.setDialogTitle("Guardar archivo");
         chooser.setAcceptAllFileFilterUsed(false);
-
-        if (chooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
-
+        
+        if (chooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {  
+        
             String file = chooser.getSelectedFile().toString().concat(".pdf");
-
-            try {
-                Document doc = new Document(PageSize.A4.rotate());
-                PdfWriter.getInstance(doc, new FileOutputStream(new File(file)));
-                doc.open();
-                PdfPTable pdfTable = new PdfPTable(tablaProv.getColumnCount());
-                for (int i = 0; i < tablaProv.getColumnCount(); i++) {
+            
+            try{
+            Document doc = new Document(PageSize.A4.rotate());
+            PdfWriter.getInstance(doc, new FileOutputStream(new File(file)));
+            doc.open();
+            PdfPTable pdfTable = new PdfPTable(tablaProv.getColumnCount());
+            for (int i = 0; i < tablaProv.getColumnCount(); i++) {
                     pdfTable.addCell(tablaProv.getColumnName(i));
                 }
                 //extracting data from the JTable and inserting it to PdfPTable
@@ -453,29 +364,6 @@ public class ReporteNumFacPorAñoNegocio extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_botonPDFActionPerformed
 
-    private void comboProvPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_comboProvPopupMenuWillBecomeInvisible
-        // TODO add your handling code here:
-        //System.out.println("Seleccionado:" +comboProv.getSelectedIndex());
-        limpiarTabla();
-        if (comboProv.getSelectedIndex()==0){
-            cargarTabla();
-        }else{
-            cargarTablaP();
-        }
-
-    }//GEN-LAST:event_comboProvPopupMenuWillBecomeInvisible
-
-    public void limpiarTabla () {
-            
-        DefaultTableModel dm = (DefaultTableModel) tablaProv.getModel();
-        int rowCount = dm.getRowCount();
-        //Remove rows one by one from the end of the table
-        for (int i = rowCount - 1; i >= 0; i--) {
-            dm.removeRow(i);
-        }
-   
-    }
-    
     public void toExcel(JTable table, File file) {
         try {
             TableModel model = table.getModel();
@@ -562,10 +450,8 @@ public class ReporteNumFacPorAñoNegocio extends javax.swing.JInternalFrame {
     private javax.swing.JTextField CI;
     private javax.swing.JButton botonExcel;
     private javax.swing.JButton botonPDF;
-    private javax.swing.JComboBox<String> comboProv;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane2;
