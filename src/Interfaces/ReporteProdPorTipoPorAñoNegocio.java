@@ -71,6 +71,22 @@ public class ReporteProdPorTipoPorAñoNegocio extends javax.swing.JInternalFrame
         for (MouseMotionListener action : actions) {
             north.removeMouseMotionListener(action);
         }
+        
+        String q2 = "SELECT ID_USUARIO,COUNT(ID_USUARIO) FROM TIPO_GASTO_NEG WHERE ID_USUARIO = '" + cedula_usuario + "' GROUP BY ID_USUARIO";
+        ArrayList num =  conn.ddl(q2);
+        System.out.println("num "+num);
+        int longitud = Integer.parseInt(num.get(1).toString());
+        
+        for (int i = 1; i <longitud; i++) {
+
+            //String query = "SELECT TIPO_GASTO FROM TIPO_GASTO_NEG WHERE ID_USUARIO = '" + cedula + "'";
+            Object[] n = conn.cargarTipoGasNegocio(cedula_usuario).toArray();
+            for (int j = 0; j<n.length; j++){
+                System.out.println(">>>> " +n[j]);
+                comboProv.addItem(n[j].toString());
+            }
+            //comboBox.addItem(n[]);
+        }
     }
 
     public void cargar_Tipo() {
@@ -260,7 +276,7 @@ public class ReporteProdPorTipoPorAñoNegocio extends javax.swing.JInternalFrame
         jLabel5.setText("Tipo de Gasto");
 
         comboProv.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        comboProv.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Vivienda", "Salud", "Educacion", "Alimentacion", "Vestimenta", "Otro" }));
+        comboProv.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos" }));
         comboProv.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
             public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
             }

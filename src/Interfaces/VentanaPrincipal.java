@@ -27,7 +27,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     ReporteFacturasAño rFA;
     ReporteProveedorAcumulado rFP;
     ReporteProdPorTipoPorAño rPTA;
-    
+    ReporteProdPorTipoPorAñoNegocio rPTipoAnioNegocio;
     TiposGastosNegocios TGN;
     FacturaElecNegoNew FENN;
     String cedula_usuario;
@@ -63,6 +63,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         rFA = new ReporteFacturasAño(conn, cedula_usuario, anio);
         rFP = new ReporteProveedorAcumulado(conn, cedula_usuario, anio);
         rPTA = new ReporteProdPorTipoPorAño(conn, cedula_usuario, anio);
+        rPTipoAnioNegocio = new ReporteProdPorTipoPorAñoNegocio(conn, cedula_usuario, anio);
         TGN = new TiposGastosNegocios(conn, cedula_usuario, anio);
         FENN = new FacturaElecNegoNew(cedula_usuario, anio);
     }
@@ -688,12 +689,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         hg.setVisible(false);                         
         rPV.setVisible(false);        
         rNFA.setVisible(false);
-        rPTA.setVisible(true);
-        rPTA.setSize(jDesktopPane.getSize());
+        rPTA.setVisible(false);
+        rPTipoAnioNegocio.setVisible(true);
+        rPTipoAnioNegocio.setSize(jDesktopPane.getSize());
         ArrayList nombCLIente  = conn.ddl("select nombre_cliente from cliente where id_cliente ='" +this.cedula_usuario +"'");
-        rPTA.cargarDato((String) nombCLIente.get(0));
-        rPTA.cargarTablaP();
-        jDesktopPane.add(rPTA);
+        rPTipoAnioNegocio.cargarDato((String) nombCLIente.get(0));
+        rPTipoAnioNegocio.cargarTablaP();
+        jDesktopPane.add(rPTipoAnioNegocio);
     }//GEN-LAST:event_jMenuItem17ActionPerformed
 
     /**

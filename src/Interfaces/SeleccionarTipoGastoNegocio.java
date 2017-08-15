@@ -87,7 +87,6 @@ public class SeleccionarTipoGastoNegocio extends javax.swing.JFrame {
         comboBox.addItem("");
 
         String q2 = "SELECT ID_USUARIO,COUNT(ID_USUARIO) FROM TIPO_GASTO_NEG WHERE ID_USUARIO = '" + cedula + "' GROUP BY ID_USUARIO";
-        
         ArrayList num =  conTipo.ddl(q2);
         System.out.println("num "+num);
         int longitud = Integer.parseInt(num.get(1).toString());
@@ -101,7 +100,6 @@ public class SeleccionarTipoGastoNegocio extends javax.swing.JFrame {
                 comboBox.addItem(n[j]);
             }
             //comboBox.addItem(n[]);
-
         }
 
         tablaProductos.getModel().addTableModelListener(new TableModelListener() {
