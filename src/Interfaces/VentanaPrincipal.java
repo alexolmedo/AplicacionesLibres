@@ -21,11 +21,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     HistorialGastos hg;
     Reportes rp;
     ReporteProveedor rPV;
+    ReporteProveedorNegocio rProvNegocio;
     ReporteNumFacPorAño rNFA;
     ReporteNumFacPorAñoNegocio rNFANegocio;
     ReporteFacturasAño rFA;
     ReporteProveedorAcumulado rFP;
     ReporteProdPorTipoPorAño rPTA;
+    
     TiposGastosNegocios TGN;
     FacturaElecNegoNew FENN;
     String cedula_usuario;
@@ -55,6 +57,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         hg = new HistorialGastos(conn, cedula_usuario, anio);
         rp = new Reportes(conn, cedula_usuario, anio);
         rPV = new ReporteProveedor(conn, cedula_usuario, anio);
+        rProvNegocio = new ReporteProveedorNegocio(conn, cedula_usuario, anio);
         rNFA = new ReporteNumFacPorAño(conn, cedula_usuario, anio);
         rNFANegocio = new ReporteNumFacPorAñoNegocio(conn, cedula_usuario, anio);
         rFA = new ReporteFacturasAño(conn, cedula_usuario, anio);
@@ -254,6 +257,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenu6.add(jMenuItem16);
 
         jMenuItem17.setText("Reporte Productos por Tipo y Año");
+        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem17ActionPerformed(evt);
+            }
+        });
         jMenu6.add(jMenuItem17);
 
         jMenuItem18.setText("Acumulado de Gastos por Año");
@@ -652,8 +660,41 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
         // TODO add your handling code here:
-        
+        jDesktopPane.removeAll();
+        jDesktopPane.repaint();
+        fmp.setVisible(false);
+        fmn.setVisible(false);
+        fe.setVisible(false);
+        rp.setVisible(false);
+        hg.setVisible(false);
+        rPV.cargar_Provee();
+        rPV.setVisible(false);
+        rProvNegocio.setVisible(true);
+        rProvNegocio.setSize(jDesktopPane.getSize());
+        ArrayList nombCLIente  = conn.ddl("select nombre_cliente from cliente where id_cliente ='" +this.cedula_usuario +"'");
+        rProvNegocio.cargarDato((String) nombCLIente.get(0));
+        rProvNegocio.cargarTabla();
+        jDesktopPane.add(rProvNegocio);
     }//GEN-LAST:event_jMenuItem16ActionPerformed
+
+    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
+        // TODO add your handling code here:
+        jDesktopPane.removeAll();
+        jDesktopPane.repaint();
+        fmp.setVisible(false);
+        fmn.setVisible(false);
+        fe.setVisible(false);
+        rp.setVisible(false);        
+        hg.setVisible(false);                         
+        rPV.setVisible(false);        
+        rNFA.setVisible(false);
+        rPTA.setVisible(true);
+        rPTA.setSize(jDesktopPane.getSize());
+        ArrayList nombCLIente  = conn.ddl("select nombre_cliente from cliente where id_cliente ='" +this.cedula_usuario +"'");
+        rPTA.cargarDato((String) nombCLIente.get(0));
+        rPTA.cargarTablaP();
+        jDesktopPane.add(rPTA);
+    }//GEN-LAST:event_jMenuItem17ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -48,14 +47,14 @@ import javax.swing.table.TableModel;
  *
  * @author vengatus
  */
-public class ReporteProveedor extends javax.swing.JInternalFrame {
+public class ReporteProdPorTipoPorAñoNegocio extends javax.swing.JInternalFrame {
 
     Conexionn conn;
     String cedula_usuario;
     int anio;
     //JTable auxP, auxN;
 
-    public ReporteProveedor(Conexionn conn, String cedula_usuario, int anio) {
+    public ReporteProdPorTipoPorAñoNegocio(Conexionn conn, String cedula_usuario, int anio) {
         initComponents();
         //setIconImage(new ImageIcon(getClass().getResource("/Imagenes/ico_21-1.png")).getImage());
         //Aceptar.setVisible(false);
@@ -64,7 +63,7 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
         this.anio = anio;
         this.tablaProv.setVisible(false);
         //this.comboProv1.setEnabled(false);
-        cargar_Provee();
+        //cargar_Tipo();
         BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
         Component north = ui.getNorthPane();
         MouseMotionListener[] actions
@@ -72,25 +71,9 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
         for (MouseMotionListener action : actions) {
             north.removeMouseMotionListener(action);
         }
-                       
-        /*comboProv.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    try {
-                        System.out.println("Holas");
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                }
-
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-        });*/
     }
 
-    public void cargar_Provee() {
+    public void cargar_Tipo() {
         comboProv.removeAllItems();
         comboProv.addItem("---Todos los proveedores---");
         ArrayList proov = conn.cargarEstablecimiento();
@@ -111,10 +94,10 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
         Statement st;
         try {
             st = conn.getConn().createStatement();
-            String c = String.format("select factura.id_establecimiento, "
-                    + "nombre_establecimiento, count(*) from factura join "
-                    + "establecimiento on (factura.id_establecimiento = "
-                    + "establecimiento.id_establecimiento) group by factura.id_establecimiento");            
+            String c = String.format("select nombre_producto, nombre_establecimiento, sum(total)  from (select substr(cast(fecha_emision as char),7), id_factura, id_establecimiento\n" +
+                    "from factura where id_cliente = '%s' and (select substr(cast(fecha_emision as char),7)) = '%s') as T1 "
+                    + "join detalle on (T1.id_factura = detalle.id_factura) join\n" +
+                    "establecimiento on (T1.id_establecimiento = establecimiento.id_establecimiento) where tipo = '%s' group by nombre_producto", cedula_usuario, anio, comboProv.getSelectedItem().toString());            
             ResultSet rs = st.executeQuery(c);
             System.out.println(c);
             ResultSetMetaData rsMd = rs.getMetaData();
@@ -135,7 +118,7 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(ReporteProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReporteProdPorTipoPorAñoNegocio.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -153,17 +136,15 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
     public void cargarTablaP() {
         
         tablaProv.setVisible(true);
-        ArrayList idEstab = conn.ddl(String.format("select id_establecimiento from "
-                + "establecimiento where tipo_fac='Negocio' and nombre_establecimiento='%s'", comboProv.getSelectedItem().toString()));
+        ArrayList idEstab = conn.ddl(String.format("select id_establecimiento from establecimiento where nombre_establecimiento='%s'", comboProv.getSelectedItem().toString()));
         
         Statement st;
         try {
             st = conn.getConn().createStatement();
-            String c = String.format("select factura.id_establecimiento, "
-                    + "nombre_establecimiento, count(*) from factura join "
-                    + "establecimiento on (factura.id_establecimiento = "
-                    + "establecimiento.id_establecimiento) where tipo_fac='Negocio' and"
-                    + "factura.id_establecimiento = '%s'", idEstab.get(0));            
+            String c = String.format("select nombre_producto, nombre_establecimiento, sum(total)  from (select substr(cast(fecha_emision as char),7), id_factura, id_establecimiento\n" +
+                    "from factura where id_cliente = '%s' and (select substr(cast(fecha_emision as char),7)) = '%s') as T1 "
+                    + "join detalle on (T1.id_factura = detalle.id_factura) join\n" +
+                    "establecimiento on (T1.id_establecimiento = establecimiento.id_establecimiento) group by nombre_producto", cedula_usuario, anio);            
             ResultSet rs = st.executeQuery(c);
             System.out.println(c);
             ResultSetMetaData rsMd = rs.getMetaData();
@@ -184,7 +165,7 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(ReporteProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReporteProdPorTipoPorAñoNegocio.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -208,7 +189,6 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         comboProv = new javax.swing.JComboBox<>();
         botonExcel = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         botonPdf = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -221,14 +201,15 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
         });
 
         lbl_Reporte.setFont(new java.awt.Font("Open Sans", 1, 36)); // NOI18N
-        lbl_Reporte.setText("Reporte Facturas por Proveedor ");
+        lbl_Reporte.setText("Reporte Productos por Tipo de Gasto ");
 
+        tablaProv.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         tablaProv.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "RUC Prov", "Nomb Prov", "Num Facturas"
+                "Nomb Producto", "Nomb Proveedor", "Total"
             }
         ) {
             Class[] types = new Class [] {
@@ -259,7 +240,6 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
         jLabel3.setText("Cliente:");
 
         nom_cli.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        nom_cli.setEnabled(false);
         nom_cli.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nom_cliActionPerformed(evt);
@@ -270,7 +250,6 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
         jLabel4.setText("CI");
 
         CI.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        CI.setEnabled(false);
         CI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CIActionPerformed(evt);
@@ -278,10 +257,10 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
         });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel5.setText("Proveedor");
+        jLabel5.setText("Tipo de Gasto");
 
         comboProv.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        comboProv.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos" }));
+        comboProv.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Vivienda", "Salud", "Educacion", "Alimentacion", "Vestimenta", "Otro" }));
         comboProv.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
             public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
             }
@@ -301,9 +280,6 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel1.setText("Seleccione un proveedor para mostrar en más detalle:");
-
         botonPdf.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         botonPdf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/if_19_1737236.png"))); // NOI18N
         botonPdf.setText("Exportar Pdf");
@@ -320,36 +296,27 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel3))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(nom_cli, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(CI))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(comboProv, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbl_Reporte)
-                                    .addComponent(jLabel1))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(botonPdf)
                         .addGap(18, 18, 18)
                         .addComponent(botonExcel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1))))
+                        .addComponent(jButton1))
+                    .addComponent(jScrollPane2)
+                    .addComponent(lbl_Reporte)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel3))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(comboProv, 0, 240, Short.MAX_VALUE)
+                            .addComponent(nom_cli))
+                        .addGap(73, 73, 73)
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(CI)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -366,12 +333,10 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(comboProv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel1)
-                .addGap(14, 14, 14)
+                .addGap(46, 46, 46)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(botonExcel)
@@ -405,10 +370,10 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         //System.out.println("Seleccionado:" +comboProv.getSelectedIndex());
         limpiarTabla();
-        if (comboProv.getSelectedIndex()==0){
-            cargarTabla();
-        }else{
+        if (comboProv.getSelectedItem().toString().equals("Todos")){
             cargarTablaP();
+        }else{
+            cargarTabla();
         }
         
     }//GEN-LAST:event_comboProvPopupMenuWillBecomeInvisible
@@ -528,21 +493,33 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ReporteProveedor.class
+            java.util.logging.Logger.getLogger(ReporteProdPorTipoPorAñoNegocio.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ReporteProveedor.class
+            java.util.logging.Logger.getLogger(ReporteProdPorTipoPorAñoNegocio.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ReporteProveedor.class
+            java.util.logging.Logger.getLogger(ReporteProdPorTipoPorAñoNegocio.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ReporteProveedor.class
+            java.util.logging.Logger.getLogger(ReporteProdPorTipoPorAñoNegocio.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -561,7 +538,6 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
     private javax.swing.JButton botonPdf;
     private javax.swing.JComboBox<String> comboProv;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

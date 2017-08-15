@@ -48,14 +48,14 @@ import javax.swing.table.TableModel;
  *
  * @author vengatus
  */
-public class ReporteProveedor extends javax.swing.JInternalFrame {
+public class ReporteProveedorNegocio extends javax.swing.JInternalFrame {
 
     Conexionn conn;
     String cedula_usuario;
     int anio;
     //JTable auxP, auxN;
 
-    public ReporteProveedor(Conexionn conn, String cedula_usuario, int anio) {
+    public ReporteProveedorNegocio(Conexionn conn, String cedula_usuario, int anio) {
         initComponents();
         //setIconImage(new ImageIcon(getClass().getResource("/Imagenes/ico_21-1.png")).getImage());
         //Aceptar.setVisible(false);
@@ -114,7 +114,9 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
             String c = String.format("select factura.id_establecimiento, "
                     + "nombre_establecimiento, count(*) from factura join "
                     + "establecimiento on (factura.id_establecimiento = "
-                    + "establecimiento.id_establecimiento) group by factura.id_establecimiento");            
+                    + "establecimiento.id_establecimiento), prov_gasto.tipo_fac='Negocio'" 
+                    + "' group by factura.id_establecimiento"
+                    );            
             ResultSet rs = st.executeQuery(c);
             System.out.println(c);
             ResultSetMetaData rsMd = rs.getMetaData();
@@ -135,7 +137,7 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(ReporteProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReporteProveedorNegocio.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -153,8 +155,7 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
     public void cargarTablaP() {
         
         tablaProv.setVisible(true);
-        ArrayList idEstab = conn.ddl(String.format("select id_establecimiento from "
-                + "establecimiento where tipo_fac='Negocio' and nombre_establecimiento='%s'", comboProv.getSelectedItem().toString()));
+        ArrayList idEstab = conn.ddl(String.format("select id_establecimiento from establecimiento where nombre_establecimiento='%s'", comboProv.getSelectedItem().toString()));
         
         Statement st;
         try {
@@ -162,8 +163,8 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
             String c = String.format("select factura.id_establecimiento, "
                     + "nombre_establecimiento, count(*) from factura join "
                     + "establecimiento on (factura.id_establecimiento = "
-                    + "establecimiento.id_establecimiento) where tipo_fac='Negocio' and"
-                    + "factura.id_establecimiento = '%s'", idEstab.get(0));            
+                    + "establecimiento.id_establecimiento) where tipo_fac='Negocio' "
+                    + "and factura.id_establecimiento = '%s'", idEstab.get(0));            
             ResultSet rs = st.executeQuery(c);
             System.out.println(c);
             ResultSetMetaData rsMd = rs.getMetaData();
@@ -184,7 +185,7 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(ReporteProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReporteProveedorNegocio.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -371,11 +372,12 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
                 .addGap(14, 14, 14)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(botonExcel)
-                        .addComponent(botonPdf)))
+                        .addComponent(botonPdf))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -528,21 +530,25 @@ public class ReporteProveedor extends javax.swing.JInternalFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ReporteProveedor.class
+            java.util.logging.Logger.getLogger(ReporteProveedorNegocio.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ReporteProveedor.class
+            java.util.logging.Logger.getLogger(ReporteProveedorNegocio.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ReporteProveedor.class
+            java.util.logging.Logger.getLogger(ReporteProveedorNegocio.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ReporteProveedor.class
+            java.util.logging.Logger.getLogger(ReporteProveedorNegocio.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>

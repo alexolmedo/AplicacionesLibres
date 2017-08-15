@@ -94,13 +94,23 @@ public class ReporteNumFacPorAñoNegocio extends javax.swing.JInternalFrame {
 
     public void cargarTabla() {
         tablaProv.setVisible(true);
+        ArrayList idEstab = conn.ddl(String.format("select id_establecimiento from "
+                + "establecimiento  where tipo_fac='Negocio' and nombre_establecimiento='%s'"
+                + "", comboProv.getSelectedItem().toString()));
         Statement st;
         try {
             st = conn.getConn().createStatement();
-            String c = String.format("select substr(cast(fecha_emision as char), count(*) from factura where id_cliente = '%s' and (select substr(cast(fecha_emision as char),7)) = '%s'", cedula_usuario, anio);
-            System.out.println(c);
-            ResultSet rs = st.executeQuery(String.format("select substr(cast(fecha_emision as char),7), count(*) from factura where id_cliente = '%s' group by (select substr(cast(fecha_emision as char),7))", cedula_usuario, anio));
-            System.out.println(c);
+            
+            String co = String.format("select nombre_establecimiento, substr(cast"
+                    + "(fecha_emision as char),7), count(*) from factura join "
+                    + "establecimiento on (factura.id_establecimiento = "
+                    + "establecimiento.id_establecimiento)");
+            
+            //String c = String.format("select substr(cast(fecha_emision as char), count(*) from factura where id_cliente = '%s' and (select substr(cast(fecha_emision as char),7)) = '%s'", cedula_usuario, anio);
+            //System.out.println(co);
+            //ResultSet rs = st.executeQuery(String.format("select substr(cast(fecha_emision as char),7), count(*) from factura where id_cliente = '%s' group by (select substr(cast(fecha_emision as char),7))", cedula_usuario, anio));
+            ResultSet rs = st.executeQuery(co);
+            System.out.println(co);
             ResultSetMetaData rsMd = rs.getMetaData();
             int numeroColumnas = rsMd.getColumnCount();
             //System.out.println("estoy en dfdfg" + rs.getString(0));
@@ -122,6 +132,48 @@ public class ReporteNumFacPorAñoNegocio extends javax.swing.JInternalFrame {
         }
     }
 
+    public void cargarTablaP() {
+        
+        tablaProv.setVisible(true);
+        ArrayList idEstab = conn.ddl(String.format("select id_establecimiento from "
+                + "establecimiento where tipo_fac='Negocio' and nombre_establecimiento='%s'", comboProv.getSelectedItem().toString()));
+        
+        Statement st;
+        try {
+            st = conn.getConn().createStatement();
+            
+            String co = String.format("select nombre_establecimiento, substr(cast(fecha_emision as char),7), count(*) from factura join "
+                    + "establecimiento on (factura.id_establecimiento = "
+                    + "establecimiento.id_establecimiento)");
+            
+            String c = String.format("select nombre_establecimiento, substr(cast(fecha_emision as char),7), count(*) from factura join "
+                    + "establecimiento on (factura.id_establecimiento = "
+                    + "establecimiento.id_establecimiento) where factura.id_establecimiento = '%s'", idEstab.get(0));            
+            ResultSet rs = st.executeQuery(c);
+            System.out.println(c);
+            ResultSetMetaData rsMd = rs.getMetaData();
+            DefaultTableModel dm = (DefaultTableModel) tablaProv.getModel();
+            int numeroColumnas = 3;
+            //System.out.println("estoy en dfdfg" + rs.getString(0));
+
+            int i = 0;
+            while (rs.next()) {
+                dm.addRow(new Object[]{"", "", ""});
+                System.out.println("estoy en el while");
+                for (int j = 0; j < numeroColumnas; j++) {                        
+                    
+                    tablaProv.setValueAt(rs.getObject(j + 1),i ,j );                    
+                    System.out.println(rs.getObject(j + 1));
+                }
+                i++;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ReporteProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -161,11 +213,11 @@ public class ReporteNumFacPorAñoNegocio extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Año", "Nro Facturas"
+                "Proveedor", "Año", "Nro Facturas"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -406,10 +458,9 @@ public class ReporteNumFacPorAñoNegocio extends javax.swing.JInternalFrame {
         //System.out.println("Seleccionado:" +comboProv.getSelectedIndex());
         limpiarTabla();
         if (comboProv.getSelectedIndex()==0){
-            //cargarTabla();
+            cargarTabla();
         }else{
-            //cargarTabla();
-            //cargarTablaP();
+            cargarTablaP();
         }
 
     }//GEN-LAST:event_comboProvPopupMenuWillBecomeInvisible
