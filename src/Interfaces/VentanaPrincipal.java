@@ -79,6 +79,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
+        jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         combo_anio = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
@@ -92,12 +93,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         miNumeroFacAnioNegocio = new javax.swing.JMenuItem();
         jMenuItem16 = new javax.swing.JMenuItem();
         jMenuItem17 = new javax.swing.JMenuItem();
-        jMenuItem18 = new javax.swing.JMenuItem();
         m_Usuario = new javax.swing.JMenu();
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -114,6 +113,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jMenu3.setText("Edit");
         jMenuBar2.add(jMenu3);
+
+        jLabel2.setText("jLabel2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Ordenador de Facturas");
@@ -228,15 +229,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         jMenu5.add(jMenuItem11);
 
-        jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/if_13_62655.png"))); // NOI18N
-        jMenuItem9.setText("Acumulado de Gastos por Año");
-        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem9ActionPerformed(evt);
-            }
-        });
-        jMenu5.add(jMenuItem9);
-
         jMenu4.add(jMenu5);
 
         jMenu6.setText("Facturas por Negocio");
@@ -264,9 +256,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu6.add(jMenuItem17);
-
-        jMenuItem18.setText("Acumulado de Gastos por Año");
-        jMenu6.add(jMenuItem18);
 
         jMenu4.add(jMenu6);
 
@@ -532,27 +521,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jDesktopPane.add(rFP);
     }
     
-    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-
-        historial_p = conn.ddl(String.format("select * from historial_pagos_personales where anio_historial_p=%s and id_cliente='%s'", anio, cedula_usuario));
-        historial_n = conn.ddl(String.format("select * from historial_pagos_negocios where anio_historial_n=%s and id_cliente='%s'", anio, cedula_usuario));
-
-        if (historial_p.isEmpty() && historial_n.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "No se tienen registros de este año");
-        } else {
-            jDesktopPane.removeAll();
-            jDesktopPane.repaint();
-            fmp.setVisible(false);
-            rPV.setVisible(false);
-            fmn.setVisible(false);
-            fe.setVisible(false);
-            rp.setVisible(false);
-            hg.setVisible(true);
-            hg.setSize(jDesktopPane.getSize());
-            jDesktopPane.add(hg);
-        }               
-    }//GEN-LAST:event_jMenuItem9ActionPerformed
-
     private void combo_anioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combo_anioItemStateChanged
         // TODO add your handling code here:
     }//GEN-LAST:event_combo_anioItemStateChanged
@@ -745,6 +713,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> combo_anio;
     private javax.swing.JDesktopPane jDesktopPane;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -760,7 +729,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
-    private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -768,7 +736,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenu m_FactElect;
     private javax.swing.JMenu m_FactFisic;
