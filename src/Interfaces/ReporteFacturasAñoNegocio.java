@@ -98,6 +98,37 @@ public class ReporteFacturasAñoNegocio extends javax.swing.JInternalFrame {
         }
     }
 
+    public void cargarTablaTipoTo() {
+        labelAnio.setText(String.valueOf(anio));
+        tablaProv.setVisible(true);
+        Statement st;
+        try {
+            st = conn.getConn().createStatement();
+            String c = String.format("select detalle.tipo, sum(total) from tipo_gasto_neg join detalle on (tipo_gasto_neg.tipo_gasto = detalle.tipo) where id_factura = '%s' "
+                    + "group by detalle.tipo", tablaProv.getValueAt(tablaProv.getSelectedRow(), 0).toString());            
+            ResultSet rs = st.executeQuery(c);
+            System.out.println(c);
+            ResultSetMetaData rsMd = rs.getMetaData();
+            int numeroColumnas = rsMd.getColumnCount();
+            //System.out.println("estoy en dfdfg" + rs.getString(0));
+            
+            DefaultTableModel dm = (DefaultTableModel) jTabTi.getModel();
+            int i = 0;
+            while (rs.next()) {
+                //System.out.println("estoy en el while");
+                dm.addRow(new Object[]{"", "", ""});
+                for (int j = 0; j < numeroColumnas; j++) {                    
+                    jTabTi.setValueAt(rs.getObject(j + 1),i ,j );                    
+                    //System.out.println(rs.getObject(j + 1));
+                }
+                i++;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ReporteProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -107,6 +138,11 @@ public class ReporteFacturasAñoNegocio extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jButton2 = new javax.swing.JButton();
         lbl_Reporte = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaProv = new javax.swing.JTable();
@@ -118,6 +154,36 @@ public class ReporteFacturasAñoNegocio extends javax.swing.JInternalFrame {
         botonExcel = new javax.swing.JButton();
         labelAnio = new javax.swing.JLabel();
         botonPdf = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTabTi = new javax.swing.JTable();
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(jTable2);
+
+        jButton2.setText("jButton2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setEnabled(false);
@@ -182,40 +248,49 @@ public class ReporteFacturasAñoNegocio extends javax.swing.JInternalFrame {
             }
         });
 
+        jTabTi.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Tipo Gasto", "Total"
+            }
+        ));
+        jScrollPane4.setViewportView(jTabTi);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(botonPdf)
                         .addGap(18, 18, 18)
                         .addComponent(botonExcel)
                         .addGap(18, 18, 18)
                         .addComponent(jButton1))
+                    .addComponent(jScrollPane2)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(2, 2, 2)
-                                        .addComponent(lbl_Reporte)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(labelAnio)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(16, 16, 16)
-                                        .addComponent(jLabel3)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(nomCli, javax.swing.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabel5)))
+                                .addGap(2, 2, 2)
+                                .addComponent(lbl_Reporte)
                                 .addGap(18, 18, 18)
-                                .addComponent(CI, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(labelAnio)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addComponent(jLabel3)
+                                .addGap(18, 18, 18)
+                                .addComponent(nomCli, javax.swing.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel5)))
+                        .addGap(18, 18, 18)
+                        .addComponent(CI, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -234,11 +309,13 @@ public class ReporteFacturasAñoNegocio extends javax.swing.JInternalFrame {
                 .addGap(29, 29, 29)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(botonExcel)
-                    .addComponent(botonPdf))
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1)
+                        .addComponent(botonExcel)
+                        .addComponent(botonPdf))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
@@ -323,6 +400,8 @@ public class ReporteFacturasAñoNegocio extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_botonPdfActionPerformed
 
     private void tablaProvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProvMouseClicked
+                
+        cargarTablaTipoTo();
         ReporteFacturaNegocio reporte = new ReporteFacturaNegocio(tablaProv.getValueAt(tablaProv.getSelectedRow(), 0).toString());
         reporte.setVisible(true);
     }//GEN-LAST:event_tablaProvMouseClicked
@@ -414,9 +493,16 @@ public class ReporteFacturasAñoNegocio extends javax.swing.JInternalFrame {
     private javax.swing.JButton botonExcel;
     private javax.swing.JButton botonPdf;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTable jTabTi;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     private javax.swing.JLabel labelAnio;
     private javax.swing.JLabel lbl_Reporte;
     private javax.swing.JTextField nomCli;
