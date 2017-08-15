@@ -69,7 +69,8 @@ public class ReporteProveedorAcumuladoNeg extends javax.swing.JInternalFrame {
             north.removeMouseMotionListener(action);
         }    
         tablaProv.setEnabled(false);
-        ArrayList tipoGastosNeg = conn.cargarTipoGasNegocio(cedula_usuario);
+        
+        /*ArrayList tipoGastosNeg = conn.cargarTipoGasNegocio(cedula_usuario);
         DefaultTableModel dm = (DefaultTableModel) jTableTiposGasto.getModel();
             int i = 0;
             for (int l=0; l<tipoGastosNeg.size(); l++) {
@@ -80,7 +81,7 @@ public class ReporteProveedorAcumuladoNeg extends javax.swing.JInternalFrame {
                     jTableTiposGasto.setValueAt("0.0",l ,1 );
                     //System.out.println(rs.getObject(j + 1));
                 //}
-            }
+            }*/
     }
     
     public void cargarDato(String sfd) {
@@ -95,16 +96,16 @@ public class ReporteProveedorAcumuladoNeg extends javax.swing.JInternalFrame {
         Statement st;
         try {
             st = conn.getConn().createStatement();
-            String co =" SELECT E.ID_ESTABLECIMIENTO, E.NOMBRE_ESTABLECIMIENTO, COUNT(ID_ESTABLECIMIENTO) FROM ESTABLECIMIENTO E JOIN"
+            /*String co =" SELECT E.ID_ESTABLECIMIENTO, E.NOMBRE_ESTABLECIMIENTO, COUNT(ID_ESTABLECIMIENTO) FROM ESTABLECIMIENTO E JOIN"
                     + " FACTURA F ON F.ID_ESTABLECIMIENTO=E.ID_ESTABLECIMIENTO"
-                    + " WHERE e.NOMBRE_ESTABLECIMIENTO ='"+nombreProveedor+"' ";
-            String c = String.format("select id_establecimiento, nombre_establecimiento, count(id_establecimiento), sum(TV), sum(TE), sum(TOt), sum(TA), sum(TVes), sum(TS) from (select id_Factura, factura.id_establecimiento, nombre_establecimiento, total_sin_IVA, IVA, Total_con_iva \n" +
+                    + " WHERE e.NOMBRE_ESTABLECIMIENTO ='"+nombreProveedor+"' ";*/
+            String c = String.format("select id_establecimiento, nombre_establecimiento, count(id_establecimiento) from (select id_Factura, factura.id_establecimiento, nombre_establecimiento, total_sin_IVA, IVA, Total_con_iva \n" +
             "from factura join establecimiento on (factura.id_establecimiento = establecimiento.id_establecimiento) \n" +
-                    "where (select substr(cast(fecha_emision as char),7) ='%s') and id_cliente = '%s' and establecimiento.nombre_establecimiento='%s') as Tab1\n" +
-                    "on (t6.id_factura = t5.id_factura)) as Tab2 on (Tab1.id_factura = tab2.id_Factura) group by id_establecimiento",anio, cedula_usuario, nombreProveedor);            
+                    "where (select substr(cast(fecha_emision as char),7) ='%s') and id_cliente = '%s' and establecimiento.nombre_establecimiento='%s') \n" +
+                    "group by id_establecimiento",anio, cedula_usuario, nombreProveedor);            
             System.out.println("Consulta q dudo");
-            System.out.println(co);
-            ResultSet rs = st.executeQuery(co);
+            System.out.println(c);
+            ResultSet rs = st.executeQuery(c);
             
             ResultSetMetaData rsMd = rs.getMetaData();
             int numeroColumnas = rsMd.getColumnCount();
@@ -125,10 +126,45 @@ public class ReporteProveedorAcumuladoNeg extends javax.swing.JInternalFrame {
         } catch (SQLException ex) {
             Logger.getLogger(ReporteProveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
+        calcularTablaTipoNegocio(nombreProveedor);
     }
-    
-    public void calcularTablaTipoNegocio (){
-        
+            
+    public void calcularTablaTipoNegocio (String nombreProvedor){
+                     
+        labelAnio.setText(nombreProvedor);
+        tablaProv.setVisible(true);
+        Statement st;
+        try {
+            st = conn.getConn().createStatement();
+            String c = String.format("select tipo, sum(total) from detalle \n" +
+                    "join factura on (detalle.id_factura=factura.id_factura)  \n" +
+                    "join establecimiento on (establecimiento.id_establecimiento=factura.id_establecimiento)\n" +
+                    "where (select substr(cast(fecha_emision as char),7) ='%s') \n" +
+                    "and id_cliente = '%s' and establecimiento.nombre_establecimiento='%s'\n" +
+                    "group by detalle.tipo",anio, cedula_usuario, nombreProvedor);            
+            
+            System.out.println(c);
+            ResultSet rs = st.executeQuery(c);
+            
+            ResultSetMetaData rsMd = rs.getMetaData();
+            int numeroColumnas = rsMd.getColumnCount();
+            //System.out.println("estoy en dfdfg" + rs.getString(0));
+            
+            DefaultTableModel dm = (DefaultTableModel) jTableTiposGasto.getModel();
+            int i = 0;
+            while (rs.next()) {
+                //System.out.println("estoy en el while");
+                dm.addRow(new Object[]{"", "", ""});
+                for (int j = 0; j < numeroColumnas; j++) {                    
+                    jTableTiposGasto.setValueAt(rs.getObject(j + 1),i ,j );                    
+                    //System.out.println(rs.getObject(j + 1));
+                }
+                i++;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ReporteProveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -233,7 +269,7 @@ public class ReporteProveedorAcumuladoNeg extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Tipo de Gasto", "Total"
+                "Tipo de Gasto", "Total Acumulado"
             }
         ));
         jScrollPane3.setViewportView(jTableTiposGasto);
