@@ -675,7 +675,7 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
                 if (!conTipo.verificar_usuario("SELECT DESCRIPCIONRELACION FROM RELACIONGASTO WHERE descripcionrelacion='" + tablaProductos.getValueAt(i, 0) + "'")) {
                     String q;
                     q = "INSERT INTO RELACIONGASTO (descripcionrelacion,tipo_gasto)"
-                            + "VALUES('" + tablaProductos.getValueAt(i, 0)+ "','" + tablaProductos.getValueAt(i, 2)+ "')";
+                            + "VALUES('" + tablaProductos.getValueAt(i, 0)+ "','" + tablaProductos.getValueAt(i, 3)+ "')";
                     conTipo.insertar(q);
                 }
             }
