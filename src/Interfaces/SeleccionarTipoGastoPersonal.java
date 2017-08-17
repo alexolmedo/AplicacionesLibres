@@ -50,7 +50,7 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
         this.cedula = cedula;
         this.tipo = tipo;               
 
-        String nombreCabeceras[] = {"Descripcion", "Precio Total", "Tipo de Gasto"};
+        String nombreCabeceras[] = {"Descripcion", "Cantidad", "Precio Total", "Tipo de Gasto"};
 
         tipoEstado = new String[tipos.length];
         for (int i = 0; i < tipos.length; i++) {
@@ -77,7 +77,7 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
         tablaProductos = new JTable(tipos, nombreCabeceras){
             @Override
             public boolean isCellEditable(int row, int column) {
-                return column == 2;
+                return column == 3;
             }
         };
         jScrollPane1.setViewportView(tablaProductos);
@@ -101,7 +101,7 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
                 TableModel model = (TableModel) tme.getSource();
                 Object data = model.getValueAt(row, column);
 
-                if (!data.equals("") && column == 2) {
+                if (!data.equals("") && column == 3) {
 
                     if (!tipoEstado[row].equals("")) {
                         if (tipoEstado[row].equals("Vivienda")) {
@@ -151,22 +151,22 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
         alinearDerecha.setHorizontalAlignment(DefaultTableCellRenderer.RIGHT);
         tablaProductos.getColumnModel().getColumn(1).setCellRenderer(alinearDerecha);
 
-        tablaProductos.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(comboBox));
+        tablaProductos.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(comboBox));
 
         tablaProductos.getColumnModel().getColumn(1).setMinWidth(100);
         tablaProductos.getColumnModel().getColumn(1).setMaxWidth(100);
-        tablaProductos.getColumnModel().getColumn(2).setMinWidth(150);
-        tablaProductos.getColumnModel().getColumn(2).setMaxWidth(150);
+        tablaProductos.getColumnModel().getColumn(3).setMinWidth(150);
+        tablaProductos.getColumnModel().getColumn(3).setMaxWidth(150);
         
         for (int i=0; i<tipos.length;i++) {
             String q = "SELECT TIPO_GASTO FROM PROV_GASTO WHERE PROVEEDOR = '" + RUC +"' and tipo_fac='Personal'";
             ArrayList n = conTipo.ddl(q);
-            tablaProductos.setValueAt(n.get(0), i, 2);
+            tablaProductos.setValueAt(n.get(0), i, 3);
             
             if(conTipo.verificar_usuario("SELECT DESCRIPCIONRELACION FROM RELACIONGASTO WHERE descripcionrelacion='" + tablaProductos.getValueAt(i, 0) + "'")){                    
                 String q1 = "SELECT TIPO_GASTO FROM RELACIONGASTO WHERE descripcionrelacion='" + tablaProductos.getValueAt(i, 0) + "'";                
                 ArrayList n1 = conTipo.ddl(q1);                          
-                tablaProductos.setValueAt(n1.get(0), i, 2);                
+                tablaProductos.setValueAt(n1.get(0), i, 3);                
             }
         }
         /*for(int i=0;i<tipos.length;i++){              
@@ -614,7 +614,7 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
         boolean validado = true;
 
         for (int i = 0; i < filasTotales; i++) {
-            if (tablaProductos.getValueAt(i, 2).equals("")) {
+            if (tablaProductos.getValueAt(i, 3).equals("")) {
                 validado = false;
                 break;
             }
@@ -683,8 +683,9 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
             
             for (int i=0; i<tablaProductos.getRowCount();i++) {         
                 String q;
-                q = "INSERT INTO DETALLE (ID_FACTURA,NOMBRE_PRODUCTO,TOTAL,TIPO)"
-                            + "VALUES('" +cod.getText()+"','"+ tablaProductos.getValueAt(i, 0)+ "','" + tablaProductos.getValueAt(i, 1)+ "','" + tablaProductos.getValueAt(i, 2)+ "')";
+                q = "INSERT INTO DETALLE (ID_FACTURA,NOMBRE_PRODUCTO,CANTIDAD,TOTAL,TIPO)"
+                            + "VALUES('" +cod.getText()+"','"+ tablaProductos.getValueAt(i, 0)+ "','" 
+                        + tablaProductos.getValueAt(i, 1)+ "','" + tablaProductos.getValueAt(i, 2)+ "','" + tablaProductos.getValueAt(i, 3)+ "')";
                 conTipo.insertar(q);
                 System.out.println(q);
             }
@@ -744,7 +745,7 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
     public void restarAgregado(JTextField txtField, int row) {
         double total;
         total = Double.parseDouble(txtField.getText());
-        total -= (Double) tablaProductos.getValueAt(row, 1);
+        total -= (Double) tablaProductos.getValueAt(row, 2);
         total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
         txtField.setText(String.valueOf(total));
     }
@@ -752,7 +753,7 @@ public class SeleccionarTipoGastoPersonal extends javax.swing.JFrame {
     public void sumarAgregado(JTextField txtField, int row, String tipo) {
         double total;
         total = Double.parseDouble(txtField.getText());
-        total += (Double) tablaProductos.getValueAt(row, 1);
+        total += (Double) tablaProductos.getValueAt(row, 2);
         total = BigDecimal.valueOf(total).setScale(3, RoundingMode.HALF_UP).doubleValue();
         txtField.setText(String.valueOf(total));
         tipoEstado[row] = tipo;

@@ -63,6 +63,7 @@ public class InitDatabase {
                     "create table DETALLE (\n" +
                     "   ID_FACTURA           VARCHAR(20)          not null,\n" +
                     "   NOMBRE_PRODUCTO      CHAR(50)             not null,\n" +
+                    "   CANTIDAD             MONEY             not null,\n" +
                     "   TOTAL                MONEY             not null,\n" +
                     "   TIPO                 VARCHAR(15)          not null,\n" +
                     "   PRIMARY KEY (ID_FACTURA, NOMBRE_PRODUCTO)\n" +
