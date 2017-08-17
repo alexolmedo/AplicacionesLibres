@@ -111,7 +111,7 @@ public class ReporteProdPorTipoPorAñoNegocio extends javax.swing.JInternalFrame
         Statement st;
         try {
             st = conn.getConn().createStatement();
-            String c = String.format("select nombre_producto, nombre_establecimiento, sum(total)  from (select substr(cast(fecha_emision as char),7), id_factura, id_establecimiento\n" +
+            String c = String.format("select nombre_producto, nombre_establecimiento, sum(cantidad), sum(total)  from (select substr(cast(fecha_emision as char),7), id_factura, id_establecimiento\n" +
                     "from factura where id_cliente = '%s' and tipo_factura='Negocio' and (select substr(cast(fecha_emision as char),7)) = '%s') as T1 "
                     + "join detalle on (T1.id_factura = detalle.id_factura) join\n" +
                     "establecimiento on (T1.id_establecimiento = establecimiento.id_establecimiento) where tipo = '%s' group by nombre_producto", cedula_usuario, anio, comboProv.getSelectedItem().toString());            
@@ -158,7 +158,7 @@ public class ReporteProdPorTipoPorAñoNegocio extends javax.swing.JInternalFrame
         Statement st;
         try {
             st = conn.getConn().createStatement();
-            String c = String.format("select nombre_producto, nombre_establecimiento, sum(total)  from (select substr(cast(fecha_emision as char),7), id_factura, id_establecimiento\n" +
+            String c = String.format("select nombre_producto, nombre_establecimiento, sum(cantidad), sum(total)  from (select substr(cast(fecha_emision as char),7), id_factura, id_establecimiento\n" +
                     "from factura where id_cliente = '%s' and tipo_factura='Negocio' and (select substr(cast(fecha_emision as char),7)) = '%s') as T1 "
                     + "join detalle on (T1.id_factura = detalle.id_factura) join\n" +
                     "establecimiento on (T1.id_establecimiento = establecimiento.id_establecimiento) group by nombre_producto", cedula_usuario, anio);            
@@ -210,7 +210,7 @@ public class ReporteProdPorTipoPorAñoNegocio extends javax.swing.JInternalFrame
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setEnabled(false);
-        setPreferredSize(new java.awt.Dimension(575, 370));
+        setPreferredSize(new java.awt.Dimension(680, 370));
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
                 formComponentShown(evt);
@@ -226,11 +226,11 @@ public class ReporteProdPorTipoPorAñoNegocio extends javax.swing.JInternalFrame
 
             },
             new String [] {
-                "Nomb Producto", "Nomb Proveedor", "Total"
+                "Nomb Producto", "Nomb Proveedor", "Cantidad Total", "Precio Total"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -314,7 +314,7 @@ public class ReporteProdPorTipoPorAñoNegocio extends javax.swing.JInternalFrame
                         .addComponent(botonExcel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 689, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
                     .addComponent(lbl_Reporte)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -353,7 +353,7 @@ public class ReporteProdPorTipoPorAñoNegocio extends javax.swing.JInternalFrame
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(botonExcel)
                         .addComponent(botonPdf)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         pack();
