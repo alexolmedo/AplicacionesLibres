@@ -1,9 +1,14 @@
 package Interfaces;
 
 import ReportExc.Exporter;
+import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import conexionBDD.Conexionn;
@@ -219,14 +224,14 @@ public class ReporteFactura extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Producto", "Total", "Tipo"
+                "Producto", "Cantidad", "Total", "Tipo"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -457,8 +462,6 @@ public class ReporteFactura extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel4.getAccessibleContext().setAccessibleName("Detalle Factura");
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -520,7 +523,7 @@ public class ReporteFactura extends javax.swing.JFrame {
         Statement st;
         try {
             st = conn.getConn().createStatement();
-            String c = String.format("select nombre_producto, total, tipo from detalle where id_factura='%s'",cod.getText());            
+            String c = String.format("select nombre_producto, cantidad, total, tipo from detalle where id_factura='%s'",cod.getText());            
             ResultSet rs = st.executeQuery(c);
             //System.out.println(c);
             ResultSetMetaData rsMd = rs.getMetaData();
@@ -564,14 +567,37 @@ public class ReporteFactura extends javax.swing.JFrame {
             String file = chooser.getSelectedFile().toString().concat(".pdf");
             
             try{
-            Document doc = new Document(PageSize.A4.rotate());
-            PdfWriter.getInstance(doc, new FileOutputStream(new File(file)));
-            doc.open();
-            PdfPTable pdfTable = new PdfPTable(tablaDetalle.getColumnCount());
-            for (int i = 0; i < tablaDetalle.getColumnCount(); i++) {
-                    pdfTable.addCell(tablaDetalle.getColumnName(i));
+                Font boldFont = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
+
+                Document doc = new Document(PageSize.A4.rotate());
+                PdfWriter.getInstance(doc, new FileOutputStream(new File(file)));
+                doc.open();
+                //Datos factura
+                Paragraph fact_parr = new Paragraph();
+                fact_parr.add(new Chunk("FACTURA",boldFont));
+                fact_parr.add(new Chunk("\nFactura: "+cod.getText()));
+                fact_parr.add(new Chunk("\nFecha: "+fecha.getText()));
+                doc.add(fact_parr);
+                //Datos Proveedor
+                Paragraph prov_parr = new Paragraph();
+                prov_parr.add(new Chunk("\nPROVEEDOR",boldFont));
+                prov_parr.add(new Chunk("\nRUC: "+RUC_PRov.getText()));
+                prov_parr.add(new Chunk("\nNombre: "+nomb_Prov.getText()));
+                prov_parr.add(new Chunk("\nDirección: "+dir_Prov.getText()));
+                doc.add(prov_parr);
+                //Datos cliente
+                Paragraph cli_parr = new Paragraph();
+                cli_parr.add(new Chunk("\nCLIENTE",boldFont));
+                cli_parr.add(new Chunk("\nRUC/CI: "+RUC_CI_Cli.getText()));
+                cli_parr.add(new Chunk("\nNombre: "+nombre_Cli.getText()));
+                cli_parr.add(new Chunk("\n\n"));
+                doc.add(cli_parr);
+                
+                PdfPTable pdfTable = new PdfPTable(tablaDetalle.getColumnCount());
+                for (int i = 0; i < tablaDetalle.getColumnCount(); i++) {
+                        pdfTable.addCell(tablaDetalle.getColumnName(i));
                 }
-                //extracting data from the JTable and inserting it to PdfPTable
+                    //extracting data from the JTable and inserting it to PdfPTable
                 for (int rows = 0; rows < tablaDetalle.getRowCount(); rows++) {
                     for (int cols = 0; cols < tablaDetalle.getColumnCount(); cols++) {
                         pdfTable.addCell(tablaDetalle.getModel().getValueAt(rows, cols).toString());
@@ -579,9 +605,25 @@ public class ReporteFactura extends javax.swing.JFrame {
                     }
                 }
                 doc.add(pdfTable);
+                //Tipos de gasto
+                Paragraph gasto_parr = new Paragraph();
+                gasto_parr.add(new Chunk("\nACUMULADO TIPOS DE GASTO",boldFont));
+                gasto_parr.add(new Chunk("\nVivienda: "+txtVivienda.getText()));
+                gasto_parr.add(new Chunk("\nSalud: "+txtSalud.getText()));
+                gasto_parr.add(new Chunk("\nAlimentación: "+txtAlimentacion.getText()));
+                gasto_parr.add(new Chunk("\nVestimenta: "+txtVestimenta.getText()));
+                gasto_parr.add(new Chunk("\nEducación: "+txtEducacion.getText()));
+                gasto_parr.add(new Chunk("\nOtros: "+txtOtro.getText()));
+                doc.add(gasto_parr);
+                //Totales
+                Paragraph total_parr = new Paragraph();
+                total_parr.add(new Chunk("\nTotal sin IVA: "+totalSinIVA.getText()));
+                total_parr.add(new Chunk("\nIVA: "+IVA.getText()));
+                total_parr.add(new Chunk("\nTotal con IVA: "+totalConIVA.getText()));
+                total_parr.setAlignment(Element.ALIGN_RIGHT);
+                doc.add(total_parr);
                 doc.close();
                 JOptionPane.showMessageDialog(null, "Los datos fueron exportados a pdf en el directorio seleccionado", "Mensaje de Informacion", JOptionPane.INFORMATION_MESSAGE);
-
             } catch (DocumentException ex) {
 
             } catch (FileNotFoundException ex) {
