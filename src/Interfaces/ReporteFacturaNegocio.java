@@ -1,9 +1,13 @@
 package Interfaces;
 
 import ReportExc.Exporter;
+import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import conexionBDD.Conexionn;
@@ -50,6 +54,7 @@ public class ReporteFacturaNegocio extends javax.swing.JFrame {
                     //System.out.println(rs.getObject(j + 1));
                 //}
             }
+        sumarTablaTotalGastos();
     }
 
     @SuppressWarnings("unchecked")
@@ -88,7 +93,6 @@ public class ReporteFacturaNegocio extends javax.swing.JFrame {
         IVA = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableTiposGasto = new javax.swing.JTable();
-        Calcular = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -223,14 +227,14 @@ public class ReporteFacturaNegocio extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Producto", "Total", "Tipo"
+                "Producto", "Cantidad", "Total", "Tipo"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -323,14 +327,6 @@ public class ReporteFacturaNegocio extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(jTableTiposGasto);
 
-        Calcular.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        Calcular.setText("Calcular");
-        Calcular.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CalcularActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -345,13 +341,8 @@ public class ReporteFacturaNegocio extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(89, 89, 89)
-                                .addComponent(Calcular, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(12, 12, 12)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -372,9 +363,7 @@ public class ReporteFacturaNegocio extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(Calcular)
-                        .addGap(5, 5, 5)
+                        .addGap(46, 46, 46)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(botonCancelar)
                             .addComponent(botonExcel)
@@ -420,10 +409,7 @@ public class ReporteFacturaNegocio extends javax.swing.JFrame {
             nombre_Cli.setText(rs.getObject(2).toString());
             
             cargarTabla();
-            
-            sumarTablaTotalGastos();
-            
-                        
+                  
         } catch (SQLException ex) {
             Logger.getLogger(ReporteFacturaNegocio.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -434,7 +420,7 @@ public class ReporteFacturaNegocio extends javax.swing.JFrame {
         Statement st;
         try {
             st = conn.getConn().createStatement();
-            String c = String.format("select nombre_producto, total, tipo from detalle where id_factura='%s'",cod.getText());            
+            String c = String.format("select nombre_producto, cantidad, total, tipo from detalle where id_factura='%s'",cod.getText());            
             ResultSet rs = st.executeQuery(c);
             //System.out.println(c);
             ResultSetMetaData rsMd = rs.getMetaData();
@@ -452,8 +438,6 @@ public class ReporteFacturaNegocio extends javax.swing.JFrame {
                 }
                 i++;
             }
-            
-            sumarTablaTotalGastos();
 
         } catch (SQLException ex) {
             Logger.getLogger(ReporteProveedor.class.getName()).log(Level.SEVERE, null, ex);
@@ -466,8 +450,8 @@ public class ReporteFacturaNegocio extends javax.swing.JFrame {
          
         for (int i=0; i<jTableTiposGasto.getRowCount(); i++ ){
             for (int j=0; j<tablaDetalle.getRowCount(); j++) {
-                if (tablaDetalle.getValueAt(j, 2).equals(jTableTiposGasto.getValueAt(i,0))) {        
-                    jTableTiposGasto.setValueAt((Double.parseDouble(jTableTiposGasto.getValueAt(i,1).toString()) + Double.parseDouble(tablaDetalle.getValueAt(j, 1).toString())), i, 1);
+                if (tablaDetalle.getValueAt(j, 3).equals(jTableTiposGasto.getValueAt(i,0))) {        
+                    jTableTiposGasto.setValueAt((Double.parseDouble(jTableTiposGasto.getValueAt(i,1).toString()) + Double.parseDouble(tablaDetalle.getValueAt(j, 2).toString())), i, 1);
                 }
             }
         } 
@@ -489,21 +473,70 @@ public class ReporteFacturaNegocio extends javax.swing.JFrame {
             String file = chooser.getSelectedFile().toString().concat(".pdf");
             
             try{
-            Document doc = new Document(PageSize.A4.rotate());
-            PdfWriter.getInstance(doc, new FileOutputStream(new File(file)));
-            doc.open();
-            PdfPTable pdfTable = new PdfPTable(tablaDetalle.getColumnCount());
-            for (int i = 0; i < tablaDetalle.getColumnCount(); i++) {
+                Font boldFont = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
+                
+                Document doc = new Document(PageSize.A4.rotate());
+                PdfWriter.getInstance(doc, new FileOutputStream(new File(file)));
+                doc.open();
+                 //Datos factura
+                Paragraph fact_parr = new Paragraph();
+                fact_parr.add(new Chunk("FACTURA",boldFont));
+                fact_parr.add(new Chunk("\nFactura: "+cod.getText()));
+                fact_parr.add(new Chunk("\nFecha: "+fecha.getText()));
+                doc.add(fact_parr);
+                //Datos Proveedor
+                Paragraph prov_parr = new Paragraph();
+                prov_parr.add(new Chunk("\nPROVEEDOR",boldFont));
+                prov_parr.add(new Chunk("\nRUC: "+RUC_PRov.getText()));
+                prov_parr.add(new Chunk("\nNombre: "+nomb_Prov.getText()));
+                prov_parr.add(new Chunk("\nDirección: "+dir_Prov.getText()));
+                doc.add(prov_parr);
+                //Datos cliente
+                Paragraph cli_parr = new Paragraph();
+                cli_parr.add(new Chunk("\nCLIENTE",boldFont));
+                cli_parr.add(new Chunk("\nRUC/CI: "+RUC_CI_Cli.getText()));
+                cli_parr.add(new Chunk("\nNombre: "+nombre_Cli.getText()));
+                cli_parr.add(new Chunk("\n\n"));
+                doc.add(cli_parr);
+                
+                PdfPTable pdfTable = new PdfPTable(tablaDetalle.getColumnCount());
+                for (int i = 0; i < tablaDetalle.getColumnCount(); i++) {
                     pdfTable.addCell(tablaDetalle.getColumnName(i));
                 }
                 //extracting data from the JTable and inserting it to PdfPTable
                 for (int rows = 0; rows < tablaDetalle.getRowCount(); rows++) {
                     for (int cols = 0; cols < tablaDetalle.getColumnCount(); cols++) {
                         pdfTable.addCell(tablaDetalle.getModel().getValueAt(rows, cols).toString());
-
                     }
                 }
                 doc.add(pdfTable);
+                              
+                //Totales
+                Paragraph total_parr = new Paragraph();
+                total_parr.add(new Chunk("\nTotal sin IVA: "+totalSinIVA.getText()));
+                total_parr.add(new Chunk("\nIVA: "+IVA.getText()));
+                total_parr.add(new Chunk("\nTotal con IVA: "+totalConIVA.getText()));
+                total_parr.setAlignment(Element.ALIGN_RIGHT);
+                doc.add(total_parr);
+                
+                Paragraph tipo_parr = new Paragraph();
+                tipo_parr.add(new Chunk("\nTOTALES POR TIPO DE GASTO",boldFont));
+                tipo_parr.add(new Chunk("\n\n"));
+                doc.add(tipo_parr);
+                
+                //Tabla totales por tipo
+                PdfPTable tablaTipo = new PdfPTable(jTableTiposGasto.getColumnCount());
+                for (int i = 0; i < jTableTiposGasto.getColumnCount(); i++) {
+                    tablaTipo.addCell(jTableTiposGasto.getColumnName(i));
+                }
+                //extracting data from the JTable and inserting it to PdfPTable
+                for (int rows = 0; rows < jTableTiposGasto.getRowCount(); rows++) {
+                    for (int cols = 0; cols < jTableTiposGasto.getColumnCount(); cols++) {
+                        tablaTipo.addCell(jTableTiposGasto.getModel().getValueAt(rows, cols).toString());
+                    }
+                }
+                doc.add(tablaTipo);
+                
                 doc.close();
                 JOptionPane.showMessageDialog(null, "Los datos fueron exportados a pdf en el directorio seleccionado", "Mensaje de Informacion", JOptionPane.INFORMATION_MESSAGE);
 
@@ -542,11 +575,6 @@ public class ReporteFacturaNegocio extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_botonExcelActionPerformed
 
-    private void CalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CalcularActionPerformed
-        // TODO add your handling code here:
-        sumarTablaTotalGastos();
-    }//GEN-LAST:event_CalcularActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -584,7 +612,6 @@ public class ReporteFacturaNegocio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Calcular;
     private javax.swing.JTextField IVA;
     private javax.swing.JTextField RUC_CI_Cli;
     private javax.swing.JTextField RUC_PRov;
