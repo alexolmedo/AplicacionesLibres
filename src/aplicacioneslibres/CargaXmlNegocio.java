@@ -84,6 +84,7 @@ public class CargaXmlNegocio {
             elementos.add("totalSinImpuestos");
             elementos.add("valor");
             elementos.add("descripcion");
+            elementos.add("cantidad");
             elementos.add("precioTotalSinImpuesto");
             elementos.add("importeTotal");
 
@@ -265,7 +266,7 @@ public class CargaXmlNegocio {
                         Element detalles = (Element) lista_campos.get(2);
                         List detalle = detalles.getChildren();
 
-                        Object datosProducto[][] = new Object[detalle.size()][3];
+                        Object datosProducto[][] = new Object[detalle.size()][4];
 
                         for (int j = 0; j < detalle.size(); j++) {
 
@@ -277,6 +278,12 @@ public class CargaXmlNegocio {
                             if (cont != -1) {
                                 descripcion = campo.getChildTextTrim(elementos.get(cont).toString());
                             }
+                            
+                            cont = elementos.indexOf("cantidad");
+                            Double cantidad = 0.0;
+                            if (cont != -1) {
+                                cantidad = Double.parseDouble(campo.getChildTextTrim(elementos.get(cont).toString()));
+                            }
 
                             cont = elementos.indexOf("precioTotalSinImpuesto");
                             Double total = 0.0;
@@ -286,8 +293,9 @@ public class CargaXmlNegocio {
 
                             if (!descripcion.equals("")) {
                                 datosProducto[j][0] = descripcion;
-                                datosProducto[j][1] = total;
-                                datosProducto[j][2] = "";
+                                datosProducto[j][1] = cantidad;
+                                datosProducto[j][2] = total;
+                                datosProducto[j][3] = "";
                             }
                         }
 
