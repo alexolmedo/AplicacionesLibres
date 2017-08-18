@@ -563,7 +563,8 @@ public class ReporteFacturaNegocio extends javax.swing.JFrame {
                 String file = chooser.getSelectedFile().toString().concat(".xls");
                 try {
                     Exporter e = new Exporter(new File(file), tb, nom);
-                    if (e.export()) {
+                    if (e.exportFactura(RUC_CI_Cli.getText(), nombre_Cli.getText(), RUC_PRov.getText() , nomb_Prov.getText(), 
+                            dir_Prov.getText(), codFactura.toString(), fecha.getText(), totalSinIVA.getText(), IVA.getText(), totalConIVA.getText())) {
                         JOptionPane.showMessageDialog(null, "Los datos fueron exportados a excel en el directorio seleccionado", "Mensaje de Informacion", JOptionPane.INFORMATION_MESSAGE);
                     }
                 } catch (Exception e) {
