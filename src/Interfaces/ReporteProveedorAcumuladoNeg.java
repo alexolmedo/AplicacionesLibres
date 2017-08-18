@@ -99,9 +99,12 @@ public class ReporteProveedorAcumuladoNeg extends javax.swing.JInternalFrame {
             /*String co =" SELECT E.ID_ESTABLECIMIENTO, E.NOMBRE_ESTABLECIMIENTO, COUNT(ID_ESTABLECIMIENTO) FROM ESTABLECIMIENTO E JOIN"
                     + " FACTURA F ON F.ID_ESTABLECIMIENTO=E.ID_ESTABLECIMIENTO"
                     + " WHERE e.NOMBRE_ESTABLECIMIENTO ='"+nombreProveedor+"' ";*/
-            String c = String.format("select id_establecimiento, nombre_establecimiento, count(id_establecimiento) from (select id_Factura, factura.id_establecimiento, nombre_establecimiento, total_sin_IVA, IVA, Total_con_iva \n" +
-            "from factura join establecimiento on (factura.id_establecimiento = establecimiento.id_establecimiento) \n" +
-                    "where (select substr(cast(fecha_emision as char),7) ='%s') and id_cliente = '%s' and establecimiento.nombre_establecimiento='%s') \n" +
+            String c = String.format("select id_establecimiento, nombre_establecimiento, count(id_establecimiento) "
+                    + "from (select id_Factura, factura.id_establecimiento, nombre_establecimiento, total_sin_IVA, IVA,"
+                    + " Total_con_iva \n" +"from factura join establecimiento on (factura.id_establecimiento = "
+                    + "establecimiento.id_establecimiento) \n" +
+                    "where (select substr(cast(fecha_emision as char),7) ='%s') and id_cliente = '%s' "
+                    + "and establecimiento.nombre_establecimiento='%s' and tipo_factura = 'Negocio') \n" +
                     "group by id_establecimiento",anio, cedula_usuario, nombreProveedor);            
             System.out.println("Consulta q dudo");
             System.out.println(c);
@@ -140,8 +143,8 @@ public class ReporteProveedorAcumuladoNeg extends javax.swing.JInternalFrame {
                     "join factura on (detalle.id_factura=factura.id_factura)  \n" +
                     "join establecimiento on (establecimiento.id_establecimiento=factura.id_establecimiento)\n" +
                     "where (select substr(cast(fecha_emision as char),7) ='%s') \n" +
-                    "and id_cliente = '%s' and establecimiento.nombre_establecimiento='%s'\n" +
-                    "group by detalle.tipo",anio, cedula_usuario, nombreProvedor);            
+                    "and id_cliente = '%s' and establecimiento.nombre_establecimiento='%s'\n" +                   
+                    "and tipo_factura='Negocio' group by detalle.tipo",anio, cedula_usuario, nombreProvedor);            
             
             System.out.println(c);
             ResultSet rs = st.executeQuery(c);
